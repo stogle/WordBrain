@@ -1,0 +1,8 @@
+# To learn more about .editorconfig see https://aka.ms/editorconfigdocs
+
+###############################
+# Custom Code Analysis        #
+###############################
+[*.cs]
+# CA1707: Identifiers should not contain underscores
+dotnet_diagnostic.CA1707.severity = none
