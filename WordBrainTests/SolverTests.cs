@@ -1,11 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace WordBrain.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class SolverTests
     {
         private static Solver CreateSolver(WordTree? wordTree = null) => new Solver(wordTree ?? CreateWordTree());

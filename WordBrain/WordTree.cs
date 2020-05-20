@@ -6,15 +6,9 @@ namespace WordBrain
 {
     public class WordTree
     {
-        private readonly string _prefix;
         private readonly IDictionary<string, WordTree> _children = new Dictionary<string, WordTree>(StringComparer.OrdinalIgnoreCase);
 
-        private WordTree(string prefix)
-        {
-            _prefix = prefix;
-        }
-
-        public WordTree(IEnumerable<string> words) : this(string.Empty)
+        public WordTree(IEnumerable<string> words)
         {
             if (words == null)
             {
@@ -30,6 +24,10 @@ namespace WordBrain
             }
         }
 
+        private WordTree()
+        {
+        }
+
         private void Add(string word, int index)
         {
             if (index == word.Length)
@@ -41,7 +39,7 @@ namespace WordBrain
             string c = word.Substring(index, 1);
             if (!_children.TryGetValue(c, out var child))
             {
-                child = new WordTree(word.Substring(0, index + 1));
+                child = new WordTree();
                 _children[c] = child;
             }
 
@@ -60,7 +58,5 @@ namespace WordBrain
 
             return false;
         }
-
-        public override string ToString() => $"{_prefix}[{string.Concat(_children.Keys)}]";
     }
 }

@@ -1,8 +1,6 @@
-﻿using WordBrain;
-using System;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
 using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace WordBrain.Tests
 {
@@ -69,7 +67,7 @@ namespace WordBrain.Tests
         {
             // Arrange
             var grid = CreateGrid();
-            var puzzle = CreatePuzzle(grid, null);
+            var puzzle = CreatePuzzle(grid);
 
             // Act
             var result = puzzle.Grid;
@@ -133,10 +131,25 @@ namespace WordBrain.Tests
             IEnumerable<(int, int)> sequence = null!;
 
             // Act
-            var exception = Assert.ThrowsException<ArgumentNullException>(() => puzzle.TryPlay(sequence, out Puzzle? outPuzzle));
+            var exception = Assert.ThrowsException<ArgumentNullException>(() => puzzle.TryPlay(sequence, out _));
 
             // Assert
             Assert.AreEqual("Value cannot be null. (Parameter 'sequence')", exception.Message);
+        }
+
+        [TestMethod]
+        public void TryPlay_WhenSequenceIsOutOfBounds_SetsPuzzleToNullAndReturnsFalse()
+        {
+            // Arrange
+            var puzzle = CreatePuzzle();
+            var sequence = new[] { (1, 0), (1, 1), (2, 1), (3, 1) };
+
+            // Act
+            bool result = puzzle.TryPlay(sequence, out Puzzle? outPuzzle);
+
+            // Assert
+            Assert.IsFalse(result);
+            Assert.IsNull(outPuzzle);
         }
 
         [TestMethod]

@@ -124,6 +124,10 @@
   <data name="Grid_ExpectedRectangularLettersExceptionMessage" xml:space="preserve">
     <value>Expected letters to be rectangular.</value>
   </data>
+  <data name="Program_FoundSolutionsFormat" xml:space="preserve">
+    <value>Found {0} solutions in {1}</value>
+    <comment>{0} = count of solutions, {1} = elapsed time</comment>
+  </data>
   <data name="Puzzle_ExpectedRemainingLettersEqualExceptionMessage" xml:space="preserve">
     <value>Expected remaining letters in Solution and Grid to be equal.</value>
   </data>

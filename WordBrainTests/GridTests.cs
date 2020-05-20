@@ -1,8 +1,6 @@
-﻿using WordBrain;
-using System;
+﻿using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 
 namespace WordBrain.Tests
 {
@@ -123,9 +121,7 @@ namespace WordBrain.Tests
             string result = grid.ToString();
 
             // Assert
-            Assert.AreEqual($"A B C{Environment.NewLine}" +
-                $"D E F{Environment.NewLine}" +
-                $"G H I", result);
+            Assert.AreEqual($"A B C{Environment.NewLine}D E F{Environment.NewLine}G H I", result);
         }
 
         [TestMethod]
@@ -139,9 +135,7 @@ namespace WordBrain.Tests
             string result = grid.ToString();
 
             // Assert
-            Assert.AreEqual($". . C{Environment.NewLine}" +
-                $"A . F{Environment.NewLine}" +
-                $"G B I", result);
+            Assert.AreEqual($". . C{Environment.NewLine}A . F{Environment.NewLine}G B I", result);
         }
     }
 }

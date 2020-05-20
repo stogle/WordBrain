@@ -7,7 +7,7 @@ namespace WordBrain
     public class Solver
     {
         private readonly WordTree _wordTree;
-        private long _iteration = 0L;
+        private long _iteration;
 
         public Solver(WordTree wordTree)
         {
@@ -30,11 +30,16 @@ namespace WordBrain
         {
             foreach (var solution in SolveInternal(puzzle))
             {
-                Console.Write($"\r{string.Concat(Enumerable.Repeat(' ', puzzle.Solution.ToString().Length))}\r");
+                Console.Write('\r');
+                Console.Write(string.Empty.PadRight(puzzle.Solution.ToString().Length));
+                Console.Write('\r');
+
                 yield return solution;
             }
 
-            Console.Write($"\r{string.Concat(Enumerable.Repeat(' ', puzzle.Solution.ToString().Length))}\r");
+            Console.Write('\r');
+            Console.Write(string.Empty.PadRight(puzzle.Solution.ToString().Length));
+            Console.Write('\r');
         }
 
         private IEnumerable<Solution> SolveInternal(Puzzle puzzle)
@@ -74,7 +79,8 @@ namespace WordBrain
                     {
                         if (_iteration++ % 1000L == 0L)
                         {
-                            Console.Write($"\r{currentPuzzle!.Solution}");
+                            Console.Write('\r');
+                            Console.Write(currentPuzzle!.Solution);
                         }
 
                         foreach (Solution solution in SolveInternal(currentPuzzle!))
@@ -84,7 +90,7 @@ namespace WordBrain
                     }
                 }
 
-                // Visit neighbours
+                // Visit neighbors
                 for (int x = i - 1; x <= i + 1; x++)
                 {
                     if (x >= 0 && x < puzzle.Grid.Height)

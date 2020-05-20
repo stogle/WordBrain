@@ -79,6 +79,15 @@ namespace WordBrain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Found {0} solutions in {1}.
+        /// </summary>
+        internal static string Program_FoundSolutionsFormat {
+            get {
+                return ResourceManager.GetString("Program_FoundSolutionsFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expected remaining letters in Solution and Grid to be equal..
         /// </summary>
         internal static string Puzzle_ExpectedRemainingLettersEqualExceptionMessage {

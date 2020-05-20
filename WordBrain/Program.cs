@@ -5,8 +5,8 @@ using System.IO;
 namespace WordBrain
 {
     /// <example>
-    /// > WordBrain CSW19.txt SLLY HAUE ICTN PAON 4 8 4
-    /// 
+    /// The command <c>WordBrain CSW19.txt SLLY HAUE ICTN PAON 4 8 4</c> produces the following output:
+    /// <code>
     /// S L L Y
     /// H A U E
     /// I C T N
@@ -17,10 +17,11 @@ namespace WordBrain
     /// NONE ACTUALLY SHIP
     /// 
     /// Found 2 solutions in 00:00:00.8331733
+    /// </code>
     /// </example>
     /// <example>
-    /// > WordBrain CSW19.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12
-    /// 
+    /// The command <c>WordBrain CSW19.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12</c> produces the following output:
+    /// <code>
     /// E Z E A I
     /// U I C R D
     /// L R H A D
@@ -41,7 +42,8 @@ namespace WordBrain
     /// VALUE SODA IDEE CHARACTERIZE
     /// 
     /// Found 11 solutions in 00:28:26.4260580
-        /// </example>
+    /// </code>
+    /// </example>
     public static class Program
     {
         public static void Main(string[] args)
@@ -67,7 +69,7 @@ namespace WordBrain
                 count++;
             }
             Console.WriteLine();
-            Console.WriteLine($"Found {count} solutions in {stopWatch.Elapsed}");
+            Console.WriteLine(Strings.Program_FoundSolutionsFormat, count, stopWatch.Elapsed);
         }
     }
 }

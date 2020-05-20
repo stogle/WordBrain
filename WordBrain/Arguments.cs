@@ -30,9 +30,9 @@ namespace WordBrain
             Usage = string.Format(Strings.Culture, Strings.Arguments_UsageFormat, args0, Environment.NewLine);
         }
 
-        private string? ParsePath(string[] args, ref int argsIndex) => argsIndex < args.Length ? args[argsIndex++] : null;
+        private static string? ParsePath(string[] args, ref int argsIndex) => argsIndex < args.Length ? args[argsIndex++] : null;
 
-        private char?[][]? ParseLetters(string[] args, ref int argsIndex)
+        private static char?[][]? ParseLetters(string[] args, ref int argsIndex)
         {
             if (argsIndex >= args.Length)
             {
@@ -64,7 +64,7 @@ namespace WordBrain
             return letters;
         }
 
-        private int[]? ParseLengths(string[] args, ref int argsIndex)
+        private static int[]? ParseLengths(string[] args, ref int argsIndex)
         {
             int lengthsCount = args.Length - argsIndex;
             if (lengthsCount <= 0)
