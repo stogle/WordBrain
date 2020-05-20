@@ -121,6 +121,9 @@
     <value>Usage: {0} word_list line1 [line2 ...] length1 [length2 ...]{1}  word_list: The path to a file containing a list of valid words (one per line).{1}  line1, line2, etc.: The lines of the WordBrain grid. All lines must be the same length. The grid must be square. Use '.' for blanks.{1}  length1, length2, etc.: The lengths of the words in the solution. The lengths must sum to the number of letters in the grid.{1}</value>
     <comment>{0} = args0, {1} = Environment.NewLine</comment>
   </data>
+  <data name="Grid_ExpectedPositiveLengthsExceptionMessage" xml:space="preserve">
+    <value>Expected positive integer lengths.</value>
+  </data>
   <data name="Move_ExpectedValueInRangeExceptionMessageFormat" xml:space="preserve">
     <value>Expected value in range {0}..{1}.</value>
     <comment>{0} = minimum, {1} = maximum</comment>
@@ -135,10 +138,7 @@
     <value>Cannot push a non-adjacent square.</value>
   </data>
   <data name="Puzzle_ExpectedLengthsSumEqualToLettersSizeExceptionMessage" xml:space="preserve">
-    <value>Expected lengths to sum to the number of letters.</value>
-  </data>
-  <data name="Puzzle_ExpectedPositiveLengthsExceptionMessage" xml:space="preserve">
-    <value>Expected positive integer lengths.</value>
+    <value>Expected lengths to sum to the number of remaining letters.</value>
   </data>
   <data name="Puzzle_ExpectedRectangularLettersExceptionMessage" xml:space="preserve">
     <value>Expected letters to be rectangular.</value>

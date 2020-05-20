@@ -23,7 +23,7 @@ namespace WordBrain
                 int[]? lengths = ParseLengths(args, ref argsIndex);
                 if (lengths != null)
                 {
-                    Puzzle = new Puzzle(letters, lengths);
+                    Puzzle = new Puzzle(new Grid(letters), lengths);
                 }
             }
             IsValid = Path != null && Puzzle != null;

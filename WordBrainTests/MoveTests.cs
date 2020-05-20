@@ -10,8 +10,9 @@ namespace WordBrain.Tests
     {
         public static Move CreateMove(Puzzle? puzzle = null) => new Move(puzzle ?? CreatePuzzle());
 
-        private static Puzzle CreatePuzzle(char?[][]? letters = null, int[]? lengths = null) =>
-            new Puzzle(letters ?? CreateLetters(), lengths ?? CreateLengths());
+        private static Puzzle CreatePuzzle(Grid? grid = null, int[]? lengths = null) => new Puzzle(grid ?? CreateGrid(), lengths ?? CreateLengths());
+
+        private static Grid CreateGrid(char?[][]? letters = null) => new Grid(letters ?? CreateLetters());
 
         private static char?[][] CreateLetters() => new[]
         {
@@ -40,10 +41,10 @@ namespace WordBrain.Tests
         public void Count_Initially_ReturnsZero()
         {
             // Arrange
-            var play = CreateMove();
+            var move = CreateMove();
 
             // Act
-            int result = play.Count;
+            int result = move.Count;
 
             // Assert
             Assert.AreEqual(0, result);
@@ -53,11 +54,11 @@ namespace WordBrain.Tests
         public void Count_AfterPush_ReturnsOne()
         {
             // Arrange
-            var play = CreateMove();
-            play.Push(0, 0);
+            var move = CreateMove();
+            move.Push(0, 0);
 
             // Act
-            int result = play.Count;
+            int result = move.Count;
 
             // Assert
             Assert.AreEqual(1, result);
@@ -67,12 +68,12 @@ namespace WordBrain.Tests
         public void Count_AfterPushAndPop_ReturnsZero()
         {
             // Arrange
-            var play = CreateMove();
-            play.Push(0, 0);
-            play.Pop();
+            var move = CreateMove();
+            move.Push(0, 0);
+            move.Pop();
 
             // Act
-            int result = play.Count;
+            int result = move.Count;
 
             // Assert
             Assert.AreEqual(0, result);
@@ -82,11 +83,11 @@ namespace WordBrain.Tests
         public void Add_WhenIIsOutOfBounds_ThrowsException()
         {
             // Arrange
-            var play = CreateMove();
+            var move = CreateMove();
             int i = -1;
 
             // Act
-            var exception = Assert.ThrowsException<ArgumentException>(() => play.Push(i, 0));
+            var exception = Assert.ThrowsException<ArgumentException>(() => move.Push(i, 0));
 
             // Assert
             Assert.AreEqual("Expected value in range 0..2. (Parameter 'i')", exception.Message);
@@ -96,11 +97,11 @@ namespace WordBrain.Tests
         public void Add_WhenJIsOutOfBounds_ThrowsException()
         {
             // Arrange
-            var play = CreateMove();
+            var move = CreateMove();
             int j = 3;
 
             // Act
-            var exception = Assert.ThrowsException<ArgumentException>(() => play.Push(0, j));
+            var exception = Assert.ThrowsException<ArgumentException>(() => move.Push(0, j));
 
             // Assert
             Assert.AreEqual("Expected value in range 0..2. (Parameter 'j')", exception.Message);
@@ -110,11 +111,11 @@ namespace WordBrain.Tests
         public void Add_WhenSquareIsNotAdjacent_ThrowsException()
         {
             // Arrange
-            var play = CreateMove();
-            play.Push(0, 0);
+            var move = CreateMove();
+            move.Push(0, 0);
 
             // Act
-            var exception = Assert.ThrowsException<InvalidOperationException>(() => play.Push(0, 2));
+            var exception = Assert.ThrowsException<InvalidOperationException>(() => move.Push(0, 2));
 
             // Assert
             Assert.AreEqual("Cannot push a non-adjacent square.", exception.Message);
@@ -124,10 +125,10 @@ namespace WordBrain.Tests
         public void RemoveLast_WhenCountIsZero_ThrowsException()
         {
             // Arrange
-            var play = CreateMove();
+            var move = CreateMove();
 
             // Act
-            var exception = Assert.ThrowsException<InvalidOperationException>(() => play.Pop());
+            var exception = Assert.ThrowsException<InvalidOperationException>(() => move.Pop());
 
             // Assert
             Assert.AreEqual("Cannot pop from an empty move.", exception.Message);
@@ -152,20 +153,22 @@ namespace WordBrain.Tests
             // Arrange
             char?[][] letters = { new char?[] { 'A', 'B', 'C' }, new char?[] { 'D', 'E', 'F' }, new char?[] { 'G', 'H', 'I' } };
             int[] lengths = { 2, 3, 4 };
-            var puzzle = CreatePuzzle(letters, lengths);
+            Grid grid = CreateGrid(letters);
+            var puzzle = CreatePuzzle(grid, lengths);
             var move = CreateMove(puzzle);
-            move.Push(1, 0);
-            move.Push(1, 1);
-            move.Push(2, 1);
-            char?[][] expected = { new char?[] { null, null, 'C' }, new char?[] { 'A', null, 'F' }, new char?[] { 'G', 'B', 'I' } };
+            var sequence = new[] { (1, 0), (1, 1), (2, 1) };
+            move.Push(sequence[0].Item1, sequence[0].Item2);
+            move.Push(sequence[1].Item1, sequence[1].Item2);
+            move.Push(sequence[2].Item1, sequence[2].Item2);
+            Grid expected = grid.Play(sequence);
 
             // Act
             Puzzle result = move.Play();
 
             // Assert
-            Assert.AreEqual(puzzle.Height, result!.Height);
-            Assert.AreEqual(puzzle.Width, result.Width);
-            Assert.IsTrue(Enumerable.Range(0, puzzle.Height).SelectMany(i => Enumerable.Range(0, puzzle.Width).Select(j => expected[i][j] == result[i, j])).All(b => b));
+            Assert.AreEqual(puzzle.Grid.Height, result!.Grid.Height);
+            Assert.AreEqual(puzzle.Grid.Width, result.Grid.Width);
+            Assert.IsTrue(Enumerable.Range(0, puzzle.Grid.Height).SelectMany(i => Enumerable.Range(0, puzzle.Grid.Width).Select(j => expected[i, j] == result.Grid[i, j])).All(b => b));
             CollectionAssert.AreEqual(new[] { 2, 4 }, result.Lengths);
         }
     }

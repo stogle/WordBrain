@@ -18,13 +18,13 @@ namespace WordBrain
 
         public void Push(int i, int j)
         {
-            if (i < 0 || i >= _puzzle.Height)
+            if (i < 0 || i >= _puzzle.Grid.Height)
             {
-                throw new ArgumentException(string.Format(Strings.Culture, Strings.Move_ExpectedValueInRangeExceptionMessageFormat, 0, _puzzle.Height - 1), nameof(i));
+                throw new ArgumentException(string.Format(Strings.Culture, Strings.Move_ExpectedValueInRangeExceptionMessageFormat, 0, _puzzle.Grid.Height - 1), nameof(i));
             }
-            if (j < 0 || j >= _puzzle.Width)
+            if (j < 0 || j >= _puzzle.Grid.Width)
             {
-                throw new ArgumentException(string.Format(Strings.Culture, Strings.Move_ExpectedValueInRangeExceptionMessageFormat, 0, _puzzle.Width - 1), nameof(j));
+                throw new ArgumentException(string.Format(Strings.Culture, Strings.Move_ExpectedValueInRangeExceptionMessageFormat, 0, _puzzle.Grid.Width - 1), nameof(j));
             }
             if (Count != 0 && (Math.Abs(i - _squares.Peek().i) > 1 || Math.Abs(j - _squares.Peek().j) > 1))
             {
@@ -32,7 +32,7 @@ namespace WordBrain
             }
 
             _squares.Push((i, j));
-            _word.Append(_puzzle[i, j]);
+            _word.Append(_puzzle.Grid[i, j]);
         }
 
         public void Pop()
@@ -54,36 +54,9 @@ namespace WordBrain
                 throw new InvalidOperationException(Strings.Move_InvalidCountForPlayExceptionMessage);
             }
 
-            // Set all used letter to null
-            char?[][] letters = Enumerable.Range(0, _puzzle.Height).Select(i => Enumerable.Range(0, _puzzle.Width).Select(j => _puzzle[i, j]).ToArray()).ToArray();
-            foreach ((int i, int j) in _squares)
-            {
-                letters[i][j] = null;
-            }
-
-            // Fill null letters with the letters above
-            for (int j = 0; j < _puzzle.Width; j++)
-            {
-                for (int i = _puzzle.Height - 1; i > 0; i--)
-                {
-                    if (letters[i][j] == null)
-                    {
-                        int k = i - 1;
-                        while (k >= 0 && letters[k][j] == null)
-                        {
-                            k--;
-                        }
-                        if (k >= 0)
-                        {
-                            letters[i][j] = letters[k][j];
-                            letters[k][j] = null;
-                        }
-                    }
-                }
-            }
-
+            Grid grid = _puzzle.Grid.Play(_squares);
             int[] lengths = _puzzle.Lengths.Take(index).Concat(_puzzle.Lengths.Skip(index + 1)).ToArray();
-            return new Puzzle(letters, lengths);
+            return new Puzzle(grid, lengths);
         }
 
         public int Count => _word.Length;

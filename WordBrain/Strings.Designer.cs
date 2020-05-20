@@ -70,6 +70,15 @@ namespace WordBrain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expected positive integer lengths..
+        /// </summary>
+        internal static string Grid_ExpectedPositiveLengthsExceptionMessage {
+            get {
+                return ResourceManager.GetString("Grid_ExpectedPositiveLengthsExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expected value in range {0}..{1}..
         /// </summary>
         internal static string Move_ExpectedValueInRangeExceptionMessageFormat {
@@ -106,20 +115,11 @@ namespace WordBrain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Expected lengths to sum to the number of letters..
+        ///   Looks up a localized string similar to Expected lengths to sum to the number of remaining letters..
         /// </summary>
         internal static string Puzzle_ExpectedLengthsSumEqualToLettersSizeExceptionMessage {
             get {
                 return ResourceManager.GetString("Puzzle_ExpectedLengthsSumEqualToLettersSizeExceptionMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Expected positive integer lengths..
-        /// </summary>
-        internal static string Puzzle_ExpectedPositiveLengthsExceptionMessage {
-            get {
-                return ResourceManager.GetString("Puzzle_ExpectedPositiveLengthsExceptionMessage", resourceCulture);
             }
         }
         

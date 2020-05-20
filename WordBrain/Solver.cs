@@ -29,19 +29,19 @@ namespace WordBrain
         {
             foreach (var solution in SolveInternal(puzzle))
             {
-                Console.Write(string.Concat(Enumerable.Repeat("\b \b", puzzle.Width * puzzle.Height + solution.Count)));
+                Console.Write(string.Concat(Enumerable.Repeat("\b \b", puzzle.Grid.Width * puzzle.Grid.Height + solution.Count)));
                 yield return solution;
             }
         }
 
         private IEnumerable<List<Move>> SolveInternal(Puzzle puzzle)
         {
-            bool[][] visited = Enumerable.Range(0, puzzle.Height).Select(i => Enumerable.Range(0, puzzle.Width).Select(j => puzzle[i, j] == null).ToArray()).ToArray();
+            bool[][] visited = Enumerable.Range(0, puzzle.Grid.Height).Select(i => Enumerable.Range(0, puzzle.Grid.Width).Select(j => puzzle.Grid[i, j] == null).ToArray()).ToArray();
             if (puzzle.Lengths.Any())
             {
-                for (int i = 0; i < puzzle.Height; i++)
+                for (int i = 0; i < puzzle.Grid.Height; i++)
                 {
-                    for (int j = 0; j < puzzle.Width; j++)
+                    for (int j = 0; j < puzzle.Grid.Width; j++)
                     {
                         if (!visited[i][j])
                         {
@@ -61,7 +61,7 @@ namespace WordBrain
 
         private IEnumerable<List<Move>> Visit(Puzzle puzzle, int i, int j, bool[][] visited, Move currentMove, WordTree currentWordTree)
         {
-            char letter = puzzle[i, j]!.Value; // We only visit squares with non-null letters
+            char letter = puzzle.Grid[i, j]!.Value; // We only visit squares with non-null letters
             if (currentWordTree.TryLetter(letter, ref currentWordTree))
             {
                 visited[i][j] = true;
@@ -87,11 +87,11 @@ namespace WordBrain
                 // Visit neighbours
                 for (int x = i - 1; x <= i + 1; x++)
                 {
-                    if (x >= 0 && x < puzzle.Height)
+                    if (x >= 0 && x < puzzle.Grid.Height)
                     {
                         for (int y = j - 1; y <= j + 1; y++)
                         {
-                            if (y >= 0 && y < puzzle.Width)
+                            if (y >= 0 && y < puzzle.Grid.Width)
                             {
                                 if (!visited[x][y])
                                 {

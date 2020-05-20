@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace WordBrain.Tests
@@ -7,12 +8,13 @@ namespace WordBrain.Tests
     [TestClass()]
     public class SolverTests
     {
-        private static Solver CreateSolver() => new Solver(CreateWordTree());
+        private static Solver CreateSolver(WordTree? wordTree = null) => new Solver(wordTree ?? CreateWordTree());
 
-        private static WordTree CreateWordTree() => new WordTree(new[] { "do", "does", "dot", "dots", "he", "hot", "see", "seed", "set", "she", "test", "the" });
+        private static WordTree CreateWordTree(IEnumerable<string>? words = null) => new WordTree(words ?? new[] { "actually", "do", "does", "dot", "dots", "he", "hot", "none", "see", "seed", "set", "she", "ship", "test", "the" });
 
-        private static Puzzle CreatePuzzle(char?[][]? letters = null, int[]? lengths = null) =>
-            new Puzzle(letters ?? CreateLetters(), lengths ?? CreateLengths());
+        private static Puzzle CreatePuzzle(Grid? grid = null, int[]? lengths = null) => new Puzzle(grid ?? CreateGrid(), lengths ?? CreateLengths());
+
+        private static Grid CreateGrid(char?[][]? letters = null) => new Grid(letters ?? CreateLetters());
 
         private static char?[][] CreateLetters() => new[]
         {
@@ -53,7 +55,7 @@ namespace WordBrain.Tests
         }
 
         [TestMethod]
-        public void Solve_WhenSolutionExists_ReturnsSolutions()
+        public void Solve_WhenPuzzleIs3x3_ReturnsSolutions()
         {
             // Arrange
             var solver = CreateSolver();
@@ -64,6 +66,22 @@ namespace WordBrain.Tests
 
             // Assert
             CollectionAssert.AreEqual(new[] { "DO THE TEST", "HE DOT TEST" }, result);
+        }
+
+        [TestMethod]
+        public void Solve_WhenPuzzleIs4x4_ReturnsSolutions()
+        {
+            // Arrange
+            var solver = CreateSolver();
+            var grid = CreateGrid(new[] { new char?[] { 'S', 'L', 'L', 'Y' }, new char?[] { 'H', 'A', 'U', 'E' }, new char?[] { 'I', 'C', 'T', 'N' }, new char?[] { 'P', 'A', 'O', 'N' } });
+            int[] lengths = { 4, 8, 4 };
+            var puzzle = CreatePuzzle(grid, lengths);
+
+            // Act
+            string[] result = solver.Solve(puzzle).ToArray();
+
+            // Assert
+            CollectionAssert.AreEqual(new[] { "SHIP ACTUALLY NONE", "NONE ACTUALLY SHIP" }, result);
         }
     }
 }
