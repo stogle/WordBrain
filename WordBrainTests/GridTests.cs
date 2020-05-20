@@ -114,37 +114,6 @@ namespace WordBrain.Tests
         }
 
         [TestMethod]
-        public void Play_WhenSequenceIsNull_ThrowsException()
-        {
-            // Arrange
-            var grid = CreateGrid();
-            IEnumerable<(int, int)> sequence = null!;
-
-            // Act
-            var exception = Assert.ThrowsException<ArgumentNullException>(() => grid.Play(sequence));
-
-            // Assert
-            Assert.AreEqual("Value cannot be null. (Parameter 'sequence')", exception.Message);
-        }
-
-        [TestMethod]
-        public void Play_WhenSequenceIsNotNull_ReturnsGrid()
-        {
-            // Arrange
-            var grid = CreateGrid();
-            var sequence = new[] { (1, 0), (1, 1), (2, 1) };
-            char?[][] expected = { new char?[] { null, null, 'C' }, new char?[] { 'A', null, 'F' }, new char?[] { 'G', 'B', 'I' } };
-
-            // Act
-            Grid result = grid.Play(sequence);
-
-            // Assert
-            Assert.AreEqual(grid.Height, result.Height);
-            Assert.AreEqual(grid.Width, result.Width);
-            Assert.IsTrue(Enumerable.Range(0, grid.Height).SelectMany(i => Enumerable.Range(0, grid.Width).Select(j => expected[i][j] == result[i, j])).All(b => b));
-        }
-
-        [TestMethod]
         public void ToString_WhenNoBlankLetters_ReturnsCorrectFormat()
         {
             // Arrange

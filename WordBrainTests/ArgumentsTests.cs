@@ -108,7 +108,7 @@ namespace WordBrain.Tests
             Assert.AreEqual(3, result.Grid.Height);
             Assert.AreEqual(3, result.Grid.Width);
             Assert.IsTrue(Enumerable.Range(0, 3).All(i => Enumerable.Range(0, 3).All(j => args[1 + i][j] == result.Grid[i, j])));
-            CollectionAssert.AreEqual(new[] { 2, 3, 4 }, result.Lengths);
+            Assert.AreEqual("__ ___ ____", result.Solution.ToString());
         }
 
         [TestMethod]

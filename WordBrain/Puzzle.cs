@@ -1,38 +1,47 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace WordBrain
 {
     public class Puzzle
     {
-        public Puzzle(Grid grid, int[] lengths)
+        public Puzzle(Grid grid, Solution solution)
         {
-            if (grid == null)
-            {
-                throw new ArgumentNullException(nameof(grid));
-            }
-            if (lengths == null)
-            {
-                throw new ArgumentNullException(nameof(lengths));
-            }
-            if (lengths.Any(length => length <= 0))
-            {
-                throw new ArgumentException(Strings.Grid_ExpectedPositiveLengthsExceptionMessage, nameof(lengths));
-            }
-            if (lengths.Sum() != grid.RemainingLetters)
-            {
-                throw new ArgumentException(Strings.Puzzle_ExpectedLengthsSumEqualToLettersSizeExceptionMessage, nameof(lengths));
-            }
+            Grid = grid ?? throw new ArgumentNullException(nameof(grid));
+            Solution = solution ?? throw new ArgumentNullException(nameof(solution));
 
-            Grid = grid;
-            Lengths = Array.AsReadOnly(lengths);
+            if (solution.RemainingLetters != grid.RemainingLetters)
+            {
+                throw new ArgumentException(Strings.Puzzle_ExpectedRemainingLettersEqualExceptionMessage, nameof(solution));
+            }
         }
 
         public Grid Grid { get; }
 
-        public ReadOnlyCollection<int> Lengths { get; }
+        public Solution Solution { get; }
 
-        public override string ToString() => $"{Grid}{Environment.NewLine}{string.Join(' ', Lengths.Select(n => new string('_', n)))}{Environment.NewLine}";
+        public bool TryPlay(IEnumerable<(int i, int j)> sequence, out Puzzle? puzzle)
+        {
+            if (sequence == null)
+            {
+                throw new ArgumentNullException(nameof(sequence));
+            }
+
+            if (Grid.TryPlay(sequence, out Grid? grid))
+            {
+                string word = string.Concat(sequence.Select(square => Grid[square.i, square.j]));
+                if (Solution.TryPlay(word, out Solution? solution))
+                {
+                    puzzle = new Puzzle(grid!, solution!);
+                    return true;
+                }
+            }
+
+            puzzle = null;
+            return false;
+        }
+
+        public override string ToString() => $"{Grid}{Environment.NewLine}{Solution}{Environment.NewLine}";
     }
 }

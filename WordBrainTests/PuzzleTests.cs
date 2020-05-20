@@ -1,13 +1,15 @@
-﻿using System;
+﻿using WordBrain;
+using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace WordBrain.Tests
 {
     [TestClass]
     public class PuzzleTests
     {
-        private static Puzzle CreatePuzzle(Grid? grid = null, int[]? lengths = null) => new Puzzle(grid ?? CreateGrid(), lengths ?? CreateLengths());
+        private static Puzzle CreatePuzzle(Grid? grid = null, Solution? solution = null) => new Puzzle(grid ?? CreateGrid(), solution ?? CreateSolution());
 
         private static Grid CreateGrid(char?[][]? letters = null) => new Grid(letters ?? CreateLetters());
 
@@ -18,6 +20,8 @@ namespace WordBrain.Tests
             new char?[] { 'G', 'H', 'I' }
         };
 
+        private static Solution CreateSolution(int[]? lengths = null) => new Solution(lengths ?? CreateLengths());
+
         private static int[] CreateLengths() => new[] { 2, 3, 4 };
 
         [TestMethod]
@@ -27,63 +31,37 @@ namespace WordBrain.Tests
             Grid grid = null!;
 
             // Act
-            var exception = Assert.ThrowsException<ArgumentNullException>(() => new Puzzle(grid, CreateLengths()));
+            var exception = Assert.ThrowsException<ArgumentNullException>(() => new Puzzle(grid, CreateSolution()));
 
             // Assert
             Assert.AreEqual("Value cannot be null. (Parameter 'grid')", exception.Message);
         }
 
         [TestMethod]
-        public void Constructor_WhenLengthsIsNull_ThrowsException()
+        public void Constructor_WhenSolutionIsNull_ThrowsException()
         {
             // Arrange
-            int[] lengths = null!;
+            Solution solution = null!;
 
             // Act
-            var exception = Assert.ThrowsException<ArgumentNullException>(() => new Puzzle(CreateGrid(), lengths));
+            var exception = Assert.ThrowsException<ArgumentNullException>(() => new Puzzle(CreateGrid(), solution));
 
             // Assert
-            Assert.AreEqual("Value cannot be null. (Parameter 'lengths')", exception.Message);
+            Assert.AreEqual("Value cannot be null. (Parameter 'solution')", exception.Message);
         }
 
         [TestMethod]
-        public void Constructor_WhenLengthsAreNotAllPositive_ThrowsException()
-        {
-            // Arrange
-            int[] lengths = { 2, 3, 0 };
-
-            // Act
-            var exception = Assert.ThrowsException<ArgumentException>(() => new Puzzle(CreateGrid(), lengths));
-
-            // Assert
-            Assert.AreEqual("Expected positive integer lengths. (Parameter 'lengths')", exception.Message);
-        }
-
-        [TestMethod]
-        public void Constructor_WhenLengthsDoNotSumToNumberOfLetters_ThrowsException()
+        public void Constructor_WhenRemainingLettersAreNotEqual_ThrowsException()
         {
             // Arrange
             int[] lengths = { 1, 2, 3, 4 };
+            Solution solution = CreateSolution(lengths);
 
             // Act
-            var exception = Assert.ThrowsException<ArgumentException>(() => new Puzzle(CreateGrid(), lengths));
+            var exception = Assert.ThrowsException<ArgumentException>(() => new Puzzle(CreateGrid(), solution));
 
             // Assert
-            Assert.AreEqual("Expected lengths to sum to the number of remaining letters. (Parameter 'lengths')", exception.Message);
-        }
-
-        [TestMethod]
-        public void Constructor_WhenLengthsDoNotSumToNumberOfRemainingLetters_ThrowsException()
-        {
-            // Arrange
-            char?[][] letters = { new char?[] { 'A', 'B', 'C' }, new char?[] { 'D', 'E', null }, new char?[] { 'G', 'H', 'I' } };
-            int[] lengths = { 2, 3, 4 };
-
-            // Act
-            var exception = Assert.ThrowsException<ArgumentException>(() => new Puzzle(CreateGrid(letters), lengths));
-
-            // Assert
-            Assert.AreEqual("Expected lengths to sum to the number of remaining letters. (Parameter 'lengths')", exception.Message);
+            Assert.AreEqual("Expected remaining letters in Solution and Grid to be equal. (Parameter 'solution')", exception.Message);
         }
 
         [TestMethod]
@@ -101,21 +79,21 @@ namespace WordBrain.Tests
         }
 
         [TestMethod]
-        public void Lengths_Always_ReturnsLengths()
+        public void Solution_Always_ReturnsSolution()
         {
             // Arrange
-            var lengths = CreateLengths();
-            var puzzle = CreatePuzzle(null, lengths);
+            var solution = CreateSolution();
+            var puzzle = CreatePuzzle(null, solution);
 
             // Act
-            var result = puzzle.Lengths;
+            var result = puzzle.Solution;
 
             // Assert
-            CollectionAssert.AreEqual(lengths, result);
+            Assert.AreEqual(solution, result);
         }
 
         [TestMethod]
-        public void ToString_WhenNoBlankLetters_ReturnsCorrectFormat()
+        public void ToString_WhenTryPlayHasNotBeenCalled_ReturnsCorrectFormat()
         {
             // Arrange
             var puzzle = CreatePuzzle();
@@ -131,12 +109,11 @@ namespace WordBrain.Tests
         }
 
         [TestMethod]
-        public void ToString_WhenBlankLetters_ReturnsCorrectFormat()
+        public void ToString_WhenTryPlayHasBeenCalled_ReturnsCorrectFormat()
         {
             // Arrange
-            char?[][] letters = { new char?[] { null, null, 'C' }, new char?[] { 'A', null, 'F' }, new char?[] { 'G', 'B', 'I' } };
-            int[] lengths = { 2, 4 };
-            var puzzle = CreatePuzzle(CreateGrid(letters), lengths);
+            Puzzle puzzle = CreatePuzzle();
+            puzzle.TryPlay(new[] { (1, 0), (1, 1), (2, 1) }, out puzzle!);
 
             // Act
             string result = puzzle.ToString();
@@ -145,7 +122,40 @@ namespace WordBrain.Tests
             Assert.AreEqual($". . C{Environment.NewLine}" +
                 $"A . F{Environment.NewLine}" +
                 $"G B I{Environment.NewLine}" +
-                $"__ ____{Environment.NewLine}", result);
+                $"__ DEH ____{Environment.NewLine}", result);
+        }
+
+        [TestMethod]
+        public void TryPlay_WhenSequenceIsNull_ThrowsException()
+        {
+            // Arrange
+            var puzzle = CreatePuzzle();
+            IEnumerable<(int, int)> sequence = null!;
+
+            // Act
+            var exception = Assert.ThrowsException<ArgumentNullException>(() => puzzle.TryPlay(sequence, out Puzzle? outPuzzle));
+
+            // Assert
+            Assert.AreEqual("Value cannot be null. (Parameter 'sequence')", exception.Message);
+        }
+
+        [TestMethod]
+        public void TryPlay_WhenSequenceIsValid_SetsPuzzleAndReturnsTrue()
+        {
+            // Arrange
+            char?[][] letters = { new char?[] { 'A', 'B', 'C' }, new char?[] { 'D', 'E', 'F' }, new char?[] { 'G', 'H', 'I' } };
+            int[] lengths = { 2, 3, 4 };
+            Grid grid = CreateGrid(letters);
+            var puzzle = CreatePuzzle(grid, CreateSolution(lengths));
+            var sequence = new[] { (1, 0), (1, 1), (2, 1) };
+
+            // Act
+            bool result = puzzle.TryPlay(sequence, out Puzzle? outPuzzle);
+
+            // Assert
+            Assert.IsTrue(result);
+            Assert.AreEqual($". . C{Environment.NewLine}A . F{Environment.NewLine}G B I", outPuzzle!.Grid.ToString());
+            Assert.AreEqual("__ DEH ____", outPuzzle.Solution.ToString());
         }
     }
 }

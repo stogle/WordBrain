@@ -70,65 +70,38 @@ namespace WordBrain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Expected positive integer lengths..
-        /// </summary>
-        internal static string Grid_ExpectedPositiveLengthsExceptionMessage {
-            get {
-                return ResourceManager.GetString("Grid_ExpectedPositiveLengthsExceptionMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Expected value in range {0}..{1}..
-        /// </summary>
-        internal static string Move_ExpectedValueInRangeExceptionMessageFormat {
-            get {
-                return ResourceManager.GetString("Move_ExpectedValueInRangeExceptionMessageFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cannot play a move of this length..
-        /// </summary>
-        internal static string Move_InvalidCountForPlayExceptionMessage {
-            get {
-                return ResourceManager.GetString("Move_InvalidCountForPlayExceptionMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cannot pop from an empty move..
-        /// </summary>
-        internal static string Move_InvalidCountForPopExceptionMessage {
-            get {
-                return ResourceManager.GetString("Move_InvalidCountForPopExceptionMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cannot push a non-adjacent square..
-        /// </summary>
-        internal static string Move_InvalidSquareForPushExceptionMessage {
-            get {
-                return ResourceManager.GetString("Move_InvalidSquareForPushExceptionMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Expected lengths to sum to the number of remaining letters..
-        /// </summary>
-        internal static string Puzzle_ExpectedLengthsSumEqualToLettersSizeExceptionMessage {
-            get {
-                return ResourceManager.GetString("Puzzle_ExpectedLengthsSumEqualToLettersSizeExceptionMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Expected letters to be rectangular..
         /// </summary>
-        internal static string Puzzle_ExpectedRectangularLettersExceptionMessage {
+        internal static string Grid_ExpectedRectangularLettersExceptionMessage {
             get {
-                return ResourceManager.GetString("Puzzle_ExpectedRectangularLettersExceptionMessage", resourceCulture);
+                return ResourceManager.GetString("Grid_ExpectedRectangularLettersExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expected remaining letters in Solution and Grid to be equal..
+        /// </summary>
+        internal static string Puzzle_ExpectedRemainingLettersEqualExceptionMessage {
+            get {
+                return ResourceManager.GetString("Puzzle_ExpectedRemainingLettersEqualExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expected positive integer lengths..
+        /// </summary>
+        internal static string Solution_ExpectedPositiveLengthsExceptionMessage {
+            get {
+                return ResourceManager.GetString("Solution_ExpectedPositiveLengthsExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot play a word of this length..
+        /// </summary>
+        internal static string Solution_InvalidLengthForPlayExceptionMessage {
+            get {
+                return ResourceManager.GetString("Solution_InvalidLengthForPlayExceptionMessage", resourceCulture);
             }
         }
     }

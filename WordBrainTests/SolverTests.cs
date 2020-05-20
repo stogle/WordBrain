@@ -12,7 +12,7 @@ namespace WordBrain.Tests
 
         private static WordTree CreateWordTree(IEnumerable<string>? words = null) => new WordTree(words ?? new[] { "actually", "do", "does", "dot", "dots", "he", "hot", "none", "see", "seed", "set", "she", "ship", "test", "the" });
 
-        private static Puzzle CreatePuzzle(Grid? grid = null, int[]? lengths = null) => new Puzzle(grid ?? CreateGrid(), lengths ?? CreateLengths());
+        private static Puzzle CreatePuzzle(Grid? grid = null, Solution? solution = null) => new Puzzle(grid ?? CreateGrid(), solution ?? CreateSolution());
 
         private static Grid CreateGrid(char?[][]? letters = null) => new Grid(letters ?? CreateLetters());
 
@@ -22,6 +22,8 @@ namespace WordBrain.Tests
             new char?[] { 'T', 'E', 'H' },
             new char?[] { 'E', 'S', 'T' }
         };
+
+        private static Solution CreateSolution(int[]? lengths = null) => new Solution(lengths ?? CreateLengths());
 
         private static int[] CreateLengths() => new[] { 2, 3, 4 };
 
@@ -75,7 +77,7 @@ namespace WordBrain.Tests
             var solver = CreateSolver();
             var grid = CreateGrid(new[] { new char?[] { 'S', 'L', 'L', 'Y' }, new char?[] { 'H', 'A', 'U', 'E' }, new char?[] { 'I', 'C', 'T', 'N' }, new char?[] { 'P', 'A', 'O', 'N' } });
             int[] lengths = { 4, 8, 4 };
-            var puzzle = CreatePuzzle(grid, lengths);
+            var puzzle = CreatePuzzle(grid, CreateSolution(lengths));
 
             // Act
             string[] result = solver.Solve(puzzle).ToArray();

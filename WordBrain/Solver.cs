@@ -21,66 +21,62 @@ namespace WordBrain
             }
 
             return SolveTop(puzzle)
-                .Select(solution => string.Join(' ', solution.Select(move => move.ToString())))
+                .Select(solution => solution.ToString())
                 .Distinct();
         }
 
-        private IEnumerable<List<Move>> SolveTop(Puzzle puzzle)
+        private IEnumerable<Solution> SolveTop(Puzzle puzzle)
         {
             foreach (var solution in SolveInternal(puzzle))
             {
-                Console.Write(string.Concat(Enumerable.Repeat("\b \b", puzzle.Grid.Width * puzzle.Grid.Height + solution.Count)));
+                Console.Write($"\r{string.Concat(Enumerable.Repeat(' ', puzzle.Solution.ToString().Length))}\r");
                 yield return solution;
             }
+
+            Console.Write($"\r{string.Concat(Enumerable.Repeat(' ', puzzle.Solution.ToString().Length))}\r");
         }
 
-        private IEnumerable<List<Move>> SolveInternal(Puzzle puzzle)
+        private IEnumerable<Solution> SolveInternal(Puzzle puzzle)
         {
-            bool[][] visited = Enumerable.Range(0, puzzle.Grid.Height).Select(i => Enumerable.Range(0, puzzle.Grid.Width).Select(j => puzzle.Grid[i, j] == null).ToArray()).ToArray();
-            if (puzzle.Lengths.Any())
+            if (puzzle.Solution.IsComplete)
             {
-                for (int i = 0; i < puzzle.Grid.Height; i++)
+                yield return puzzle.Solution;
+            }
+
+            bool[][] visited = Enumerable.Range(0, puzzle.Grid.Height).Select(i => Enumerable.Range(0, puzzle.Grid.Width).Select(j => puzzle.Grid[i, j] == null).ToArray()).ToArray();
+            for (int i = 0; i < puzzle.Grid.Height; i++)
+            {
+                for (int j = 0; j < puzzle.Grid.Width; j++)
                 {
-                    for (int j = 0; j < puzzle.Grid.Width; j++)
+                    if (!visited[i][j])
                     {
-                        if (!visited[i][j])
+                        foreach (Solution solution in Visit(puzzle, i, j, visited, new Stack<(int i, int j)>(), _wordTree))
                         {
-                            foreach (List<Move> solution in Visit(puzzle, i, j, visited, new Move(puzzle), _wordTree))
-                            {
-                                yield return solution;
-                            }
+                            yield return solution;
                         }
                     }
                 }
-
-                yield break;
             }
-
-            yield return new List<Move>();
         }
 
-        private IEnumerable<List<Move>> Visit(Puzzle puzzle, int i, int j, bool[][] visited, Move currentMove, WordTree currentWordTree)
+        private IEnumerable<Solution> Visit(Puzzle puzzle, int i, int j, bool[][] visited, Stack<(int i, int j)> currentMove, WordTree currentWordTree)
         {
             char letter = puzzle.Grid[i, j]!.Value; // We only visit squares with non-null letters
             if (currentWordTree.TryLetter(letter, ref currentWordTree))
             {
                 visited[i][j] = true;
-                currentMove.Push(i, j);
+                currentMove.Push((i, j));
 
                 if (currentWordTree.IsWord)
                 {
-                    int index = puzzle.Lengths.IndexOf(currentMove.Count);
-                    if (index != -1)
+                    if (puzzle.TryPlay(currentMove.Reverse(), out Puzzle? currentPuzzle))
                     {
-                        Console.Write($"{currentMove} ");
+                        Console.Write($"\r{currentPuzzle!.Solution}");
 
-                        foreach (List<Move> solution in SolveInternal(currentMove.Play()))
+                        foreach (Solution solution in SolveInternal(currentPuzzle))
                         {
-                            solution.Insert(index, currentMove);
                             yield return solution;
                         }
-
-                        Console.Write(string.Concat(Enumerable.Repeat("\b \b", currentMove.Count + 1)));
                     }
                 }
 
@@ -95,7 +91,7 @@ namespace WordBrain
                             {
                                 if (!visited[x][y])
                                 {
-                                    foreach (List<Move> solution in Visit(puzzle, x, y, visited, currentMove, currentWordTree))
+                                    foreach (Solution solution in Visit(puzzle, x, y, visited, currentMove, currentWordTree))
                                     {
                                         yield return solution;
                                     }
