@@ -7,6 +7,7 @@ namespace WordBrain
     public class Solver
     {
         private readonly WordTree _wordTree;
+        private long _iteration = 0L;
 
         public Solver(WordTree wordTree)
         {
@@ -71,9 +72,12 @@ namespace WordBrain
                 {
                     if (puzzle.TryPlay(currentMove.Reverse(), out Puzzle? currentPuzzle))
                     {
-                        Console.Write($"\r{currentPuzzle!.Solution}");
+                        if (_iteration++ % 1000L == 0L)
+                        {
+                            Console.Write($"\r{currentPuzzle!.Solution}");
+                        }
 
-                        foreach (Solution solution in SolveInternal(currentPuzzle))
+                        foreach (Solution solution in SolveInternal(currentPuzzle!))
                         {
                             yield return solution;
                         }

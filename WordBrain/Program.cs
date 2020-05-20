@@ -16,7 +16,7 @@ namespace WordBrain
     /// SHIP ACTUALLY NONE
     /// NONE ACTUALLY SHIP
     /// 
-    /// Found 2 solutions in 00:00:01.9090980
+    /// Found 2 solutions in 00:00:00.8331733
     /// </example>
     /// <example>
     /// > WordBrain CSW19.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12
@@ -40,8 +40,8 @@ namespace WordBrain
     /// VALUE SODA EIDE CHARACTERIZE
     /// VALUE SODA IDEE CHARACTERIZE
     /// 
-    /// Found 11 solutions in 00:36:27.2480340
-    /// </example>
+    /// Found 11 solutions in 00:28:26.4260580
+        /// </example>
     public static class Program
     {
         public static void Main(string[] args)
