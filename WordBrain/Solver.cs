@@ -28,18 +28,15 @@ namespace WordBrain
 
         private IEnumerable<Solution> SolveTop(Puzzle puzzle)
         {
+            int solutionLength = puzzle.Solution.ToString().Length;
             foreach (var solution in SolveInternal(puzzle))
             {
-                Console.Write('\r');
-                Console.Write(string.Empty.PadRight(puzzle.Solution.ToString().Length));
-                Console.Write('\r');
+                Console.Write($"\r{string.Empty.PadRight(solutionLength)}\r");
 
                 yield return solution;
             }
 
-            Console.Write('\r');
-            Console.Write(string.Empty.PadRight(puzzle.Solution.ToString().Length));
-            Console.Write('\r');
+            Console.Write($"\r{string.Empty.PadRight(solutionLength)}\r");
         }
 
         private IEnumerable<Solution> SolveInternal(Puzzle puzzle)
@@ -79,8 +76,7 @@ namespace WordBrain
                     {
                         if (_iteration++ % 1000L == 0L)
                         {
-                            Console.Write('\r');
-                            Console.Write(currentPuzzle!.Solution);
+                            Console.Write($"\r{currentPuzzle!.Solution}");
                         }
 
                         foreach (Solution solution in SolveInternal(currentPuzzle!))

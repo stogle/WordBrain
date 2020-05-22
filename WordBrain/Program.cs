@@ -44,6 +44,22 @@ namespace WordBrain
     /// Found 11 solutions in 00:28:26.4260580
     /// </code>
     /// </example>
+    /// <example>
+    /// The command <c>WordBrain CSW19.txt EZE.. UICA. LRHR. AEAAI VCTED 5 4 12</c> produces the following output:
+    /// <code>
+    /// E Z E. .
+    /// U I C A.
+    /// L R H R.
+    /// A E A A I
+    /// V C T E D
+    /// _____ ____ ____________
+    /// 
+    /// VALUE AIDE CHARACTERIZE
+    /// VALUE IDEA CHARACTERIZE
+    /// 
+    /// Found 2 solutions in 00:00:08.5289698
+    /// </code>
+    /// </example>
     public static class Program
     {
         public static void Main(string[] args)
