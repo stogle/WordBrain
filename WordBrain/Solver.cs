@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace WordBrain
 {
@@ -28,8 +30,26 @@ namespace WordBrain
 
         private IEnumerable<Solution> SolveTop(Puzzle puzzle)
         {
+            // Solve each square of the top-level puzzle in parallel
+            using var solutions = new BlockingCollection<Solution>();
+            Task.Run(() =>
+            {
+                Parallel.ForEach(Enumerable.Range(0, puzzle.Grid.Height).SelectMany(i => Enumerable.Range(0, puzzle.Grid.Width).Select(j => (i, j))), square =>
+                {
+                    bool[][] visited = Enumerable.Range(0, puzzle.Grid.Height).Select(i => Enumerable.Range(0, puzzle.Grid.Width).Select(j => puzzle.Grid[i, j] == null).ToArray()).ToArray();
+                    if (!visited[square.i][square.j])
+                    {
+                        foreach (Solution solution in Visit(puzzle, square.i, square.j, visited, new Stack<(int i, int j)>(), _wordTree))
+                        {
+                            solutions.Add(solution);
+                        }
+                    }
+                });
+                solutions.CompleteAdding();
+            });
+
             int solutionLength = puzzle.Solution.ToString().Length;
-            foreach (var solution in SolveInternal(puzzle))
+            foreach (var solution in solutions.GetConsumingEnumerable())
             {
                 Console.Write($"\r{string.Empty.PadRight(solutionLength)}\r");
 

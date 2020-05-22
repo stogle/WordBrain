@@ -67,7 +67,7 @@ namespace WordBrain.Tests
             string[] result = solver.Solve(puzzle).ToArray();
 
             // Assert
-            CollectionAssert.AreEqual(new[] { "DO THE TEST", "HE DOT TEST" }, result);
+            CollectionAssert.AreEquivalent(new[] { "DO THE TEST", "HE DOT TEST" }, result);
         }
 
         [TestMethod]
@@ -83,7 +83,7 @@ namespace WordBrain.Tests
             string[] result = solver.Solve(puzzle).ToArray();
 
             // Assert
-            CollectionAssert.AreEqual(new[] { "SHIP ACTUALLY NONE", "NONE ACTUALLY SHIP" }, result);
+            CollectionAssert.AreEquivalent(new[] { "SHIP ACTUALLY NONE", "NONE ACTUALLY SHIP" }, result);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace WordBrain
     /// SHIP ACTUALLY NONE
     /// NONE ACTUALLY SHIP
     /// 
-    /// Found 2 solutions in 00:00:00.8331733
+    /// Found 2 solutions in 00:00:00.5763553
     /// </code>
     /// </example>
     /// <example>
@@ -41,15 +41,15 @@ namespace WordBrain
     /// VALUE SODA EIDE CHARACTERIZE
     /// VALUE SODA IDEE CHARACTERIZE
     /// 
-    /// Found 11 solutions in 00:28:26.4260580
+    /// Found 11 solutions in 00:13:19.9390511
     /// </code>
     /// </example>
     /// <example>
     /// The command <c>WordBrain CSW19.txt EZE.. UICA. LRHR. AEAAI VCTED 5 4 12</c> produces the following output:
     /// <code>
-    /// E Z E. .
-    /// U I C A.
-    /// L R H R.
+    /// E Z E . .
+    /// U I C A .
+    /// L R H R .
     /// A E A A I
     /// V C T E D
     /// _____ ____ ____________
@@ -57,7 +57,7 @@ namespace WordBrain
     /// VALUE AIDE CHARACTERIZE
     /// VALUE IDEA CHARACTERIZE
     /// 
-    /// Found 2 solutions in 00:00:08.5289698
+    /// Found 2 solutions in 00:00:04.0379118
     /// </code>
     /// </example>
     public static class Program
