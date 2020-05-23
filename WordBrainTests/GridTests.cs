@@ -7,7 +7,7 @@ namespace WordBrain.Tests
     [TestClass]
     public class GridTests
     {
-        private static Grid CreateGrid(char?[][]? letters = null) => new Grid(letters ?? CreateLetters());
+        private static Puzzle CreatePuzzle(char?[][]? letters = null, int[]? lengths = null) => new Puzzle(letters ?? CreateLetters(), lengths ?? CreateLengths());
 
         private static char?[][] CreateLetters() => new[]
         {
@@ -16,41 +16,17 @@ namespace WordBrain.Tests
             new char?[] { 'G', 'H', 'I' }
         };
 
-        [TestMethod]
-        public void Constructor_WhenLettersIsNull_ThrowsException()
-        {
-            // Arrange
-            char?[][] letters = null!;
-
-            // Act
-            var exception = Assert.ThrowsException<ArgumentNullException>(() => new Grid(letters));
-
-            // Assert
-            Assert.AreEqual("Value cannot be null. (Parameter 'letters')", exception.Message);
-        }
-
-        [TestMethod]
-        public void Constructor_WhenLettersAreNotRectangular_ThrowsException()
-        {
-            // Arrange
-            char?[][] letters = { new char?[] { 'A', 'B', 'C' }, new char?[] { 'D', 'E' }, new char?[] { 'G', 'H', 'I' } };
-
-            // Act
-            var exception = Assert.ThrowsException<ArgumentException>(() => new Grid(letters));
-
-            // Assert
-            Assert.AreEqual("Expected letters to be rectangular. (Parameter 'letters')", exception.Message);
-        }
+        private static int[] CreateLengths() => new[] { 2, 3, 4 };
 
         [TestMethod]
         public void Height_Always_ReturnsHeight()
         {
             // Arrange
             var letters = CreateLetters();
-            var grid = CreateGrid(letters);
+            var puzzle = CreatePuzzle(letters);
 
             // Act
-            int result = grid.Height;
+            int result = puzzle.Grid.Height;
 
             // Assert
             Assert.AreEqual(letters.Length, result);
@@ -61,10 +37,10 @@ namespace WordBrain.Tests
         {
             // Arrange
             var letters = CreateLetters();
-            var grid = CreateGrid(letters);
+            var puzzle = CreatePuzzle(letters);
 
             // Act
-            int result = grid.Width;
+            int result = puzzle.Grid.Width;
 
             // Assert
             Assert.AreEqual(letters[0].Length, result);
@@ -75,50 +51,23 @@ namespace WordBrain.Tests
         {
             // Arrange
             var letters = CreateLetters();
-            var grid = CreateGrid(letters);
+            var puzzle = CreatePuzzle(letters);
 
             // Act
-            var result = Enumerable.Range(0, grid.Height).SelectMany(i => Enumerable.Range(0, grid.Width).Select(j => letters[i][j] == grid[i, j]));
+            var result = Enumerable.Range(0, puzzle.Grid.Height).SelectMany(i => Enumerable.Range(0, puzzle.Grid.Width).Select(j => letters[i][j] == puzzle.Grid[i, j]));
 
             // Assert
             Assert.IsTrue(result.All(b => b));
         }
 
         [TestMethod]
-        public void RemainingLetters_WhenNoBlankLetters_ReturnsCorrectValue()
-        {
-            // Arrange
-            var grid = CreateGrid();
-
-            // Act
-            int result = grid.RemainingLetters;
-
-            // Assert
-            Assert.AreEqual(9, result);
-        }
-
-        [TestMethod]
-        public void RemainingLetters_WhenBlankLetters_ReturnsCorrectValue()
-        {
-            // Arrange
-            char?[][] letters = { new char?[] { null, null, 'C' }, new char?[] { 'A', null, 'F' }, new char?[] { 'G', 'B', 'I' } };
-            var grid = CreateGrid(letters);
-
-            // Act
-            int result = grid.RemainingLetters;
-
-            // Assert
-            Assert.AreEqual(6, result);
-        }
-
-        [TestMethod]
         public void ToString_WhenNoBlankLetters_ReturnsCorrectFormat()
         {
             // Arrange
-            var grid = CreateGrid();
+            var puzzle = CreatePuzzle();
 
             // Act
-            string result = grid.ToString();
+            string result = puzzle.Grid.ToString();
 
             // Assert
             Assert.AreEqual($"A B C{Environment.NewLine}D E F{Environment.NewLine}G H I", result);
@@ -129,10 +78,11 @@ namespace WordBrain.Tests
         {
             // Arrange
             char?[][] letters = { new char?[] { null, null, 'C' }, new char?[] { 'A', null, 'F' }, new char?[] { 'G', 'B', 'I' } };
-            var grid = CreateGrid(letters);
+            int[] lengths = { 2, 4 };
+            var puzzle = CreatePuzzle(letters, lengths);
 
             // Act
-            string result = grid.ToString();
+            string result = puzzle.Grid.ToString();
 
             // Assert
             Assert.AreEqual($". . C{Environment.NewLine}A . F{Environment.NewLine}G B I", result);

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace WordBrain
@@ -6,39 +6,26 @@ namespace WordBrain
     public class Solution
     {
         private readonly int _length;
-        private readonly int[] _lengths;
+        private readonly IReadOnlyList<int> _lengths;
         private readonly string?[] _words;
 
-        public Solution(int[] lengths)
+        internal Solution(IReadOnlyList<int> lengths)
         {
-            if (lengths == null)
-            {
-                throw new ArgumentNullException(nameof(lengths));
-            }
-            if (lengths.Any(length => length <= 0))
-            {
-                throw new ArgumentException(Strings.Solution_ExpectedPositiveLengthsExceptionMessage, nameof(lengths));
-            }
-
-            _length = lengths.Length;
+            _length = lengths.Count;
             _lengths = lengths;
             _words = new string?[_length];
             IsComplete = _length == 0;
-            RemainingLetters = _lengths.Sum();
         }
 
-        private Solution(int[] lengths, string?[] words)
+        private Solution(IReadOnlyList<int> lengths, string?[] words)
         {
-            _length = lengths.Length;
+            _length = lengths.Count;
             _lengths = lengths;
             _words = words;
             IsComplete = _words.All(word => word != null);
-            RemainingLetters = _lengths.Zip(_words, (length, word) => word == null ? length : 0).Sum();
         }
 
         public bool IsComplete { get; }
-
-        public int RemainingLetters { get; }
 
         internal bool TryPlay(string word, out Solution? solution)
         {
@@ -46,10 +33,9 @@ namespace WordBrain
             {
                 if (_lengths[i] == word.Length && _words[i] == null)
                 {
-                    int[] lengths = _lengths.ToArray();
                     string?[] words = _words.ToArray();
                     words[i] = word;
-                    solution = new Solution(lengths, words);
+                    solution = new Solution(_lengths, words);
                     return true;
                 }
             }

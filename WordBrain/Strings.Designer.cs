@@ -70,15 +70,6 @@ namespace WordBrain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Expected letters to be rectangular..
-        /// </summary>
-        internal static string Grid_ExpectedRectangularLettersExceptionMessage {
-            get {
-                return ResourceManager.GetString("Grid_ExpectedRectangularLettersExceptionMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Found {0} solutions in {1}.
         /// </summary>
         internal static string Program_FoundSolutionsFormat {
@@ -88,29 +79,29 @@ namespace WordBrain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Expected remaining letters in Solution and Grid to be equal..
+        ///   Looks up a localized string similar to Expected positive integer lengths..
+        /// </summary>
+        internal static string Puzzle_ExpectedPositiveLengthsExceptionMessage {
+            get {
+                return ResourceManager.GetString("Puzzle_ExpectedPositiveLengthsExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expected letters to be rectangular..
+        /// </summary>
+        internal static string Puzzle_ExpectedRectangularLettersExceptionMessage {
+            get {
+                return ResourceManager.GetString("Puzzle_ExpectedRectangularLettersExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expected remaining letters in grid and solution to be equal..
         /// </summary>
         internal static string Puzzle_ExpectedRemainingLettersEqualExceptionMessage {
             get {
                 return ResourceManager.GetString("Puzzle_ExpectedRemainingLettersEqualExceptionMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Expected positive integer lengths..
-        /// </summary>
-        internal static string Solution_ExpectedPositiveLengthsExceptionMessage {
-            get {
-                return ResourceManager.GetString("Solution_ExpectedPositiveLengthsExceptionMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cannot play a word of this length..
-        /// </summary>
-        internal static string Solution_InvalidLengthForPlayExceptionMessage {
-            get {
-                return ResourceManager.GetString("Solution_InvalidLengthForPlayExceptionMessage", resourceCulture);
             }
         }
     }

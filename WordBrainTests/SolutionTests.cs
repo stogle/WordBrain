@@ -6,44 +6,25 @@ namespace WordBrain.Tests
     [TestClass]
     public class SolutionTests
     {
-        private static Solution CreateSolution(int[]? lengths = null) => new Solution(lengths ?? CreateLengths());
+        private static Puzzle CreatePuzzle(char?[][]? letters = null, int[]? lengths = null) => new Puzzle(letters ?? CreateLetters(), lengths ?? CreateLengths());
+
+        private static char?[][] CreateLetters() => new[]
+        {
+            new char?[] { 'A', 'B', 'C' },
+            new char?[] { 'D', 'E', 'F' },
+            new char?[] { 'G', 'H', 'I' }
+        };
 
         private static int[] CreateLengths() => new[] { 2, 3, 4 };
-
-        [TestMethod]
-        public void Constructor_WhenLengthsIsNull_ThrowsException()
-        {
-            // Arrange
-            int[] lengths = null!;
-
-            // Act
-            var exception = Assert.ThrowsException<ArgumentNullException>(() => new Solution(lengths));
-
-            // Assert
-            Assert.AreEqual("Value cannot be null. (Parameter 'lengths')", exception.Message);
-        }
-
-        [TestMethod]
-        public void Constructor_WhenLengthsAreNotAllPositive_ThrowsException()
-        {
-            // Arrange
-            int[] lengths = { 2, 3, 0 };
-
-            // Act
-            var exception = Assert.ThrowsException<ArgumentException>(() => new Solution(lengths));
-
-            // Assert
-            Assert.AreEqual("Expected positive integer lengths. (Parameter 'lengths')", exception.Message);
-        }
 
         [TestMethod]
         public void IsComplete_WhenIsNotComplete_ReturnsFalse()
         {
             // Arrange
-            Solution solution = CreateSolution();
+            Puzzle puzzle = CreatePuzzle();
 
             // Act
-            bool result = solution.IsComplete;
+            bool result = puzzle.Solution.IsComplete;
 
             // Assert
             Assert.IsFalse(result);
@@ -53,11 +34,10 @@ namespace WordBrain.Tests
         public void IsComplete_WhenIsComplete_ReturnsFalse()
         {
             // Arrange
-            int[] lengths = Array.Empty<int>();
-            Solution solution = CreateSolution(lengths);
+            Puzzle puzzle = CreatePuzzle(Array.Empty<char?[]>(), Array.Empty<int>());
 
             // Act
-            bool result = solution.IsComplete;
+            bool result = puzzle.Solution.IsComplete;
 
             // Assert
             Assert.IsTrue(result);
@@ -67,10 +47,10 @@ namespace WordBrain.Tests
         public void ToString_WhenTryPlayHasNotBeenCalled_ReturnsCorrectValue()
         {
             // Arrange
-            Solution solution = CreateSolution();
+            Puzzle puzzle = CreatePuzzle();
 
             // Act
-            string result = solution.ToString();
+            string result = puzzle.Solution.ToString();
 
             // Assert
             Assert.AreEqual("__ ___ ____", result);

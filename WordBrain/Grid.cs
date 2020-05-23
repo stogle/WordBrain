@@ -7,23 +7,12 @@ namespace WordBrain
     public class Grid
     {
         private readonly char?[][] _letters;
-        private readonly Lazy<int> _remainingLetters;
 
-        public Grid(char?[][] letters)
+        internal Grid(char?[][] letters)
         {
-            if (letters == null)
-            {
-                throw new ArgumentNullException(nameof(letters));
-            }
-            if (letters.Skip(1).Any(row => row.Length != letters[0].Length))
-            {
-                throw new ArgumentException(Strings.Grid_ExpectedRectangularLettersExceptionMessage, nameof(letters));
-            }
-
             Height = letters.Length;
             Width = Height == 0 ? 0 : letters[0].Length;
             _letters = letters;
-            _remainingLetters = new Lazy<int>(() => _letters.SelectMany(row => row).Count(c => c != null));
         }
 
         public int Height { get; }
@@ -31,8 +20,6 @@ namespace WordBrain
         public int Width { get; }
 
         public char? this[int x, int y] => _letters[x][y];
-
-        public int RemainingLetters => _remainingLetters.Value;
 
         internal bool TryPlay(IEnumerable<(int i, int j)> sequence, out Grid? grid)
         {
