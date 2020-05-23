@@ -48,7 +48,7 @@ namespace WordBrain
 
         public bool IsWord { get; private set; }
 
-        public bool TryLetter(char c, ref WordTree childTree)
+        public bool TryLetter(char c, out WordTree? childTree)
         {
             if (_children.TryGetValue(c.ToString(CultureInfo.InvariantCulture), out var value))
             {
@@ -56,6 +56,7 @@ namespace WordBrain
                 return true;
             }
 
+            childTree = null;
             return false;
         }
     }

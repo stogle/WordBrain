@@ -34,15 +34,12 @@ namespace WordBrain
             using var solutions = new BlockingCollection<Solution>();
             Task.Run(() =>
             {
-                Parallel.ForEach(Enumerable.Range(0, puzzle.Grid.Height).SelectMany(i => Enumerable.Range(0, puzzle.Grid.Width).Select(j => (i, j))), square =>
+                var sequence = new Sequence(puzzle, _wordTree);
+                Parallel.ForEach(sequence.Extend(), sequence =>
                 {
-                    bool[][] visited = Enumerable.Range(0, puzzle.Grid.Height).Select(i => Enumerable.Range(0, puzzle.Grid.Width).Select(j => puzzle.Grid[i, j] == null).ToArray()).ToArray();
-                    if (!visited[square.i][square.j])
+                    foreach (Solution solution in Extend(sequence))
                     {
-                        foreach (Solution solution in Visit(puzzle, square.i, square.j, visited, new Stack<(int i, int j)>(), _wordTree))
-                        {
-                            solutions.Add(solution);
-                        }
+                        solutions.Add(solution);
                     }
                 });
                 solutions.CompleteAdding();
@@ -66,69 +63,34 @@ namespace WordBrain
                 yield return puzzle.Solution;
             }
 
-            bool[][] visited = Enumerable.Range(0, puzzle.Grid.Height).Select(i => Enumerable.Range(0, puzzle.Grid.Width).Select(j => puzzle.Grid[i, j] == null).ToArray()).ToArray();
-            for (int i = 0; i < puzzle.Grid.Height; i++)
+            foreach (Solution solution in Extend(new Sequence(puzzle, _wordTree)))
             {
-                for (int j = 0; j < puzzle.Grid.Width; j++)
-                {
-                    if (!visited[i][j])
-                    {
-                        foreach (Solution solution in Visit(puzzle, i, j, visited, new Stack<(int i, int j)>(), _wordTree))
-                        {
-                            yield return solution;
-                        }
-                    }
-                }
+                yield return solution;
             }
         }
 
-        private IEnumerable<Solution> Visit(Puzzle puzzle, int i, int j, bool[][] visited, Stack<(int i, int j)> currentMove, WordTree currentWordTree)
+        private IEnumerable<Solution> Extend(Sequence sequence)
         {
-            char letter = puzzle.Grid[i, j]!.Value; // We only visit squares with non-null letters
-            if (currentWordTree.TryLetter(letter, ref currentWordTree))
+            if (sequence.TryPlay(out Puzzle? puzzle))
             {
-                visited[i][j] = true;
-                currentMove.Push((i, j));
-
-                if (currentWordTree.IsWord)
+                if (_iteration++ % 1000L == 0L)
                 {
-                    if (puzzle.TryPlay(currentMove.Reverse(), out Puzzle? currentPuzzle))
-                    {
-                        if (_iteration++ % 1000L == 0L)
-                        {
-                            Console.Write($"\r{currentPuzzle!.Solution}");
-                        }
-
-                        foreach (Solution solution in SolveInternal(currentPuzzle!))
-                        {
-                            yield return solution;
-                        }
-                    }
+                    Console.Write($"\r{puzzle!.Solution}");
                 }
 
-                // Visit neighbors
-                for (int x = i - 1; x <= i + 1; x++)
+                foreach (Solution solution in SolveInternal(puzzle!))
                 {
-                    if (x >= 0 && x < puzzle.Grid.Height)
-                    {
-                        for (int y = j - 1; y <= j + 1; y++)
-                        {
-                            if (y >= 0 && y < puzzle.Grid.Width)
-                            {
-                                if (!visited[x][y])
-                                {
-                                    foreach (Solution solution in Visit(puzzle, x, y, visited, currentMove, currentWordTree))
-                                    {
-                                        yield return solution;
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    yield return solution;
                 }
+            }
 
-                currentMove.Pop();
-                visited[i][j] = false;
+            // Visit neighbors
+            foreach (var nextSequence in sequence.Extend())
+            {
+                foreach (Solution solution in Extend(nextSequence))
+                {
+                    yield return solution;
+                }
             }
         }
     }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace WordBrain
@@ -21,18 +20,12 @@ namespace WordBrain
 
         public char? this[int x, int y] => _letters[x][y];
 
-        internal bool TryPlay(IEnumerable<(int i, int j)> sequence, out Grid? grid)
+        internal Grid Play(Sequence sequence)
         {
             // Set all used letter to null
             char?[][] letters = _letters.Select(row => row.ToArray()).ToArray();
-            foreach ((int i, int j) in sequence)
+            foreach ((int i, int j) in sequence.GetSquares())
             {
-                if (i < 0 || i >= Height || j < 0 || j >= Width || letters[i][j] == null)
-                {
-                    grid = null;
-                    return false;
-                }
-
                 letters[i][j] = null;
             }
 
@@ -57,8 +50,7 @@ namespace WordBrain
                 }
             }
 
-            grid = new Grid(letters);
-            return true;
+            return new Grid(letters);
         }
 
         public override string ToString() => string.Join(Environment.NewLine, _letters.Select(row => string.Join(' ', row.Select(c => c ?? '.'))));

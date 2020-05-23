@@ -7,35 +7,35 @@ namespace WordBrain
     {
         private readonly int _length;
         private readonly IReadOnlyList<int> _lengths;
-        private readonly string?[] _words;
+        private readonly Sequence?[] _sequences;
 
         internal Solution(IReadOnlyList<int> lengths)
         {
             _length = lengths.Count;
             _lengths = lengths;
-            _words = new string?[_length];
+            _sequences = new Sequence?[_length];
             IsComplete = _length == 0;
         }
 
-        private Solution(IReadOnlyList<int> lengths, string?[] words)
+        private Solution(IReadOnlyList<int> lengths, Sequence?[] sequences)
         {
             _length = lengths.Count;
             _lengths = lengths;
-            _words = words;
-            IsComplete = _words.All(word => word != null);
+            _sequences = sequences;
+            IsComplete = _sequences.All(word => word != null);
         }
 
         public bool IsComplete { get; }
 
-        internal bool TryPlay(string word, out Solution? solution)
+        internal bool TryPlay(Sequence sequence, out Solution? solution)
         {
             for (int i = 0; i < _length; i++)
             {
-                if (_lengths[i] == word.Length && _words[i] == null)
+                if (_lengths[i] == sequence.Length && _sequences[i] == null)
                 {
-                    string?[] words = _words.ToArray();
-                    words[i] = word;
-                    solution = new Solution(_lengths, words);
+                    Sequence?[] sequences = _sequences.ToArray();
+                    sequences[i] = sequence;
+                    solution = new Solution(_lengths, sequences);
                     return true;
                 }
             }
@@ -44,6 +44,6 @@ namespace WordBrain
             return false;
         }
 
-        public override string ToString() => string.Join(' ', _words.Zip(_lengths, (word, length) => word ?? new string('_', length)));
+        public override string ToString() => string.Join(' ', _sequences.Zip(_lengths, (sequence, length) => sequence?.ToString() ?? new string('_', length)));
     }
 }

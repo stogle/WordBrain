@@ -27,8 +27,8 @@ namespace WordBrain.Tests
         public void IsWord_WhenIsWord_ReturnsTrue()
         {
             // Arrange
-            var wordTree = CreateWordTree();
-            wordTree.TryLetter('a', ref wordTree);
+            WordTree wordTree;
+            CreateWordTree().TryLetter('a', out wordTree!);
 
             // Act
             bool result = wordTree.IsWord;
@@ -41,8 +41,8 @@ namespace WordBrain.Tests
         public void IsWord_WhenIsNotWord_ReturnsFalse()
         {
             // Arrange
-            var wordTree = CreateWordTree();
-            wordTree.TryLetter('b', ref wordTree);
+            WordTree wordTree;
+            CreateWordTree().TryLetter('b', out wordTree!);
 
             // Act
             bool result = wordTree.IsWord;
@@ -56,14 +56,13 @@ namespace WordBrain.Tests
         {
             // Arrange
             var wordTree = CreateWordTree();
-            var childTree = wordTree;
 
             // Act
-            bool result = wordTree.TryLetter('a', ref childTree);
+            bool result = wordTree.TryLetter('a', out var childTree);
 
             // Assert
             Assert.IsTrue(result);
-            Assert.AreNotEqual(wordTree, childTree);
+            Assert.IsNotNull(childTree);
         }
 
         [TestMethod]
@@ -71,29 +70,27 @@ namespace WordBrain.Tests
         {
             // Arrange
             var wordTree = CreateWordTree();
-            var childTree = wordTree;
 
             // Act
-            bool result = wordTree.TryLetter('A', ref childTree);
+            bool result = wordTree.TryLetter('A', out var childTree);
 
             // Assert
             Assert.IsTrue(result);
-            Assert.AreNotEqual(wordTree, childTree);
+            Assert.IsNotNull(childTree);
         }
 
         [TestMethod]
-        public void TryLetter_WhenLetterDoesNotExist_DoesNotSetChildTreeAndReturnsFalse()
+        public void TryLetter_WhenLetterDoesNotExist_SetsChildTreeToNullAndReturnsFalse()
         {
             // Arrange
             var wordTree = CreateWordTree();
-            var childTree = wordTree;
 
             // Act
-            bool result = wordTree.TryLetter('c', ref childTree);
+            bool result = wordTree.TryLetter('c', out var childTree);
 
             // Assert
             Assert.IsFalse(result);
-            Assert.AreEqual(wordTree, childTree);
+            Assert.IsNull(childTree);
         }
     }
 }

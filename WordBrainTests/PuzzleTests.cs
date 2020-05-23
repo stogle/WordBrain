@@ -19,6 +19,10 @@ namespace WordBrain.Tests
 
         private static int[] CreateLengths() => new[] { 2, 3, 4 };
 
+        private static WordTree CreateWordTree(IEnumerable<string>? words = null) => new WordTree(words ?? CreateWords());
+
+        private static IEnumerable<string> CreateWords() => new[] { "a", "alice", "bob" };
+
         [TestMethod]
         public void Constructor_WhenLettersIsNull_ThrowsException()
         {
@@ -139,61 +143,16 @@ namespace WordBrain.Tests
         {
             // Arrange
             Puzzle puzzle = CreatePuzzle();
-            puzzle.TryPlay(new[] { (1, 0), (1, 1), (2, 1) }, out puzzle!);
+            WordTree wordTree = CreateWordTree(new[] { "BED" });
+            Sequence sequence = new Sequence(puzzle, wordTree).Extend().First().Extend().First().Extend().First();
+            sequence.TryPlay(out puzzle!);
 
             // Act
             string result = puzzle.ToString();
 
             // Assert
-            Assert.AreEqual($". . C{Environment.NewLine}" +
-                $"A . F{Environment.NewLine}" +
-                $"G B I{Environment.NewLine}" +
-                $"__ DEH ____{Environment.NewLine}", result);
-        }
-
-        [TestMethod]
-        public void TryPlay_WhenSequenceIsNull_ThrowsException()
-        {
-            // Arrange
-            var puzzle = CreatePuzzle();
-            IEnumerable<(int, int)> sequence = null!;
-
-            // Act
-            var exception = Assert.ThrowsException<ArgumentNullException>(() => puzzle.TryPlay(sequence, out _));
-
-            // Assert
-            Assert.AreEqual("Value cannot be null. (Parameter 'sequence')", exception.Message);
-        }
-
-        [TestMethod]
-        public void TryPlay_WhenSequenceIsOutOfBounds_SetsPuzzleToNullAndReturnsFalse()
-        {
-            // Arrange
-            var puzzle = CreatePuzzle();
-            var sequence = new[] { (1, 0), (1, 1), (2, 1), (3, 1) };
-
-            // Act
-            bool result = puzzle.TryPlay(sequence, out Puzzle? outPuzzle);
-
-            // Assert
-            Assert.IsFalse(result);
-            Assert.IsNull(outPuzzle);
-        }
-
-        [TestMethod]
-        public void TryPlay_WhenSequenceIsValid_SetsPuzzleAndReturnsTrue()
-        {
-            // Arrange
-            Puzzle puzzle = CreatePuzzle();
-            var sequence = new[] { (1, 0), (1, 1), (2, 1) };
-
-            // Act
-            bool result = puzzle.TryPlay(sequence, out Puzzle? outPuzzle);
-
-            // Assert
-            Assert.IsTrue(result);
-            Assert.AreEqual($". . C{Environment.NewLine}A . F{Environment.NewLine}G B I", outPuzzle!.Grid.ToString());
-            Assert.AreEqual("__ DEH ____", outPuzzle.Solution.ToString());
+            Assert.AreEqual($". . C{Environment.NewLine}A . F{Environment.NewLine}G H I{Environment.NewLine}" +
+                $"__ BED ____{Environment.NewLine}", result);
         }
     }
 }

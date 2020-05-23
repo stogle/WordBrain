@@ -16,7 +16,7 @@ namespace WordBrain
     /// SHIP ACTUALLY NONE
     /// NONE ACTUALLY SHIP
     /// 
-    /// Found 2 solutions in 00:00:00.5763553
+    /// Found 2 solutions in 00:00:00.3020142
     /// </code>
     /// </example>
     /// <example>
@@ -41,7 +41,7 @@ namespace WordBrain
     /// VALUE SODA EIDE CHARACTERIZE
     /// VALUE SODA IDEE CHARACTERIZE
     /// 
-    /// Found 11 solutions in 00:13:19.9390511
+    /// Found 11 solutions in 00:06:48.1641681
     /// </code>
     /// </example>
     /// <example>
@@ -57,7 +57,7 @@ namespace WordBrain
     /// VALUE AIDE CHARACTERIZE
     /// VALUE IDEA CHARACTERIZE
     /// 
-    /// Found 2 solutions in 00:00:04.0379118
+    /// Found 2 solutions in 00:00:02.1610788
     /// </code>
     /// </example>
     public static class Program
