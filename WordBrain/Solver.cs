@@ -71,14 +71,15 @@ namespace WordBrain
 
         private IEnumerable<Solution> Extend(Sequence sequence)
         {
-            if (sequence.TryPlay(out Puzzle? puzzle))
+            Puzzle puzzle;
+            if (sequence.TryPlay(out puzzle!))
             {
-                if (_iteration++ % 1000L == 0L)
+                if (_iteration++ % 5000L == 0L)
                 {
-                    Console.Write($"\r{puzzle!.Solution}");
+                    Console.Write($"\r{puzzle.Solution}");
                 }
 
-                foreach (Solution solution in SolveInternal(puzzle!))
+                foreach (Solution solution in SolveInternal(puzzle))
                 {
                     yield return solution;
                 }
