@@ -122,8 +122,12 @@
     <comment>{0} = args0, {1} = Environment.NewLine</comment>
   </data>
   <data name="Program_FoundSolutionsFormat" xml:space="preserve">
-    <value>Found {0} solutions in {1}</value>
+    <value>Found {0:N0} solutions in {1}</value>
     <comment>{0} = count of solutions, {1} = elapsed time</comment>
+  </data>
+  <data name="Program_ReadWordsFormat" xml:space="preserve">
+    <value>Read {0:N0} words in {1}</value>
+    <comment>{0} = count of words, {1} = elapsed time</comment>
   </data>
   <data name="Puzzle_ExpectedPositiveLengthsExceptionMessage" xml:space="preserve">
     <value>Expected positive integer lengths.</value>

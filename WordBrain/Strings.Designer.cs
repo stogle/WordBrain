@@ -70,11 +70,20 @@ namespace WordBrain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Found {0} solutions in {1}.
+        ///   Looks up a localized string similar to Found {0:N0} solutions in {1}.
         /// </summary>
         internal static string Program_FoundSolutionsFormat {
             get {
                 return ResourceManager.GetString("Program_FoundSolutionsFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read {0:N0} words in {1}.
+        /// </summary>
+        internal static string Program_ReadWordsFormat {
+            get {
+                return ResourceManager.GetString("Program_ReadWordsFormat", resourceCulture);
             }
         }
         

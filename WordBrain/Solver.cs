@@ -48,12 +48,12 @@ namespace WordBrain
             int solutionLength = puzzle.Solution.ToString().Length;
             foreach (var solution in solutions.GetConsumingEnumerable())
             {
-                Console.Write($"\r{string.Empty.PadRight(solutionLength)}\r");
+                Console.Write($"{new string(' ', solutionLength)}\r");
 
                 yield return solution;
             }
 
-            Console.Write($"\r{string.Empty.PadRight(solutionLength)}\r");
+            Console.Write($"{new string(' ', solutionLength)}\r");
         }
 
         private IEnumerable<Solution> SolveInternal(Puzzle puzzle)
@@ -76,7 +76,7 @@ namespace WordBrain
             {
                 if (_iteration++ % 5000L == 0L)
                 {
-                    Console.Write($"\r{puzzle.Solution}");
+                    Console.Write($"{puzzle.Solution}\r");
                 }
 
                 foreach (Solution solution in SolveInternal(puzzle))
