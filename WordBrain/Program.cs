@@ -5,7 +5,7 @@ using System.IO;
 namespace WordBrain
 {
     /// <example>
-    /// The command <c>WordBrain CSW19.txt SLLY HAUE ICTN PAON 4 8 4</c> produces the following output:
+    /// The command <c>WordBrain nwl2018.txt SLLY HAUE ICTN PAON 4 8 4</c> produces the following output:
     /// <code>
     /// S L L Y
     /// H A U E
@@ -16,11 +16,11 @@ namespace WordBrain
     /// SHIP ACTUALLY NONE
     /// NONE ACTUALLY SHIP
     /// 
-    /// Found 2 solutions in 00:00:00.3151958
+    /// Found 2 solutions in 00:00:00.1658532
     /// </code>
     /// </example>
     /// <example>
-    /// The command <c>WordBrain CSW19.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12</c> produces the following output:
+    /// The command <c>WordBrain nwl2018.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12</c> produces the following output:
     /// <code>
     /// E Z E A I
     /// U I C R D
@@ -30,7 +30,6 @@ namespace WordBrain
     /// _____ ____ ____ ____________
     /// 
     /// VALUE ADOS EIDE CHARACTERIZE
-    /// VALUE ADOS IDEE CHARACTERIZE
     /// VALUE DOES AIDE CHARACTERIZE
     /// VALUE DOES IDEA CHARACTERIZE
     /// VALUE DOSE AIDE CHARACTERIZE
@@ -39,13 +38,12 @@ namespace WordBrain
     /// VALUE ODES AIDE CHARACTERIZE
     /// VALUE ODES IDEA CHARACTERIZE
     /// VALUE SODA EIDE CHARACTERIZE
-    /// VALUE SODA IDEE CHARACTERIZE
     /// 
-    /// Found 11 solutions in 00:05:35.4735320
+    /// Found 9 solutions in 00:01:47.1717371
     /// </code>
     /// </example>
     /// <example>
-    /// The command <c>WordBrain CSW19.txt EZE.. UICA. LRHR. AEAAI VCTED 5 4 12</c> produces the following output:
+    /// The command <c>WordBrain nwl2018.txt EZE.. UICA. LRHR. AEAAI VCTED 5 4 12</c> produces the following output:
     /// <code>
     /// E Z E . .
     /// U I C A .
@@ -57,7 +55,7 @@ namespace WordBrain
     /// VALUE AIDE CHARACTERIZE
     /// VALUE IDEA CHARACTERIZE
     /// 
-    /// Found 2 solutions in 00:00:01.9103463
+    /// Found 2 solutions in 00:00:01.0473025
     /// </code>
     /// </example>
     public static class Program
