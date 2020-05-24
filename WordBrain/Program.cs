@@ -25,8 +25,8 @@ namespace WordBrain
     /// <example>
     /// The command <c>WordBrain nwl2018.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12</c> produces the following output:
     /// <code>
-    /// Read 192,111 words in 00:00:00.4675473
-    ///
+    /// Read 192,111 words in 00:00:00.5089258
+    /// 
     /// E Z E A I
     /// U I C R D
     /// L R H A D
@@ -44,7 +44,7 @@ namespace WordBrain
     /// VALUE ODES IDEA CHARACTERIZE
     /// VALUE SODA EIDE CHARACTERIZE
     /// 
-    /// Found 9 solutions in 00:01:47.1717371
+    /// Found 9 solutions in 00:01:46.7221040
     /// </code>
     /// </example>
     ///

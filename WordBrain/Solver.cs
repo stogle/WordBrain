@@ -56,30 +56,24 @@ namespace WordBrain
             Console.Write($"{new string(' ', solutionLength)}\r");
         }
 
-        private IEnumerable<Solution> SolveInternal(Puzzle puzzle)
-        {
-            if (puzzle.Solution.IsComplete)
-            {
-                yield return puzzle.Solution;
-            }
-
-            foreach (Solution solution in Extend(new Sequence(puzzle, _wordTree)))
-            {
-                yield return solution;
-            }
-        }
-
         private IEnumerable<Solution> Extend(Sequence sequence)
         {
             Puzzle puzzle;
             if (sequence.TryPlay(out puzzle!))
             {
+                if (puzzle.Solution.IsComplete)
+                {
+                    yield return puzzle.Solution;
+                    yield break;
+                }
+
                 if (_iteration++ % 5000L == 0L)
                 {
                     Console.Write($"{puzzle.Solution}\r");
                 }
 
-                foreach (Solution solution in SolveInternal(puzzle))
+                // Solve remaining puzzle
+                foreach (Solution solution in Extend(new Sequence(puzzle, _wordTree)))
                 {
                     yield return solution;
                 }
