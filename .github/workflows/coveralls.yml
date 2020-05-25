@@ -23,6 +23,6 @@ jobs:
         mv coverage/*/lcov.info coverage/lcov.info
 
     - name: Coveralls GitHub Action
-    - uses: coverallsapp/github-action@v1.1.1
+      uses: coverallsapp/github-action@v1.1.1
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
