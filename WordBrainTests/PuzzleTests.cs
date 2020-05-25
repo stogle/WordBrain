@@ -152,7 +152,7 @@ namespace WordBrain.Tests
 
             // Assert
             Assert.AreEqual($". . C{Environment.NewLine}A . F{Environment.NewLine}G H I{Environment.NewLine}" +
-                $"__ BED ____{Environment.NewLine}", result);
+                $"BED __ ____{Environment.NewLine}", result);
         }
     }
 }

@@ -99,7 +99,7 @@ namespace WordBrain.Tests
             var result = puzzle.Solution.ToString();
 
             // Assert
-            Assert.AreEqual("__ BED ____", result);
+            Assert.AreEqual("BED __ ____", result);
         }
     }
 }

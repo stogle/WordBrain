@@ -5,37 +5,36 @@ namespace WordBrain
 {
     public class Solution
     {
+        private readonly IReadOnlyList<Word> _items;
+        private readonly int _index;
         private readonly int _length;
-        private readonly IReadOnlyList<int> _lengths;
-        private readonly Sequence?[] _sequences;
 
         internal Solution(IReadOnlyList<int> lengths)
         {
+            _items = lengths.Select(length => new Word(length)).ToArray();
+            _index = 0;
             _length = lengths.Count;
-            _lengths = lengths;
-            _sequences = new Sequence?[_length];
-            IsComplete = _length == 0;
         }
 
-        private Solution(IReadOnlyList<int> lengths, Sequence?[] sequences)
+        private Solution(IReadOnlyList<Word> items, int index)
         {
-            _length = lengths.Count;
-            _lengths = lengths;
-            _sequences = sequences;
-            IsComplete = _sequences.All(word => word != null);
+            _items = items;
+            _index = index;
+            _length = items.Count;
         }
 
-        public bool IsComplete { get; }
+        public bool IsComplete => _index == _length;
 
         internal bool TryPlay(Sequence sequence, out Solution? solution)
         {
-            for (int i = 0; i < _length; i++)
+            for (int i = _index; i < _length; i++)
             {
-                if (_lengths[i] == sequence.Length && _sequences[i] == null)
+                if (_items[i].Length == sequence.Length)
                 {
-                    Sequence?[] sequences = _sequences.ToArray();
-                    sequences[i] = sequence;
-                    solution = new Solution(_lengths, sequences);
+                    Word[] items = _items.ToArray();
+                    items[i] = items[_index];
+                    items[_index] = new Word(sequence);
+                    solution = new Solution(items, _index + 1);
                     return true;
                 }
             }
@@ -44,8 +43,19 @@ namespace WordBrain
             return false;
         }
 
-        public IEnumerable<string> Words => _sequences.Zip(_lengths, (sequence, length) => sequence?.ToString() ?? new string('_', length));
+        public IEnumerable<string> Words => _items.Select(word => word.ToString());
 
         public override string ToString() => string.Join(' ', Words);
+
+        private class Word
+        {
+            public readonly int? Length;
+            public readonly Sequence? Sequence;
+
+            public Word(int length) => Length = length;
+            public Word(Sequence sequence) => Sequence = sequence;
+
+            public override string ToString() => Sequence?.ToString() ?? new string('_', Length!.Value);
+        }
     }
 }

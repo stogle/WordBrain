@@ -156,7 +156,7 @@ namespace WordBrain.Tests
             // Assert
             Assert.IsTrue(result);
             Assert.AreEqual($". . C{Environment.NewLine}A . F{Environment.NewLine}G H I", outPuzzle!.Grid.ToString());
-            Assert.AreEqual("__ BED ____", outPuzzle.Solution.ToString());
+            Assert.AreEqual("BED __ ____", outPuzzle.Solution.ToString());
         }
 
         [TestMethod]
