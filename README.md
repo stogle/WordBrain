@@ -1,4 +1,4 @@
-![.NET Core](https://github.com/stogle/WordBrain/workflows/.NET%20Core/badge.svg)
+![.NET Core](https://github.com/stogle/WordBrain/workflows/.NET%20Core/badge.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md)
 
 # WordBrain
 Solves [WordBrain](https://www.maginteractive.com/games/wordbrain/) puzzles
@@ -65,6 +65,3 @@ The command `WordBrain nwl2018.txt G....T AF..AL PL..LI TO..EE TAM.UR ETO.MB 6 4
     FAG ATOP MOTTLE UMBRELLA TIE
     
     Found 3 solutions in 00:01:32.9075473
-
-## Licence
-This project is licensed under the [MIT License](http://opensource.org/licenses/mit-license.php) - see the [LICENSE.md](LICENSE.md) file for details.
