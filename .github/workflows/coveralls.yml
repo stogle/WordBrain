@@ -19,7 +19,7 @@ jobs:
         dotnet-version: 3.1.101
     - name: Test
       run: |
-        dotnet test --configuration Release --collect:"XPlat Code Coverage" -r coverage DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=lcov
+        dotnet test --configuration Release --collect:"XPlat Code Coverage" -r coverage -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=lcov
         mv coverage/*/coverage.info coverage/lcov.info
 
     - name: Coveralls GitHub Action
