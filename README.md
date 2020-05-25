@@ -1,3 +1,5 @@
+![.NET Core](https://github.com/stogle/WordBrain/workflows/.NET%20Core/badge.svg)
+
 # WordBrain
 Solves [WordBrain](https://www.maginteractive.com/games/wordbrain/) puzzles
 
