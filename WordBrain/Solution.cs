@@ -44,6 +44,8 @@ namespace WordBrain
             return false;
         }
 
-        public override string ToString() => string.Join(' ', _sequences.Zip(_lengths, (sequence, length) => sequence?.ToString() ?? new string('_', length)));
+        public IEnumerable<string> Words => _sequences.Zip(_lengths, (sequence, length) => sequence?.ToString() ?? new string('_', length));
+
+        public override string ToString() => string.Join(' ', Words);
     }
 }

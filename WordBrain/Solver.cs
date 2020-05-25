@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace WordBrain
@@ -16,20 +15,13 @@ namespace WordBrain
             _wordTree = wordTree ?? throw new ArgumentNullException(nameof(wordTree));
         }
 
-        public IEnumerable<string> Solve(Puzzle puzzle)
+        public IEnumerable<Solution> Solve(Puzzle puzzle)
         {
             if (puzzle == null)
             {
                 throw new ArgumentNullException(nameof(puzzle));
             }
 
-            return SolveTop(puzzle)
-                .Select(solution => solution.ToString())
-                .Distinct();
-        }
-
-        private IEnumerable<Solution> SolveTop(Puzzle puzzle)
-        {
             // Solve each square of the top-level puzzle in parallel
             using var solutions = new BlockingCollection<Solution>();
             Task.Run(() =>
@@ -45,12 +37,18 @@ namespace WordBrain
                 solutions.CompleteAdding();
             });
 
+            // Only yield solutions with distinct word sets
             int solutionLength = puzzle.Solution.ToString().Length;
+            var distinctSolutions = new HashSet<HashSet<string>>(HashSet<string>.CreateSetComparer());
             foreach (var solution in solutions.GetConsumingEnumerable())
             {
-                Console.Write($"{new string(' ', solutionLength)}\r");
+                var wordSet = new HashSet<string>(solution.Words);
+                if (distinctSolutions.Add(wordSet))
+                {
+                    Console.Write($"{new string(' ', solutionLength)}\r");
 
-                yield return solution;
+                    yield return solution;
+                }
             }
 
             Console.Write($"{new string(' ', solutionLength)}\r");

@@ -45,7 +45,7 @@ namespace WordBrain.Tests
             Puzzle puzzle = null!;
 
             // Act
-            var exception = Assert.ThrowsException<ArgumentNullException>(() => solver.Solve(puzzle));
+            var exception = Assert.ThrowsException<ArgumentNullException>(() => solver.Solve(puzzle).ToList());
 
             // Assert
             Assert.AreEqual("Value cannot be null. (Parameter 'puzzle')", exception.Message);
@@ -60,10 +60,13 @@ namespace WordBrain.Tests
             var puzzle = CreatePuzzle();
 
             // Act
-            string[] result = solver.Solve(puzzle).ToArray();
+            var result = solver.Solve(puzzle).ToList();
 
             // Assert
-            CollectionAssert.AreEquivalent(new[] { "DO THE TEST", "HE DOT TEST" }, result);
+            int i = 0;
+            CollectionAssert.AreEquivalent(new[] { "DO", "THE", "TEST", }, result[i++].Words.ToList());
+            CollectionAssert.AreEquivalent(new[] { "HE", "DOT", "TEST" }, result[i++].Words.ToList());
+            Assert.AreEqual(result.Count, i);
         }
 
         [TestMethod]
@@ -76,10 +79,12 @@ namespace WordBrain.Tests
             var puzzle = CreatePuzzle(letters, lengths);
 
             // Act
-            string[] result = solver.Solve(puzzle).ToArray();
+            var result = solver.Solve(puzzle).ToList();
 
             // Assert
-            CollectionAssert.AreEquivalent(new[] { "SHIP ACTUALLY NONE", "NONE ACTUALLY SHIP" }, result);
+            int i = 0;
+            CollectionAssert.AreEquivalent(new[] { "SHIP", "ACTUALLY", "NONE" }, result[i++].Words.ToList());
+            Assert.AreEqual(result.Count, i);
         }
     }
 }
