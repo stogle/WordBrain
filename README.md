@@ -1,4 +1,6 @@
-![.NET Core](https://github.com/stogle/WordBrain/workflows/.NET%20Core/badge.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md)
+![.NET Core](https://github.com/stogle/WordBrain/workflows/.NET%20Core/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/stogle/WordBrain/badge.svg)](https://coveralls.io/github/stogle/WordBrain)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md)
 
 # WordBrain
 Solves [WordBrain](https://www.maginteractive.com/games/wordbrain/) puzzles
