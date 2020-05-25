@@ -1,0 +1,28 @@
+name: Coveralls GitHub Action
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    - name: Test
+      run: |
+        dotnet test --configuration Release --collect:"XPlat Code Coverage" -r coverage -s .runsettings
+        mv coverage/*/lcov.info coverage/lcov.info
+
+    - name: Coveralls GitHub Action
+    - uses: coverallsapp/github-action@v1.1.1
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
