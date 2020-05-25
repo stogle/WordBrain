@@ -19,33 +19,33 @@ namespace WordBrain.Tests
         private static int[] CreateLengths() => new[] { 2, 3, 4 };
 
         [TestMethod]
-        public void IsComplete_WhenLengthsIsNotEmpty_ReturnsFalse()
+        public void MaxLength_WhenLengthsIsNotEmpty_ReturnsCorrectValue()
         {
             // Arrange
             Puzzle puzzle = CreatePuzzle();
 
             // Act
-            bool result = puzzle.Solution.IsComplete;
+            int? result = puzzle.Solution.MaxLength;
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.AreEqual(4, result);
         }
 
         [TestMethod]
-        public void IsComplete_WhenLengthsIsEmpty_ReturnsTrue()
+        public void IsComplete_WhenLengthsIsEmpty_ReturnsNull()
         {
             // Arrange
             Puzzle puzzle = CreatePuzzle(Array.Empty<char?[]>(), Array.Empty<int>());
 
             // Act
-            bool result = puzzle.Solution.IsComplete;
+            int? result = puzzle.Solution.MaxLength;
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.IsNull(result);
         }
 
         [TestMethod]
-        public void Words_WhenCreated_ReturneCorrectValue()
+        public void Words_WhenCreated_ReturnsCorrectValue()
         {
             // Arrange
             Puzzle puzzle = CreatePuzzle();
@@ -58,7 +58,7 @@ namespace WordBrain.Tests
         }
 
         [TestMethod]
-        public void Words_WhenPartiallySolved_ReturneCorrectValue()
+        public void Words_WhenPartiallySolved_ReturnsCorrectValue()
         {
             // Arrange
             Puzzle puzzle = CreatePuzzle();

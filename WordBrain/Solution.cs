@@ -14,6 +14,7 @@ namespace WordBrain
             _items = lengths.Select(length => new Word(length)).ToArray();
             _index = 0;
             _length = lengths.Count;
+            MaxLength = lengths.Cast<int?>().Max();
         }
 
         private Solution(IReadOnlyList<Word> items, int index)
@@ -21,9 +22,10 @@ namespace WordBrain
             _items = items;
             _index = index;
             _length = items.Count;
+            MaxLength = _items.Skip(index).Select(item => item.Length).Max();
         }
 
-        public bool IsComplete => _index == _length;
+        public int? MaxLength { get; }
 
         internal bool TryPlay(Sequence sequence, out Solution? solution)
         {
