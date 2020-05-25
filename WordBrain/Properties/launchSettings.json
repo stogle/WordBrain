@@ -2,7 +2,7 @@
   "profiles": {
     "WordBrain": {
       "commandName": "Project",
-      "commandLineArgs": "nwl2018.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12"
+      "commandLineArgs": "3of6game.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12"
     }
   }
 }

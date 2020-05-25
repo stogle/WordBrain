@@ -13,24 +13,24 @@ Solves [WordBrain](https://www.maginteractive.com/games/wordbrain/) puzzles
 
 ## Examples
 
-The command `WordBrain nwl2018.txt SLLY HAUE ICTN PAON 4 8 4` produces the following output:
+The command `WordBrain 3of6game.txt SLLY HAUE ICTN PAON 4 8 4` produces the following output:
 
-    Read 192,111 words in 00:00:00.4762284
-
+    Read 61,442 words in 00:00:00.1276103
+    
     S L L Y
     H A U E
     I C T N
     P A O N
     ____ ________ ____
-
-    SHIP ACTUALLY NONE
-
-    Found 1 solutions in 00:00:00.1665678
-
-The command `WordBrain nwl2018.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12` produces the following output:
-
-    Read 192,111 words in 00:00:00.4885625
     
+    SHIP ACTUALLY NONE
+    
+    Found 1 solutions in 00:00:00.1009244
+
+The command `WordBrain 3of6game.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12` produces the following output:
+
+Read 61,442 words in 00:00:00.1563239
+
     E Z E A I
     U I C R D
     L R H A D
@@ -38,22 +38,19 @@ The command `WordBrain nwl2018.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12` produ
     V C T E S
     _____ ____ ____ ____________
     
-    VALUE ADOS CHARACTERIZE EIDE
-    VALUE DOES CHARACTERIZE AIDE
-    VALUE DOES CHARACTERIZE IDEA
+    ODES CHARACTERIZE AIDE VALUE
+    ODES CHARACTERIZE IDEA VALUE
+    DOES CHARACTERIZE AIDE VALUE
+    DOES CHARACTERIZE IDEA VALUE
     VALUE DOSE CHARACTERIZE AIDE
     VALUE DOSE CHARACTERIZE IDEA
-    VALUE ODEA CHARACTERIZE IDES
-    VALUE ODES CHARACTERIZE AIDE
-    VALUE ODES CHARACTERIZE IDEA
-    VALUE SODA CHARACTERIZE EIDE
     
-    Found 9 solutions in 00:01:42.0179057
+    Found 6 solutions in 00:00:12.8510263
 
-The command `WordBrain nwl2018.txt G....T AF..AL PL..LI TO..EE TAM.UR ETO.MB 6 4 8 3 3` produces the following output:
+The command `WordBrain 3of6game.txt G....T AF..AL PL..LI TO..EE TAM.UR ETO.MB 6 4 8 3 3` produces the following output:
 
-    Read 192,111 words in 00:00:00.4621304
-    
+Read 61,442 words in 00:00:00.1470442
+
     G . . . . T
     A F . . A L
     P L . . L I
@@ -64,6 +61,5 @@ The command `WordBrain nwl2018.txt G....T AF..AL PL..LI TO..EE TAM.UR ETO.MB 6 4
     
     GAP TOMATO FELT UMBRELLA TIE
     GAP TOMATO UMBRELLA TIE LEFT
-    FAG ATOP MOTTLE UMBRELLA TIE
     
-    Found 3 solutions in 00:01:32.9075473
+    Found 2 solutions in 00:00:20.0985069
