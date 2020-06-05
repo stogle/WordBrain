@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace WordBrain
@@ -27,7 +28,7 @@ namespace WordBrain
 
         public int? MaxLength { get; }
 
-        internal bool TryPlay(Sequence sequence, out Solution? solution)
+        internal bool TryPlay(Sequence sequence, [NotNullWhen(true)]out Solution? solution)
         {
             for (int i = _index; i < _length; i++)
             {

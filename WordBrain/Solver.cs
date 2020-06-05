@@ -56,8 +56,7 @@ namespace WordBrain
 
         private IEnumerable<Solution> Extend(Sequence sequence)
         {
-            Puzzle puzzle;
-            if (sequence.TryPlay(out puzzle!))
+            if (sequence.TryPlay(out Puzzle? puzzle))
             {
                 if (puzzle.Solution.MaxLength == null)
                 {

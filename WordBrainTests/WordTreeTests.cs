@@ -27,8 +27,7 @@ namespace WordBrain.Tests
         public void IsWord_WhenIsWord_ReturnsTrue()
         {
             // Arrange
-            WordTree wordTree;
-            CreateWordTree().TryLetter('a', out wordTree!);
+            var wordTree = CreateWordTree(new[] { "" });
 
             // Act
             bool result = wordTree.IsWord;
@@ -41,8 +40,7 @@ namespace WordBrain.Tests
         public void IsWord_WhenIsNotWord_ReturnsFalse()
         {
             // Arrange
-            WordTree wordTree;
-            CreateWordTree().TryLetter('b', out wordTree!);
+            var wordTree = CreateWordTree();
 
             // Act
             bool result = wordTree.IsWord;
@@ -58,7 +56,7 @@ namespace WordBrain.Tests
             var wordTree = CreateWordTree();
 
             // Act
-            bool result = wordTree.TryLetter('a', out var childTree);
+            bool result = wordTree.TryLetter('a', out WordTree? childTree);
 
             // Assert
             Assert.IsTrue(result);
@@ -72,7 +70,7 @@ namespace WordBrain.Tests
             var wordTree = CreateWordTree();
 
             // Act
-            bool result = wordTree.TryLetter('A', out var childTree);
+            bool result = wordTree.TryLetter('A', out WordTree? childTree);
 
             // Assert
             Assert.IsTrue(result);
@@ -86,7 +84,7 @@ namespace WordBrain.Tests
             var wordTree = CreateWordTree();
 
             // Act
-            bool result = wordTree.TryLetter('c', out var childTree);
+            bool result = wordTree.TryLetter('c', out WordTree? childTree);
 
             // Assert
             Assert.IsFalse(result);
