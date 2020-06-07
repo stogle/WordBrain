@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace WordBrain
@@ -15,7 +16,9 @@ namespace WordBrain
             _wordTree = wordTree ?? throw new ArgumentNullException(nameof(wordTree));
         }
 
-        public IEnumerable<Solution> Solve(Puzzle puzzle)
+        public IEnumerable<Solution> Solve(Puzzle puzzle) => SolveAsync(puzzle).ToEnumerable();
+
+        public async IAsyncEnumerable<Solution> SolveAsync(Puzzle puzzle)
         {
             if (puzzle == null)
             {
@@ -23,24 +26,22 @@ namespace WordBrain
             }
 
             // Solve each square of the top-level puzzle in parallel
-            using var solutions = new BlockingCollection<Solution>();
-            Task.Run(() =>
-            {
-                var sequence = new Sequence(puzzle, _wordTree);
-                Parallel.ForEach(sequence.Extend(), sequence =>
+            var channel = Channel.CreateUnbounded<Solution>();
+            var sequence = new Sequence(puzzle, _wordTree);
+            _ = Task.WhenAll(sequence.Extend()
+                .Select(sequence => Task.Run(() =>
                 {
                     foreach (Solution solution in Extend(sequence))
                     {
-                        solutions.Add(solution);
+                        channel.Writer.TryWrite(solution);
                     }
-                });
-                solutions.CompleteAdding();
-            });
+                })))
+                .ContinueWith(_ => channel.Writer.Complete(), TaskScheduler.Default);
 
             // Only yield solutions with distinct word sets
             int solutionLength = puzzle.Solution.ToString().Length;
             var distinctSolutions = new HashSet<HashSet<string>>(HashSet<string>.CreateSetComparer());
-            foreach (var solution in solutions.GetConsumingEnumerable())
+            await foreach (var solution in channel.Reader.ReadAllAsync())
             {
                 var wordSet = new HashSet<string>(solution.Words);
                 if (distinctSolutions.Add(wordSet))
