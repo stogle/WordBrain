@@ -1,0 +1,48 @@
+﻿<ItemsControl x:Class="WordBrain.WPF.SolutionControl"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              Focusable="False">
+    <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+            <WrapPanel HorizontalAlignment="Center"
+                       Margin="5"/>
+        </ItemsPanelTemplate>
+    </ItemsControl.ItemsPanel>
+    <ItemsControl.ItemTemplate>
+        <DataTemplate>
+            <ItemsControl Focusable="False"
+                          ItemsSource="{Binding Value}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="16,0"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="White"
+                                BorderThickness="1"
+                                CornerRadius="3"
+                                Margin="1">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="White"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding}" Value="{x:Null}">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <TextBlock FontWeight="Bold"
+                                       Padding="5"
+                                       TextAlignment="Center"
+                                       Text="{Binding}"
+                                       Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"/>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </DataTemplate>
+    </ItemsControl.ItemTemplate>
+</ItemsControl>
