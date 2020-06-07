@@ -15,21 +15,21 @@ Solves [WordBrain](https://www.maginteractive.com/games/wordbrain/) puzzles
 
 The command `WordBrain 3of6game.txt SLLY HAUE ICTN PAON 4 8 4` produces the following output:
 
-    Read 61,442 words in 00:00:00.1276103
-    
+    Read 61,442 words in 00:00:00.1030221
+
     S L L Y
     H A U E
     I C T N
     P A O N
     ____ ________ ____
-    
-    SHIP ACTUALLY NONE
-    
-    Found 1 solutions in 00:00:00.1009244
+
+    ACTUALLY SHIP NONE
+
+    Found 1 solutions in 00:00:00.1116093
 
 The command `WordBrain 3of6game.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12` produces the following output:
 
-Read 61,442 words in 00:00:00.1563239
+    Read 61,442 words in 00:00:00.0933638
 
     E Z E A I
     U I C R D
@@ -37,19 +37,19 @@ Read 61,442 words in 00:00:00.1563239
     A E A E O
     V C T E S
     _____ ____ ____ ____________
-    
-    ODES CHARACTERIZE AIDE VALUE
-    ODES CHARACTERIZE IDEA VALUE
+
     DOES CHARACTERIZE AIDE VALUE
     DOES CHARACTERIZE IDEA VALUE
     VALUE DOSE CHARACTERIZE AIDE
     VALUE DOSE CHARACTERIZE IDEA
-    
-    Found 6 solutions in 00:00:12.8510263
+    VALUE ODES CHARACTERIZE AIDE
+    VALUE ODES CHARACTERIZE IDEA
+
+    Found 6 solutions in 00:00:12.7250664
 
 The command `WordBrain 3of6game.txt G....T AF..AL PL..LI TO..EE TAM.UR ETO.MB 6 4 8 3 3` produces the following output:
 
-Read 61,442 words in 00:00:00.1470442
+    Read 61,442 words in 00:00:00.0983899
 
     G . . . . T
     A F . . A L
@@ -58,8 +58,8 @@ Read 61,442 words in 00:00:00.1470442
     T A M . U R
     E T O . M B
     ______ ____ ________ ___ ___
-    
+
     GAP TOMATO FELT UMBRELLA TIE
     GAP TOMATO UMBRELLA TIE LEFT
-    
-    Found 2 solutions in 00:00:20.0985069
+
+    Found 2 solutions in 00:00:16.0833299

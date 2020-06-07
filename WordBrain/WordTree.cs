@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 
 namespace WordBrain
 {
     public class WordTree
     {
-        private readonly IDictionary<string, WordTree> _children = new Dictionary<string, WordTree>(StringComparer.OrdinalIgnoreCase);
+        private readonly IDictionary<char, WordTree> _children = new Dictionary<char, WordTree>();
 
         public WordTree(IEnumerable<string> words)
         {
@@ -34,7 +33,7 @@ namespace WordBrain
                 return;
             }
 
-            string c = word.Substring(index, 1);
+            char c = char.ToUpperInvariant(word[index]);
             if (!_children.TryGetValue(c, out var child))
             {
                 child = new WordTree();
@@ -48,7 +47,7 @@ namespace WordBrain
 
         public bool TryLetter(char c, [NotNullWhen(true)]out WordTree? childTree)
         {
-            if (_children.TryGetValue(c.ToString(CultureInfo.InvariantCulture), out var value))
+            if (_children.TryGetValue(char.ToUpperInvariant(c), out var value))
             {
                 childTree = value;
                 return true;
