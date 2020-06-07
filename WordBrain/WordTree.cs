@@ -7,7 +7,7 @@ namespace WordBrain
 {
     public class WordTree
     {
-        private readonly IDictionary<string, WordTree> _children = new Dictionary<string, WordTree>(StringComparer.CurrentCultureIgnoreCase);
+        private readonly IDictionary<string, WordTree> _children = new Dictionary<string, WordTree>(StringComparer.OrdinalIgnoreCase);
 
         public WordTree(IEnumerable<string> words)
         {
