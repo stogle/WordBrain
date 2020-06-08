@@ -8,6 +8,8 @@
         mc:Ignorable="d"
         FocusManager.FocusedElement="{Binding ElementName=Grid}"
         Height="800"
+        MinHeight="600"
+        MinWidth="600"
         Title="WordBrain"
         Width="800">
     <Window.DataContext>
@@ -17,11 +19,12 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="400"/>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition MinWidth="150"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition MinHeight="400"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <Grid Margin="5">
@@ -77,13 +80,18 @@
         <local:PuzzleControl Grid.Row="1"
                              Margin="5"/>
 
-        <Button Grid.Column="1"
+        <GridSplitter Grid.Column="1"
+                      Grid.RowSpan="2"
+                      HorizontalAlignment="Center"
+                      Width="5"/>
+
+        <Button Grid.Column="2"
                 Command="{Binding Solve}"
                 Content="Solve"
                 IsDefault="True"
                 Margin="5"/>
 
-        <ListBox Grid.Column="1"
+        <ListBox Grid.Column="2"
                  Grid.Row="1"
                  FontFamily="Consolas"
                  FontSize="14"
