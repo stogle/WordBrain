@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:WordBrain.WPF"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        FocusManager.FocusedElement="{Binding ElementName=Grid}"
         Height="800"
         MinHeight="600"
         MinWidth="600"
@@ -37,29 +36,42 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Label Content="_Grid:"
+            <Label x:Name="GridLabel"
+                   Content="_Grid:"
                    Margin="0,0,5,0"
-                   Target="{Binding ElementName=Grid}"
                    VerticalAlignment="Center"/>
-            <TextBox x:Name="Grid"
-                     Grid.Column="1"
-                     FontFamily="Consolas"
-                     FontSize="14"
-                     HorizontalAlignment="Stretch"
-                     Margin="0,5"
-                     Text="{Binding Grid, UpdateSourceTrigger=PropertyChanged}"
-                     VerticalContentAlignment="Center"/>
+            <ItemsControl x:Name="Grid"
+                          Grid.Column="1"
+                          Focusable="False"
+                          ItemsSource="{Binding Grid}"
+                          Loaded="Grid_Loaded"
+                          Margin="0,2.5">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel FocusManager.IsFocusScope="True"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="local:LineViewModel">
+                        <TextBox x:Name="Line"
+                                 FontFamily="Consolas"
+                                 FontSize="14"
+                                 Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
 
-            <Label Grid.Row="1"
+            <Label x:Name="SolutionLabel"
+                   Grid.Row="1"
                    Content="_Solution:"
                    Margin="0,0,5,0"
-                   Target="{Binding ElementName=Solution}"
                    VerticalAlignment="Center"/>
             <ItemsControl x:Name="Solution"
                           Grid.Row="1"
                           Grid.Column="1"
                           Focusable="False"
                           ItemsSource="{Binding Solution}"
+                          Loaded="Solution_Loaded"
                           Margin="0,2.5">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -68,7 +80,8 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="local:WordViewModel">
-                        <xctk:IntegerUpDown Margin="0,2.5,5,2.5"
+                        <xctk:IntegerUpDown x:Name="Word"
+                                            Margin="0,2.5,5,2.5"
                                             Maximum="{Binding DataContext.Letters.Count, RelativeSource={RelativeSource AncestorType=local:MainWindow}}"
                                             Minimum="1"
                                             Value="{Binding Length}"/>
@@ -87,7 +100,7 @@
 
         <Button Grid.Column="2"
                 Command="{Binding Solve}"
-                Content="Solve"
+                Content="S_olve"
                 IsDefault="True"
                 Margin="5"/>
 

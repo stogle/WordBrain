@@ -4,7 +4,7 @@
               Focusable="False">
     <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
-            <UniformGrid/>
+            <UniformGrid Rows="{Binding Rows}"/>
         </ItemsPanelTemplate>
     </ItemsControl.ItemsPanel>
     <ItemsControl.ItemTemplate>

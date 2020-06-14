@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -13,21 +12,59 @@ namespace WordBrain.WPF
     {
         public MainWindowViewModel()
         {
+            Grid.CollectionChanged += GridCollectionChanged;
+            Grid.Add(new LineViewModel());
             Solve = new AsyncCommand(ExecuteSolveAsync, CanExecuteSolve);
         }
 
-        private string _grid = string.Empty;
-        public string Grid
+        public ObservableCollection<LineViewModel> Grid { get; } = new ObservableCollection<LineViewModel>();
+
+        private void GridCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            get => _grid;
-            set
+            if (e.OldItems != null)
             {
-                value = (value ?? string.Empty).ToUpper(CultureInfo.CurrentCulture);
-                if (SetValue(ref _grid, value))
+                foreach (var line in e.OldItems.OfType<LineViewModel>())
                 {
-                    Letters = value.Select(c => char.IsLetter(c) ? c : (char?)null).ToList();
+                    line.PropertyChanged -= LinePropertyChanged;
                 }
             }
+            if (e.NewItems != null)
+            {
+                foreach (var line in e.NewItems.OfType<LineViewModel>())
+                {
+                    line.PropertyChanged += LinePropertyChanged;
+                }
+            }
+            Rows = Grid.Count - 1;
+        }
+
+        private void LinePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var item = (LineViewModel)sender;
+            bool isLast = item == Grid.Last();
+            if (isLast && item.Text.Length != 0)
+            {
+                Grid.Add(new LineViewModel());
+            }
+            else if (!isLast && item.Text.Length == 0)
+            {
+                Grid.Remove(item);
+            }
+
+            int width = Grid.Max(line => line.Text.Length);
+            Letters = Grid.Take(Rows)
+                          .Select(line => line.Text.PadRight(width))
+                          .SelectMany(s => s)
+                          .Select(c => char.IsLetter(c) ? c : (char?)null)
+                          .DefaultIfEmpty('?')
+                          .ToList();
+        }
+
+        private int _rows;
+        public int Rows
+        {
+            get => _rows;
+            private set => SetValue(ref _rows, value);
         }
 
         private IReadOnlyCollection<char?> _letters = new List<char?> { '?' };
@@ -36,10 +73,6 @@ namespace WordBrain.WPF
             get => _letters;
             private set
             {
-                if (!value.Any())
-                {
-                    value = new List<char?> { '?' };
-                }
                 if (SetValue(ref _letters, value))
                 {
                     AdjustSolutionToMatchLetters();
@@ -104,8 +137,7 @@ namespace WordBrain.WPF
         {
             var wordTree = new WordTree(System.IO.File.ReadAllLines("3of6game.txt"));
             var solver = new Solver(wordTree);
-            int i = 0, lettersPerRow = (int)Math.Sqrt(Letters.Count);
-            var letters = Letters.GroupBy(letter => i++ / lettersPerRow).Select(group => group.ToArray()).ToArray();
+            var letters = Grid.Take(Rows).Select(line => line.Text.Select(c => char.IsLetter(c) ? c : (char?)null).ToArray()).ToArray();
             var puzzle = new Puzzle(letters, Solution.Select(vm => vm.Length).ToArray());
             Output.Clear();
             await foreach (var solution in solver.SolveAsync(puzzle))
@@ -114,12 +146,7 @@ namespace WordBrain.WPF
             }
         }
 
-        private bool CanExecuteSolve(object _)
-        {
-            int length = Grid.Length;
-            int sqrtLength = (int)Math.Sqrt(length);
-            return length != 0 && sqrtLength * sqrtLength == length;
-        }
+        private bool CanExecuteSolve(object _) => Rows != 0;
 
         public ObservableCollection<Solution> Output { get; } = new ObservableCollection<Solution>();
     }

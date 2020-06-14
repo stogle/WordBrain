@@ -61,7 +61,7 @@ namespace WordBrain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usage: {0} word_list line1 [line2 ...] length1 [length2 ...]{1}  word_list: The path to a file containing a list of valid words (one per line).{1}  line1, line2, etc.: The lines of the WordBrain grid. The grid must be square. Use &apos;.&apos; for blanks.{1}  length1, length2, etc.: The lengths of the words in the solution. They must sum to the number of letters in the grid.{1}.
+        ///   Looks up a localized string similar to Usage: {0} word_list line1 [line2 ...] length1 [length2 ...]{1}  word_list: The path to a file containing a list of valid words (one per line).{1}  line1, line2, etc.: The lines of the WordBrain grid. The grid must be rectangular. Use &apos;.&apos; for blanks.{1}  length1, length2, etc.: The lengths of the words in the solution. They must sum to the number of letters in the grid.{1}.
         /// </summary>
         internal static string Arguments_UsageFormat {
             get {

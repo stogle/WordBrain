@@ -142,21 +142,7 @@ namespace WordBrain.Tests
         public void IsValid_WhenArgsDoesNotContainsEqualLineLengths_ReturnsFalse()
         {
             // Arrange
-            string[] args = { "words.txt", "ABC", "DE", "FGH" };
-            var arguments = CreateArguments(args);
-
-            // Act
-            bool result = arguments.IsValid;
-
-            // Assert
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void IsValid_WhenArgsDoesNotContainsSufficientLines_ReturnsFalse()
-        {
-            // Arrange
-            string[] args = { "words.txt", "ABC", "DEF" };
+            string[] args = { "words.txt", "ABC", "DE", "FGH", "2", "2", "4" };
             var arguments = CreateArguments(args);
 
             // Act
@@ -220,7 +206,7 @@ namespace WordBrain.Tests
             // Assert
             Assert.AreEqual($"Usage: WordBrain word_list line1 [line2 ...] length1 [length2 ...]{Environment.NewLine}" +
                 $"  word_list: The path to a file containing a list of valid words (one per line).{Environment.NewLine}" +
-                $"  line1, line2, etc.: The lines of the WordBrain grid. The grid must be square. Use '.' for blanks.{Environment.NewLine}" +
+                $"  line1, line2, etc.: The lines of the WordBrain grid. The grid must be rectangular. Use '.' for blanks.{Environment.NewLine}" +
                 $"  length1, length2, etc.: The lengths of the words in the solution. They must sum to the number of letters in the grid.{Environment.NewLine}", result);
         }
     }

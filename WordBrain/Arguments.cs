@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace WordBrain
 {
@@ -39,29 +41,20 @@ namespace WordBrain
                 return null;
             }
 
-            int height = args[argsIndex].Length;
-            if (argsIndex + height > args.Length)
-            {
-                return null;
-            }
+            int width = args[argsIndex].Length;
 
-            char?[][] letters = new char?[height][];
-            for (int i = 0; i < height; i++)
+            var letters = new List<char?[]>();
+            while (argsIndex < args.Length && !int.TryParse(args[argsIndex], out _))
             {
                 string line = args[argsIndex++];
-                if (line.Length != height)
+                if (line.Length != width)
                 {
                     return null;
                 }
 
-                letters[i] = new char?[height];
-                for (int j = 0; j < height; j++)
-                {
-                    char? letter = line[j];
-                    letters[i][j] = letter == '.' ? null : letter;
-                }
+                letters.Add(line.Select(letter => letter == '.' ? (char?)null : letter).ToArray());
             }
-            return letters;
+            return letters.ToArray();
         }
 
         private static int[]? ParseLengths(string[] args, ref int argsIndex)

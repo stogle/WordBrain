@@ -8,7 +8,7 @@ Solves [WordBrain](https://www.maginteractive.com/games/wordbrain/) puzzles
 ## Usage
     Usage: WordBrain word_list line1 [line2 ...] length1 [length2 ...]
       word_list: The path to a file containing a list of valid words (one per line).
-      line1, line2, etc.: The lines of the WordBrain grid. The grid must be square. Use '.' for blanks.
+      line1, line2, etc.: The lines of the WordBrain grid. The grid must be rectangular. Use '.' for blanks.
       length1, length2, etc.: The lengths of the words in the solution. They must sum to the number of letters in the grid.
 
 ## Examples

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Arguments_UsageFormat" xml:space="preserve">
-    <value>Usage: {0} word_list line1 [line2 ...] length1 [length2 ...]{1}  word_list: The path to a file containing a list of valid words (one per line).{1}  line1, line2, etc.: The lines of the WordBrain grid. The grid must be square. Use '.' for blanks.{1}  length1, length2, etc.: The lengths of the words in the solution. They must sum to the number of letters in the grid.{1}</value>
+    <value>Usage: {0} word_list line1 [line2 ...] length1 [length2 ...]{1}  word_list: The path to a file containing a list of valid words (one per line).{1}  line1, line2, etc.: The lines of the WordBrain grid. The grid must be rectangular. Use '.' for blanks.{1}  length1, length2, etc.: The lengths of the words in the solution. They must sum to the number of letters in the grid.{1}</value>
     <comment>{0} = args0, {1} = Environment.NewLine</comment>
   </data>
   <data name="Program_FoundSolutionsFormat" xml:space="preserve">
