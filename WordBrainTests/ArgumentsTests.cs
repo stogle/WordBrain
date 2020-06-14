@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace WordBrain.Tests
@@ -38,160 +37,114 @@ namespace WordBrain.Tests
         }
 
         [TestMethod]
-        public void Path_WhenArgsDoesNotContainPath_ReturnsNull()
+        public void TryParse_WhenArgsDoesNotContainPath_SetsNothingAndReturnsFalse()
         {
             // Arrange
             string[] args = Array.Empty<string>();
             var arguments = CreateArguments(args);
 
             // Act
-            string? result = arguments.Path;
+            bool result = arguments.TryParse(out string? path, out char?[][]? letters, out int[]? lengths);
 
             // Assert
-            Assert.IsNull(result);
+            Assert.IsFalse(result);
+            Assert.IsNull(path);
+            Assert.IsNull(letters);
+            Assert.IsNull(lengths);
         }
 
         [TestMethod]
-        public void Path_WhenArgsContainsPath_ReturnsPath()
+        public void TryParse_WhenArgsDoesNotContainLetters_SetsPathAndReturnsFalse()
         {
             // Arrange
             string[] args = { "words.txt" };
             var arguments = CreateArguments(args);
 
             // Act
-            string? result = arguments.Path;
+            bool result = arguments.TryParse(out string? path, out char?[][]? letters, out int[]? lengths);
 
             // Assert
-            Assert.AreEqual("words.txt", result);
+            Assert.IsFalse(result);
+            Assert.AreEqual("words.txt", path);
+            Assert.IsNull(letters);
+            Assert.IsNull(lengths);
         }
 
         [TestMethod]
-        public void Puzzle_WhenArgsDoesNotContainValidLetters_ReturnsNull()
-        {
-            // Arrange
-            string[] args = { "words.txt" };
-            var arguments = CreateArguments(args);
-
-            // Act
-            var result = arguments.Puzzle;
-
-            // Assert
-            Assert.IsNull(result);
-        }
-
-        [TestMethod]
-        public void Puzzle_WhenArgsDoesNotContainValidLengths_ReturnsNull()
+        public void TryParse_WhenArgsDoesNotContainLengths_SetsPathAndLettersAndReturnsFalse()
         {
             // Arrange
             string[] args = { "words.txt", "ABC", "DEF", "GHI" };
             var arguments = CreateArguments(args);
 
             // Act
-            var result = arguments.Puzzle;
+            bool result = arguments.TryParse(out string? path, out char?[][]? letters, out int[]? lengths);
 
             // Assert
-            Assert.IsNull(result);
+            Assert.IsFalse(result);
+            Assert.AreEqual("words.txt", path);
+            Assert.AreEqual(3, letters!.Length);
+            CollectionAssert.AreEqual("ABC".ToCharArray(), letters![0]);
+            CollectionAssert.AreEqual("DEF".ToCharArray(), letters![1]);
+            CollectionAssert.AreEqual("GHI".ToCharArray(), letters![2]);
+            Assert.IsNull(lengths);
         }
 
         [TestMethod]
-        public void Puzzle_WhenArgsContainsValidLettersAndLengths_ReturnsPuzzle()
+        public void TryParse_WhenArgsContainsPathValidLettersAndValidLengths_SetsPathLettersAndLengthAndReturnsTrue()
         {
             // Arrange
             string[] args = { "words.txt", "ABC", "DEF", "GHI", "2", "3", "4" };
             var arguments = CreateArguments(args);
 
             // Act
-            var result = arguments.Puzzle!;
+            bool result = arguments.TryParse(out string? path, out char?[][]? letters, out int[]? lengths);
 
             // Assert
-            Assert.AreEqual(3, result.Grid.Height);
-            Assert.AreEqual(3, result.Grid.Width);
-            Assert.IsTrue(Enumerable.Range(0, 3).All(i => Enumerable.Range(0, 3).All(j => args[1 + i][j] == result.Grid[i, j])));
-            Assert.AreEqual("__ ___ ____", result.Solution.ToString());
+            Assert.IsTrue(result);
+            Assert.AreEqual("words.txt", path);
+            Assert.AreEqual(3, letters!.Length);
+            CollectionAssert.AreEqual("ABC".ToCharArray(), letters![0]);
+            CollectionAssert.AreEqual("DEF".ToCharArray(), letters![1]);
+            CollectionAssert.AreEqual("GHI".ToCharArray(), letters![2]);
+            CollectionAssert.AreEqual(new[] { 2, 3, 4 }, lengths);
         }
 
         [TestMethod]
-        public void IsValid_WhenArgsDoesNotContainPath_ReturnsFalse()
-        {
-            // Arrange
-            string[] args = Array.Empty<string>();
-            var arguments = CreateArguments(args);
-
-            // Act
-            bool result = arguments.IsValid;
-
-            // Assert
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void IsValid_WhenArgsDoesNotContainLetters_ReturnsFalse()
-        {
-            // Arrange
-            string[] args = { "words.txt" };
-            var arguments = CreateArguments(args);
-
-            // Act
-            bool result = arguments.IsValid;
-
-            // Assert
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void IsValid_WhenArgsDoesNotContainsEqualLineLengths_ReturnsFalse()
+        public void TryParse_WhenArgsContainsInvalidLetters_SetsPathAndReturnsFalse()
         {
             // Arrange
             string[] args = { "words.txt", "ABC", "DE", "FGH", "2", "2", "4" };
             var arguments = CreateArguments(args);
 
             // Act
-            bool result = arguments.IsValid;
+            bool result = arguments.TryParse(out string? path, out char?[][]? letters, out int[]? lengths);
 
             // Assert
             Assert.IsFalse(result);
+            Assert.AreEqual("words.txt", path);
+            Assert.IsNull(letters);
+            Assert.IsNull(lengths);
         }
 
         [TestMethod]
-        public void IsValid_WhenArgsDoesNotContainLengths_ReturnsFalse()
-        {
-            // Arrange
-            string[] args = { "words.txt", "ABC", "DEF", "GHI" };
-            var arguments = CreateArguments(args);
-
-            // Act
-            bool result = arguments.IsValid;
-
-            // Assert
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void IsValid_WhenArgsDoesNotContainsValidLengths_ReturnsFalse()
+        public void TryParse_WhenArgsContainsInvalidLengths_SetsPathAndLettersAndReturnsFalse()
         {
             // Arrange
             string[] args = { "words.txt", "ABC", "DEF", "GHI", "2", "3x", "4" };
             var arguments = CreateArguments(args);
 
             // Act
-            bool result = arguments.IsValid;
+            bool result = arguments.TryParse(out string? path, out char?[][]? letters, out int[]? lengths);
 
             // Assert
             Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void IsValid_WhenArgsContainsPathValidLettersAndValidLengths_ReturnsTrue()
-        {
-            // Arrange
-            string[] args = { "words.txt", "ABC", "DEF", "GHI", "2", "3", "4" };
-            var arguments = CreateArguments(args);
-
-            // Act
-            bool result = arguments.IsValid;
-
-            // Assert
-            Assert.IsTrue(result);
+            Assert.AreEqual("words.txt", path);
+            Assert.AreEqual(3, letters!.Length);
+            CollectionAssert.AreEqual("ABC".ToCharArray(), letters![0]);
+            CollectionAssert.AreEqual("DEF".ToCharArray(), letters![1]);
+            CollectionAssert.AreEqual("GHI".ToCharArray(), letters![2]);
+            Assert.IsNull(lengths);
         }
 
         [TestMethod]

@@ -10,13 +10,12 @@ namespace WordBrain
         {
             // Process arguments
             var arguments = new Arguments(args, AppDomain.CurrentDomain.FriendlyName);
-            if (!arguments.IsValid)
+            if (!arguments.TryParse(out string? path, out char?[][]? letters, out int[]? lengths))
             {
                 Console.WriteLine(arguments.Usage);
                 Environment.Exit(-1);
             }
-            string path = arguments.Path!;
-            Puzzle puzzle = arguments.Puzzle!;
+            Puzzle puzzle = new Puzzle(new Grid(letters), new Solution(lengths));
 
             // Read word list
             var stopWatch = Stopwatch.StartNew();

@@ -1,88 +1,103 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace WordBrain
 {
     public class Arguments
     {
+        private string[] _args;
+        private string _args0;
+
         public Arguments(string[] args, string args0)
         {
-            if (args == null)
-            {
-                throw new ArgumentNullException(nameof(args));
-            }
-            if (args0 == null)
-            {
-                throw new ArgumentNullException(nameof(args0));
-            }
-
-            int argsIndex = 0;
-            Path = ParsePath(args, ref argsIndex);
-            char?[][]? letters = ParseLetters(args, ref argsIndex);
-            if (letters != null)
-            {
-                int[]? lengths = ParseLengths(args, ref argsIndex);
-                if (lengths != null)
-                {
-                    Puzzle = new Puzzle(letters, lengths);
-                }
-            }
-            IsValid = Path != null && Puzzle != null;
-            Usage = string.Format(Strings.Culture, Strings.Arguments_UsageFormat, args0, Environment.NewLine);
+            _args = args ?? throw new ArgumentNullException(nameof(args));
+            _args0 = args0 ?? throw new ArgumentNullException(nameof(args0));
         }
 
-        private static string? ParsePath(string[] args, ref int argsIndex) => argsIndex < args.Length ? args[argsIndex++] : null;
-
-        private static char?[][]? ParseLetters(string[] args, ref int argsIndex)
+        public bool TryParse([NotNullWhen(true)]out string? path, [NotNullWhen(true)]out char?[][]? letters, [NotNullWhen(true)]out int[]? lengths)
         {
-            if (argsIndex >= args.Length)
+            int argsIndex = 0;
+            if (!TryParsePath(ref argsIndex, out path))
             {
-                return null;
+                letters = null;
+                lengths = null;
+                return false;
+            }
+            if (!TryParseLetters(ref argsIndex, out letters))
+            {
+                lengths = null;
+                return false;
+            }
+            if (!TryParseLengths(ref argsIndex, out lengths))
+            {
+                return false;
             }
 
-            int width = args[argsIndex].Length;
+            return true;
+        }
 
-            var letters = new List<char?[]>();
-            while (argsIndex < args.Length && !int.TryParse(args[argsIndex], out _))
+        private bool TryParsePath(ref int argsIndex, [NotNullWhen(true)]out string? path)
+        {
+            if (argsIndex >= _args.Length)
             {
-                string line = args[argsIndex++];
+                path = null;
+                return false;
+            }
+
+            path = _args[argsIndex++];
+            return true;
+        }
+
+        private bool TryParseLetters(ref int argsIndex, [NotNullWhen(true)]out char?[][]? letters)
+        {
+            if (argsIndex >= _args.Length)
+            {
+                letters = null;
+                return false;
+            }
+
+            int width = _args[argsIndex].Length;
+
+            var lettersList = new List<char?[]>();
+            while (argsIndex < _args.Length && !int.TryParse(_args[argsIndex], out _))
+            {
+                string line = _args[argsIndex++];
                 if (line.Length != width)
                 {
-                    return null;
+                    letters = null;
+                    return false;
                 }
 
-                letters.Add(line.Select(letter => letter == '.' ? (char?)null : letter).ToArray());
+                lettersList.Add(line.Select(letter => letter == '.' ? (char?)null : letter).ToArray());
             }
-            return letters.ToArray();
+            letters = lettersList.ToArray();
+            return true;
         }
 
-        private static int[]? ParseLengths(string[] args, ref int argsIndex)
+        private bool TryParseLengths(ref int argsIndex, [NotNullWhen(true)]out int[]? lengths)
         {
-            int lengthsCount = args.Length - argsIndex;
+            int lengthsCount = _args.Length - argsIndex;
             if (lengthsCount <= 0)
             {
-                return null;
+                lengths = null;
+                return false;
             }
 
-            int[] lengths = new int[lengthsCount];
+            lengths = new int[lengthsCount];
             for (int i = 0; i < lengthsCount; i++)
             {
-                if (!int.TryParse(args[argsIndex++], out int length))
+                if (!int.TryParse(_args[argsIndex++], out int length))
                 {
-                    return null;
+                    lengths = null;
+                    return false;
                 }
                 lengths[i] = length;
             }
-            return lengths;
+            return true;
         }
 
-        public string? Path { get; }
-
-        public Puzzle? Puzzle { get; }
-
-        public bool IsValid { get; }
-
-        public string Usage { get; }
+        public string Usage => string.Format(Strings.Culture, Strings.Arguments_UsageFormat, _args0, Environment.NewLine);
     }
 }
