@@ -121,6 +121,9 @@
     <value>Usage: {0} word_list line1 [line2 ...] length1 [length2 ...]{1}  word_list: The path to a file containing a list of valid words (one per line).{1}  line1, line2, etc.: The lines of the WordBrain grid. The grid must be rectangular. Use '.' for blanks.{1}  length1, length2, etc.: The lengths of the words in the solution. They must sum to the number of letters in the grid.{1}</value>
     <comment>{0} = args0, {1} = Environment.NewLine</comment>
   </data>
+  <data name="Program_ExpectedValidArgs" xml:space="preserve">
+    <value>Expected valid arguments.</value>
+  </data>
   <data name="Program_FoundSolutionsFormat" xml:space="preserve">
     <value>Found {0:N0} solutions in {1}</value>
     <comment>{0} = count of solutions, {1} = elapsed time</comment>

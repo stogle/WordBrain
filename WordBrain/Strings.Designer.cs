@@ -70,6 +70,15 @@ namespace WordBrain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expected valid arguments..
+        /// </summary>
+        internal static string Program_ExpectedValidArgs {
+            get {
+                return ResourceManager.GetString("Program_ExpectedValidArgs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Found {0:N0} solutions in {1}.
         /// </summary>
         internal static string Program_FoundSolutionsFormat {
