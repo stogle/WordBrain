@@ -49,7 +49,22 @@ namespace WordBrain.Tests
 
             // Assert
             Assert.AreEqual("Value cannot be null. (Parameter 'puzzle')", exception.Message);
+        }
 
+        [TestMethod]
+        public void Solve_WhenProgressIsNotNull_ReportsProgress()
+        {
+            // Arrange
+            var solver = CreateSolver();
+            var puzzle = CreatePuzzle();
+            bool isProgressReported = false;
+            var progress = new Progress<Solution>(solution => isProgressReported = true);
+
+            // Act
+            solver.Solve(puzzle, progress).ToList();
+
+            // Assert
+            Assert.IsTrue(isProgressReported);
         }
 
         [TestMethod]
@@ -64,7 +79,7 @@ namespace WordBrain.Tests
 
             // Assert
             int i = 0;
-            CollectionAssert.AreEquivalent(new[] { "DO", "THE", "TEST", }, result[i++].Words.ToList());
+            CollectionAssert.AreEquivalent(new[] { "DO", "THE", "TEST" }, result[i++].Words.ToList());
             CollectionAssert.AreEquivalent(new[] { "HE", "DOT", "TEST" }, result[i++].Words.ToList());
             Assert.AreEqual(result.Count, i);
         }

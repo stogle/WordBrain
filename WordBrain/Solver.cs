@@ -16,9 +16,9 @@ namespace WordBrain
             _wordTree = wordTree ?? throw new ArgumentNullException(nameof(wordTree));
         }
 
-        public IEnumerable<Solution> Solve(Puzzle puzzle) => SolveAsync(puzzle).ToEnumerable();
+        public IEnumerable<Solution> Solve(Puzzle puzzle, IProgress<Solution>? progress = null) => SolveAsync(puzzle, progress).ToEnumerable();
 
-        public async IAsyncEnumerable<Solution> SolveAsync(Puzzle puzzle)
+        public async IAsyncEnumerable<Solution> SolveAsync(Puzzle puzzle, IProgress<Solution>? progress = null)
         {
             if (puzzle == null)
             {
@@ -31,7 +31,7 @@ namespace WordBrain
             _ = Task.WhenAll(sequence.Extend()
                 .Select(sequence => Task.Run(() =>
                 {
-                    foreach (Solution solution in Extend(sequence))
+                    foreach (Solution solution in Extend(sequence, progress))
                     {
                         channel.Writer.TryWrite(solution);
                     }
@@ -46,16 +46,12 @@ namespace WordBrain
                 var wordSet = new HashSet<string>(solution.Words);
                 if (distinctSolutions.Add(wordSet))
                 {
-                    Console.Write($"{new string(' ', solutionLength)}\r");
-
                     yield return solution;
                 }
             }
-
-            Console.Write($"{new string(' ', solutionLength)}\r");
         }
 
-        private IEnumerable<Solution> Extend(Sequence sequence)
+        private IEnumerable<Solution> Extend(Sequence sequence, IProgress<Solution>? progress = null)
         {
             if (sequence.TryPlay(out Puzzle? puzzle))
             {
@@ -67,11 +63,11 @@ namespace WordBrain
 
                 if (_iteration++ % 5000L == 0L)
                 {
-                    Console.Write($"{puzzle.Solution}\r");
+                    progress?.Report(puzzle.Solution);
                 }
 
                 // Solve remaining puzzle
-                foreach (Solution solution in Extend(new Sequence(puzzle, _wordTree)))
+                foreach (Solution solution in Extend(new Sequence(puzzle, _wordTree), progress))
                 {
                     yield return solution;
                 }
@@ -80,7 +76,7 @@ namespace WordBrain
             // Visit neighbors
             foreach (var nextSequence in sequence.Extend())
             {
-                foreach (Solution solution in Extend(nextSequence))
+                foreach (Solution solution in Extend(nextSequence, progress))
                 {
                     yield return solution;
                 }

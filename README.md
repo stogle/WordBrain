@@ -25,7 +25,7 @@ The command `WordBrain 3of6game.txt SLLY HAUE ICTN PAON 4 8 4` produces the foll
 
     ACTUALLY SHIP NONE
 
-    Found 1 solutions in 00:00:00.1002846
+    Found 1 solution(s) in 00:00:00.1002846
 
 The command `WordBrain 3of6game.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12` produces the following output:
 
@@ -45,7 +45,7 @@ The command `WordBrain 3of6game.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12` prod
     VALUE DOSE CHARACTERIZE AIDE
     VALUE DOSE CHARACTERIZE IDEA
 
-    Found 6 solutions in 00:00:11.8792028
+    Found 6 solution(s) in 00:00:11.8792028
 
 The command `WordBrain 3of6game.txt ....AT .F..LL .LMTLI TODIUE TAPNAR ETOSMB 7 6 4 8 3` produces the following output:
 
@@ -64,4 +64,4 @@ The command `WordBrain 3of6game.txt ....AT .F..LL .LMTLI TODIUE TAPNAR ETOSMB 7 
     SANDPIT TOMATO UMBRELLA TIL LEFT
     SANDPIT TOMATO UMBRELLA LEFT LIT
 
-    Found 4 solutions in 00:00:49.0017859
+    Found 4 solution(s) in 00:00:49.0017859

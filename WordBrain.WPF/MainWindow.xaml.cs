@@ -20,9 +20,9 @@ namespace WordBrain.WPF
 
         private void Solution_Loaded(object sender, RoutedEventArgs e)
         {
-            var contentPresenter = (ContentPresenter)Solution.ItemContainerGenerator.ContainerFromIndex(0);
+            var contentPresenter = (ContentPresenter)Lengths.ItemContainerGenerator.ContainerFromIndex(0);
             var element = (UIElement)contentPresenter.ContentTemplate.FindName("Word", contentPresenter);
-            SolutionLabel.Target = element;
+            LengthsLabel.Target = element;
         }
     }
 }

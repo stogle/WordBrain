@@ -4,7 +4,7 @@ using System.IO;
 
 namespace WordBrain
 {
-    public sealed class Program
+    public class Program
     {
         public static void Main(string[] args) => new Program(() => DateTime.Now, File.ReadAllLines, Console.Out, args).Start();
 
@@ -13,6 +13,8 @@ namespace WordBrain
         private readonly TextWriter _stdout;
         private readonly string _path;
         private readonly Puzzle _puzzle;
+        private readonly Progress<Solution> _progress;
+        private int _reportLength;
 
         public Program(Func<DateTime> now, Func<string, string[]> fileReader, TextWriter stdout, string[] args)
         {
@@ -29,6 +31,7 @@ namespace WordBrain
             }
             _path = path;
             _puzzle = new Puzzle(new Grid(letters), new Solution(lengths));
+            _progress = new Progress<Solution>(Report);
         }
 
         public void Start()
@@ -52,12 +55,31 @@ namespace WordBrain
         {
             var solver = new Solver(wordTree);
             var solutions = new List<Solution>();
-            foreach (var solution in solver.Solve(_puzzle))
+            foreach (var solution in solver.Solve(_puzzle, _progress))
             {
                 solutions.Add(solution);
+                ClearReport();
                 _stdout.WriteLine(solution);
             }
+            ClearReport();
             return solutions;
+        }
+
+        private void Report(Solution value)
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            string report = value.ToString();
+            _reportLength = report.Length;
+            Console.Write($"{report}\r");
+        }
+
+        private void ClearReport()
+        {
+            Console.Write($"{new string(' ', _reportLength)}\r");
         }
     }
 }

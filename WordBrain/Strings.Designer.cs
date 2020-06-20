@@ -22,7 +22,7 @@ namespace WordBrain {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Strings {
+    public class Strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace WordBrain {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WordBrain.Strings", typeof(Strings).Assembly);
@@ -51,7 +51,7 @@ namespace WordBrain {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace WordBrain {
         /// <summary>
         ///   Looks up a localized string similar to Usage: {0} word_list line1 [line2 ...] length1 [length2 ...]{1}  word_list: The path to a file containing a list of valid words (one per line).{1}  line1, line2, etc.: The lines of the WordBrain grid. The grid must be rectangular. Use &apos;.&apos; for blanks.{1}  length1, length2, etc.: The lengths of the words in the solution. They must sum to the number of letters in the grid.{1}.
         /// </summary>
-        internal static string Arguments_UsageFormat {
+        public static string Arguments_UsageFormat {
             get {
                 return ResourceManager.GetString("Arguments_UsageFormat", resourceCulture);
             }
@@ -72,16 +72,16 @@ namespace WordBrain {
         /// <summary>
         ///   Looks up a localized string similar to Expected valid arguments..
         /// </summary>
-        internal static string Program_ExpectedValidArgs {
+        public static string Program_ExpectedValidArgs {
             get {
                 return ResourceManager.GetString("Program_ExpectedValidArgs", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Found {0:N0} solutions in {1}.
+        ///   Looks up a localized string similar to Found {0:N0} solution(s) in {1}.
         /// </summary>
-        internal static string Program_FoundSolutionsFormat {
+        public static string Program_FoundSolutionsFormat {
             get {
                 return ResourceManager.GetString("Program_FoundSolutionsFormat", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace WordBrain {
         /// <summary>
         ///   Looks up a localized string similar to Read {0:N0} words in {1}.
         /// </summary>
-        internal static string Program_ReadWordsFormat {
+        public static string Program_ReadWordsFormat {
             get {
                 return ResourceManager.GetString("Program_ReadWordsFormat", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace WordBrain {
         /// <summary>
         ///   Looks up a localized string similar to Expected positive integer lengths..
         /// </summary>
-        internal static string Puzzle_ExpectedPositiveLengthsExceptionMessage {
+        public static string Puzzle_ExpectedPositiveLengthsExceptionMessage {
             get {
                 return ResourceManager.GetString("Puzzle_ExpectedPositiveLengthsExceptionMessage", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace WordBrain {
         /// <summary>
         ///   Looks up a localized string similar to Expected letters to be rectangular..
         /// </summary>
-        internal static string Puzzle_ExpectedRectangularLettersExceptionMessage {
+        public static string Puzzle_ExpectedRectangularLettersExceptionMessage {
             get {
                 return ResourceManager.GetString("Puzzle_ExpectedRectangularLettersExceptionMessage", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace WordBrain {
         /// <summary>
         ///   Looks up a localized string similar to Expected remaining letters in grid and solution to be equal..
         /// </summary>
-        internal static string Puzzle_ExpectedRemainingLettersEqualExceptionMessage {
+        public static string Puzzle_ExpectedRemainingLettersEqualExceptionMessage {
             get {
                 return ResourceManager.GetString("Puzzle_ExpectedRemainingLettersEqualExceptionMessage", resourceCulture);
             }

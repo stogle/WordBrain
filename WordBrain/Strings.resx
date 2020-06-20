@@ -125,7 +125,7 @@
     <value>Expected valid arguments.</value>
   </data>
   <data name="Program_FoundSolutionsFormat" xml:space="preserve">
-    <value>Found {0:N0} solutions in {1}</value>
+    <value>Found {0:N0} solution(s) in {1}</value>
     <comment>{0} = count of solutions, {1} = elapsed time</comment>
   </data>
   <data name="Program_ReadWordsFormat" xml:space="preserve">
