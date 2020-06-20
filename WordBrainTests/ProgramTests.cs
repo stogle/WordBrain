@@ -103,7 +103,7 @@ namespace WordBrain.Tests
                 $"{Environment.NewLine}" +
                 $"(SHIP ACTUALLY|ACTUALLY SHIP) NONE{Environment.NewLine}" +
                 $"{Environment.NewLine}" +
-                $"Found 1 solutions in 00:00:01{Environment.NewLine}"));
+                $"Found 1 solution\\(s\\) in 00:00:01{Environment.NewLine}"));
         }
     }
 }
