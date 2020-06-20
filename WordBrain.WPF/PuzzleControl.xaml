@@ -20,7 +20,7 @@
 
             <local:SolutionControl Grid.Row="1"
                                    Focusable="False"
-                                   ItemsSource="{Binding Solution}"
+                                   ItemsSource="{Binding Lengths}"
                                    Margin="5"
                                    MaxWidth="{Binding ActualWidth, ElementName=Grid}"/>
         </Grid>
