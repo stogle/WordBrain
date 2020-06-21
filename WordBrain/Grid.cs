@@ -1,16 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace WordBrain
 {
     public class Grid
     {
-        private readonly char?[][] _letters;
+        private readonly IReadOnlyList<IReadOnlyList<char?>> _letters;
 
-        internal Grid(char?[][] letters)
+        internal Grid(IReadOnlyList<IReadOnlyList<char?>> letters)
         {
-            Height = letters.Length;
-            Width = Height == 0 ? 0 : letters[0].Length;
+            Height = letters.Count;
+            Width = Height == 0 ? 0 : letters[0].Count;
             _letters = letters;
         }
 

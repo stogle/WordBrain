@@ -1,17 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace WordBrain
 {
     public class Puzzle
     {
-        public Puzzle(char?[][] letters, int[] lengths)
+        public Puzzle(IReadOnlyList<IReadOnlyList<char?>> letters, IReadOnlyList<int> lengths)
         {
             if (letters == null)
             {
                 throw new ArgumentNullException(nameof(letters));
             }
-            if (letters.Skip(1).Any(row => row.Length != letters[0].Length))
+            if (letters.Skip(1).Any(row => row.Count != letters[0].Count))
             {
                 throw new ArgumentException(Strings.Puzzle_ExpectedRectangularLettersExceptionMessage, nameof(letters));
             }
