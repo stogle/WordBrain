@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WordBrain.WPF"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Height="800"
         MinHeight="600"
@@ -43,69 +42,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Grid Margin="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <Label x:Name="GridLabel"
-                       Content="_Grid:"
-                       Margin="0,0,5,0"
-                       VerticalAlignment="Center"/>
-                <ItemsControl x:Name="Grid"
-                              Grid.Column="1"
-                              Focusable="False"
-                              ItemsSource="{Binding Grid}"
-                              Loaded="Grid_Loaded"
-                              Margin="0,2.5">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel FocusManager.IsFocusScope="True"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="local:LineViewModel">
-                            <TextBox x:Name="Line"
-                                     FontFamily="Consolas"
-                                     FontSize="14"
-                                     Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-
-                <Label x:Name="LengthsLabel"
-                       Grid.Row="1"
-                       Content="_Lengths:"
-                       Margin="0,0,5,0"
-                       VerticalAlignment="Center"/>
-                <ItemsControl x:Name="Lengths"
-                              Grid.Row="1"
-                              Grid.Column="1"
-                              Focusable="False"
-                              ItemsSource="{Binding Lengths}"
-                              Loaded="Solution_Loaded"
-                              Margin="0,2.5">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="local:WordViewModel">
-                            <xctk:IntegerUpDown x:Name="Word"
-                                                Margin="0,2.5,5,2.5"
-                                                Maximum="{Binding DataContext.Letters.Count, RelativeSource={RelativeSource AncestorType=local:MainWindow}}"
-                                                Minimum="1"
-                                                Value="{Binding Length}"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </Grid>
+            <local:PuzzleEditorControl Margin="5"/>
 
             <local:PuzzleControl Grid.Row="1"
                                  Margin="5"/>
