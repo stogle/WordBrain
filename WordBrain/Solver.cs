@@ -55,7 +55,7 @@ namespace WordBrain
         {
             if (sequence.TryPlay(out Puzzle? puzzle))
             {
-                if (puzzle.Solution.MaxLength == null)
+                if (puzzle.Solution.NextLength == null)
                 {
                     yield return puzzle.Solution;
                     yield break;

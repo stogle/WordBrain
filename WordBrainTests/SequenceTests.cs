@@ -1,8 +1,7 @@
-﻿using WordBrain;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace WordBrain.Tests
 {
@@ -15,16 +14,16 @@ namespace WordBrain.Tests
 
         private static char?[][] CreateLetters() => new[]
         {
-            new char?[] { 'A', 'B', 'C' },
-            new char?[] { 'D', 'E', 'F' },
-            new char?[] { 'G', 'H', 'I' }
+            new char?[] { 'F', 'O', 'O' },
+            new char?[] { 'R', 'A', 'Z' },
+            new char?[] { 'B', 'A', 'B' }
         };
 
-        private static int[] CreateLengths() => new[] { 2, 3, 4 };
+        private static int[] CreateLengths() => new[] { 3, 3, 3 };
 
         public static WordTree CreateWordTree(IEnumerable<string>? words = null) => new WordTree(words ?? CreateWords());
 
-        public static IEnumerable<string> CreateWords() => new[] { "bed" };
+        public static IEnumerable<string> CreateWords() => new[] { "oar" };
 
         [TestMethod]
         public void Length_WhenCreated_ReturnsZero()
@@ -83,7 +82,7 @@ namespace WordBrain.Tests
         {
             // Arrange
             var puzzle = CreatePuzzle();
-            var wordTree = CreateWordTree(new[] { "a", "bee", "hat" });
+            var wordTree = CreateWordTree(new[] { "far", "r", "zoo" });
             var sequence = CreateSequence(puzzle, wordTree);
 
             // Act
@@ -91,9 +90,9 @@ namespace WordBrain.Tests
 
             // Assert
             int index = 0;
-            CollectionAssert.AreEqual(new[] { (0, 0) }, result[index++].GetSquares().ToList()); // A
-            CollectionAssert.AreEqual(new[] { (0, 1) }, result[index++].GetSquares().ToList()); // B
-            CollectionAssert.AreEqual(new[] { (2, 1) }, result[index++].GetSquares().ToList()); // H
+            CollectionAssert.AreEqual(new[] { (0, 0) }, result[index++].GetSquares().ToList()); // F
+            CollectionAssert.AreEqual(new[] { (1, 0) }, result[index++].GetSquares().ToList()); // R
+            CollectionAssert.AreEqual(new[] { (1, 2) }, result[index++].GetSquares().ToList()); // Z
             Assert.AreEqual(index, result.Count);
         }
 
@@ -102,7 +101,7 @@ namespace WordBrain.Tests
         {
             // Arrange
             var puzzle = CreatePuzzle();
-            var wordTree = CreateWordTree(new[] { "abc", "aeon" });
+            var wordTree = CreateWordTree(new[] { "far", "fob" });
             var sequence = CreateSequence(puzzle, wordTree).Extend().First();
 
             // Act
@@ -110,8 +109,8 @@ namespace WordBrain.Tests
 
             // Assert
             int index = 0;
-            CollectionAssert.AreEqual(new[] { (0, 0), (0, 1) }, result[index++].GetSquares().ToList()); // AB
-            CollectionAssert.AreEqual(new[] { (0, 0), (1, 1) }, result[index++].GetSquares().ToList()); // AE
+            CollectionAssert.AreEqual(new[] { (0, 0), (0, 1) }, result[index++].GetSquares().ToList()); // FO
+            CollectionAssert.AreEqual(new[] { (0, 0), (1, 1) }, result[index++].GetSquares().ToList()); // FA
             Assert.AreEqual(index, result.Count);
         }
 
@@ -155,8 +154,8 @@ namespace WordBrain.Tests
 
             // Assert
             Assert.IsTrue(result);
-            Assert.AreEqual($". . C{Environment.NewLine}A . F{Environment.NewLine}G H I", outPuzzle!.Grid.ToString());
-            Assert.AreEqual("BED __ ____", outPuzzle.Solution.ToString());
+            Assert.AreEqual($". . O{Environment.NewLine}F . Z{Environment.NewLine}B A B", outPuzzle!.Grid.ToString());
+            Assert.AreEqual("OAR ___ ___", outPuzzle.Solution.ToString());
         }
 
         [TestMethod]
@@ -182,7 +181,7 @@ namespace WordBrain.Tests
             string result = sequence.ToString();
 
             // Assert
-            Assert.AreEqual("BED", result);
+            Assert.AreEqual("OAR", result);
         }
     }
 }

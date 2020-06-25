@@ -11,12 +11,12 @@ namespace WordBrain.Tests
 
         private static char?[][] CreateLetters() => new[]
         {
-            new char?[] { 'A', 'B', 'C' },
-            new char?[] { 'D', 'E', 'F' },
-            new char?[] { 'G', 'H', 'I' }
+            new char?[] { 'F', 'O', 'O' },
+            new char?[] { 'R', 'A', 'Z' },
+            new char?[] { 'B', 'A', 'B' }
         };
 
-        private static int[] CreateLengths() => new[] { 2, 3, 4 };
+        private static int[] CreateLengths() => new[] { 3, 3, 3 };
 
         [TestMethod]
         public void Height_Always_ReturnsHeight()
@@ -70,7 +70,7 @@ namespace WordBrain.Tests
             string result = puzzle.Grid.ToString();
 
             // Assert
-            Assert.AreEqual($"A B C{Environment.NewLine}D E F{Environment.NewLine}G H I", result);
+            Assert.AreEqual($"F O O{Environment.NewLine}R A Z{Environment.NewLine}B A B", result);
         }
 
         [TestMethod]

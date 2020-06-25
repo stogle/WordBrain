@@ -8,38 +8,31 @@ namespace WordBrain
     {
         private readonly IReadOnlyList<Word> _items;
         private readonly int _index;
-        private readonly int _length;
 
         internal Solution(IReadOnlyList<int> lengths)
         {
             _items = lengths.Select(length => new Word(length)).ToArray();
             _index = 0;
-            _length = lengths.Count;
-            MaxLength = lengths.Cast<int?>().Max();
+            NextLength = _items.Any() ? _items[0].Length : null;
         }
 
         private Solution(IReadOnlyList<Word> items, int index)
         {
             _items = items;
             _index = index;
-            _length = items.Count;
-            MaxLength = _items.Skip(index).Select(item => item.Length).Max();
+            NextLength = index < _items.Count ? _items[index].Length : null;
         }
 
-        public int? MaxLength { get; }
+        public int? NextLength { get; }
 
         internal bool TryPlay(Sequence sequence, [NotNullWhen(true)]out Solution? solution)
         {
-            for (int i = _index; i < _length; i++)
+            if (sequence.Length == NextLength)
             {
-                if (_items[i].Length == sequence.Length)
-                {
-                    Word[] items = _items.ToArray();
-                    items[i] = items[_index];
-                    items[_index] = new Word(sequence);
-                    solution = new Solution(items, _index + 1);
-                    return true;
-                }
+                Word[] items = _items.ToArray();
+                items[_index] = new Word(sequence);
+                solution = new Solution(items, _index + 1);
+                return true;
             }
 
             solution = null;

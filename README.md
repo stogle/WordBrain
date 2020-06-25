@@ -15,7 +15,7 @@ Solves [WordBrain](https://www.maginteractive.com/games/wordbrain/) puzzles
 
 The command `WordBrain 3of6game.txt SLLY HAUE ICTN PAON 4 8 4` produces the following output:
 
-    Read 61,442 words in 00:00:00.0944764
+    Read 61,442 words in 00:00:00.1048676
 
     S L L Y
     H A U E
@@ -23,13 +23,13 @@ The command `WordBrain 3of6game.txt SLLY HAUE ICTN PAON 4 8 4` produces the foll
     P A O N
     ____ ________ ____
 
-    ACTUALLY SHIP NONE
+    SHIP ACTUALLY NONE
 
-    Found 1 solution(s) in 00:00:00.1002846
+    Found 1 solution(s) in 00:00:00.1271285
 
 The command `WordBrain 3of6game.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12` produces the following output:
 
-    Read 61,442 words in 00:00:00.0963334
+    Read 61,442 words in 00:00:00.1094828
 
     E Z E A I
     U I C R D
@@ -38,30 +38,28 @@ The command `WordBrain 3of6game.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12` prod
     V C T E S
     _____ ____ ____ ____________
 
-    ODES CHARACTERIZE AIDE VALUE
-    ODES CHARACTERIZE IDEA VALUE
-    DOES CHARACTERIZE AIDE VALUE
-    DOES CHARACTERIZE IDEA VALUE
-    VALUE DOSE CHARACTERIZE AIDE
-    VALUE DOSE CHARACTERIZE IDEA
+    VALUE DOES AIDE CHARACTERIZE
+    VALUE DOES IDEA CHARACTERIZE
+    VALUE DOSE AIDE CHARACTERIZE
+    VALUE DOSE IDEA CHARACTERIZE
+    VALUE ODES AIDE CHARACTERIZE
+    VALUE ODES IDEA CHARACTERIZE
 
-    Found 6 solution(s) in 00:00:11.8792028
+    Found 6 solution(s) in 00:00:04.8951832
 
 The command `WordBrain 3of6game.txt ....AT .F..LL .LMTLI TODIUE TAPNAR ETOSMB 7 6 4 8 3` produces the following output:
 
-    Read 61,442 words in 00:00:00.0935246
+    Read 61,442 words in 00:00:00.0928488
 
-    . . . . A T
-    . F . . L L
-    . L M T L I
+    G . . . A T
+    A F . . L L
+    P L M T E I
     T O D I U E
     T A P N A R
     E T O S M B
-    _______ ______ ____ ________ ___
+    _______ ______ ____ ________ ___ ___
 
-    SANDPIT TOMATO FELT UMBRELLA TIL
-    SANDPIT TOMATO FELT UMBRELLA LIT
-    SANDPIT TOMATO UMBRELLA TIL LEFT
-    SANDPIT TOMATO UMBRELLA LEFT LIT
+    SANDPIT TOMATO FELT UMBRELLA GAP TIE
+    SANDPIT TOMATO LEFT UMBRELLA GAP TIE
 
-    Found 4 solution(s) in 00:00:49.0017859
+    Found 2 solution(s) in 00:00:00.4058408

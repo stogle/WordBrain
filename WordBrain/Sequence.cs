@@ -67,7 +67,7 @@ namespace WordBrain
                 yield break;
             }
 
-            if (Length < _puzzle.Solution.MaxLength)
+            if (Length < _puzzle.Solution.NextLength)
             {
                 bool isNotFirstColumn = _j - 1 >= 0;
                 bool isNotLastColumn = _j + 1 < _puzzle.Grid.Width;

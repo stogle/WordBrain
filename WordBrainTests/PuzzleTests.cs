@@ -12,12 +12,12 @@ namespace WordBrain.Tests
 
         private static char?[][] CreateLetters() => new[]
         {
-            new char?[] { 'A', 'B', 'C' },
-            new char?[] { 'D', 'E', 'F' },
-            new char?[] { 'G', 'H', 'I' }
+            new char?[] { 'F', 'O', 'O' },
+            new char?[] { 'R', 'A', 'Z' },
+            new char?[] { 'B', 'A', 'B' }
         };
 
-        private static int[] CreateLengths() => new[] { 2, 3, 4 };
+        private static int[] CreateLengths() => new[] { 3, 3, 3 };
 
         private static WordTree CreateWordTree(IEnumerable<string>? words = null) => new WordTree(words ?? CreateWords());
 
@@ -40,7 +40,7 @@ namespace WordBrain.Tests
         public void Constructor_WhenLettersAreNotRectangular_ThrowsException()
         {
             // Arrange
-            char?[][] letters = { new char?[] { 'A', 'B', 'C' }, new char?[] { 'D', 'E' }, new char?[] { 'G', 'H', 'I' } };
+            char?[][] letters = { new char?[] { 'F', 'O', 'O' }, new char?[] { 'R', 'A' }, new char?[] { 'B', 'A', 'B' } };
 
             // Act
             var exception = Assert.ThrowsException<ArgumentException>(() => new Puzzle(letters, CreateLengths()));
@@ -134,8 +134,8 @@ namespace WordBrain.Tests
             string result = puzzle.ToString();
 
             // Assert
-            Assert.AreEqual($"A B C{Environment.NewLine}D E F{Environment.NewLine}G H I{Environment.NewLine}" +
-                $"__ ___ ____{Environment.NewLine}", result);
+            Assert.AreEqual($"F O O{Environment.NewLine}R A Z{Environment.NewLine}B A B{Environment.NewLine}" +
+                $"___ ___ ___{Environment.NewLine}", result);
         }
 
         [TestMethod]
@@ -143,7 +143,7 @@ namespace WordBrain.Tests
         {
             // Arrange
             Puzzle puzzle = CreatePuzzle();
-            WordTree wordTree = CreateWordTree(new[] { "BED" });
+            WordTree wordTree = CreateWordTree(new[] { "OAR" });
             Sequence sequence = new Sequence(puzzle, wordTree).Extend().First().Extend().First().Extend().First();
             sequence.TryPlay(out puzzle!);
 
@@ -151,8 +151,8 @@ namespace WordBrain.Tests
             string result = puzzle.ToString();
 
             // Assert
-            Assert.AreEqual($". . C{Environment.NewLine}A . F{Environment.NewLine}G H I{Environment.NewLine}" +
-                $"BED __ ____{Environment.NewLine}", result);
+            Assert.AreEqual($". . O{Environment.NewLine}F . Z{Environment.NewLine}B A B{Environment.NewLine}" +
+                $"OAR ___ ___{Environment.NewLine}", result);
         }
     }
 }

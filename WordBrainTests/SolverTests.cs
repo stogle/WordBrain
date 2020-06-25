@@ -10,18 +10,18 @@ namespace WordBrain.Tests
     {
         private static Solver CreateSolver(WordTree? wordTree = null) => new Solver(wordTree ?? CreateWordTree());
 
-        private static WordTree CreateWordTree(IEnumerable<string>? words = null) => new WordTree(words ?? new[] { "actually", "do", "does", "dot", "dots", "he", "hot", "none", "see", "seed", "set", "she", "ship", "test", "the" });
+        private static WordTree CreateWordTree(IEnumerable<string>? words = null) => new WordTree(words ?? new[] { "actually", "bar", "boa", "boo", "fab", "far", "fob", "for", "none", "oar", "orb", "ship", "zoo" });
 
         private static Puzzle CreatePuzzle(char?[][]? letters = null, int[]? lengths = null) => new Puzzle(letters ?? CreateLetters(), lengths ?? CreateLengths());
 
         private static char?[][] CreateLetters() => new[]
         {
-            new char?[] { 'D', 'O', 'T' },
-            new char?[] { 'T', 'E', 'H' },
-            new char?[] { 'E', 'S', 'T' }
+            new char?[] { 'F', 'O', 'O' },
+            new char?[] { 'R', 'A', 'Z' },
+            new char?[] { 'B', 'A', 'B' }
         };
 
-        private static int[] CreateLengths() => new[] { 2, 3, 4 };
+        private static int[] CreateLengths() => new[] { 3, 3, 3 };
 
         [TestMethod]
         public void Constructor_WhenWordTreeIsNull_ThrowsException()
@@ -78,10 +78,8 @@ namespace WordBrain.Tests
             var result = solver.Solve(puzzle).ToList();
 
             // Assert
-            int i = 0;
-            CollectionAssert.AreEquivalent(new[] { "DO", "THE", "TEST" }, result[i++].Words.ToList());
-            CollectionAssert.AreEquivalent(new[] { "HE", "DOT", "TEST" }, result[i++].Words.ToList());
-            Assert.AreEqual(result.Count, i);
+            Assert.AreEqual(1, result.Count);
+            CollectionAssert.AreEquivalent(new[] { "BAR", "ZOO", "FAB" }, result[0].Words.ToList());
         }
 
         [TestMethod]
@@ -97,9 +95,8 @@ namespace WordBrain.Tests
             var result = solver.Solve(puzzle).ToList();
 
             // Assert
-            int i = 0;
-            CollectionAssert.AreEquivalent(new[] { "SHIP", "ACTUALLY", "NONE" }, result[i++].Words.ToList());
-            Assert.AreEqual(result.Count, i);
+            Assert.AreEqual(1, result.Count);
+            CollectionAssert.AreEqual(new[] { "SHIP", "ACTUALLY", "NONE" }, result[0].Words.ToList());
         }
     }
 }

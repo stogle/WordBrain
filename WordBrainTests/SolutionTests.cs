@@ -11,34 +11,34 @@ namespace WordBrain.Tests
 
         private static char?[][] CreateLetters() => new[]
         {
-            new char?[] { 'A', 'B', 'C' },
-            new char?[] { 'D', 'E', 'F' },
-            new char?[] { 'G', 'H', 'I' }
+            new char?[] { 'F', 'O', 'O' },
+            new char?[] { 'R', 'A', 'Z' },
+            new char?[] { 'B', 'A', 'B' }
         };
 
-        private static int[] CreateLengths() => new[] { 2, 3, 4 };
+        private static int[] CreateLengths() => new[] { 3, 3, 3 };
 
         [TestMethod]
-        public void MaxLength_WhenLengthsIsNotEmpty_ReturnsCorrectValue()
+        public void NextLength_WhenLengthsIsNotEmpty_ReturnsCorrectValue()
         {
             // Arrange
             Puzzle puzzle = CreatePuzzle();
 
             // Act
-            int? result = puzzle.Solution.MaxLength;
+            int? result = puzzle.Solution.NextLength;
 
             // Assert
-            Assert.AreEqual(4, result);
+            Assert.AreEqual(3, result);
         }
 
         [TestMethod]
-        public void IsComplete_WhenLengthsIsEmpty_ReturnsNull()
+        public void NextLength_WhenLengthsIsEmpty_ReturnsNull()
         {
             // Arrange
             Puzzle puzzle = CreatePuzzle(Array.Empty<char?[]>(), Array.Empty<int>());
 
             // Act
-            int? result = puzzle.Solution.MaxLength;
+            int? result = puzzle.Solution.NextLength;
 
             // Assert
             Assert.IsNull(result);
@@ -54,7 +54,7 @@ namespace WordBrain.Tests
             var result = puzzle.Solution.Words.ToList();
 
             // Assert
-            CollectionAssert.AreEquivalent(new[] { "__", "___", "____" }, result);
+            CollectionAssert.AreEquivalent(new[] { "___", "___", "___" }, result);
         }
 
         [TestMethod]
@@ -62,7 +62,7 @@ namespace WordBrain.Tests
         {
             // Arrange
             Puzzle puzzle = CreatePuzzle();
-            WordTree wordTree = new WordTree(new[] { "BED" });
+            WordTree wordTree = new WordTree(new[] { "OAR" });
             Sequence sequence = new Sequence(puzzle, wordTree).Extend().First().Extend().First().Extend().First();
             sequence.TryPlay(out puzzle!);
 
@@ -70,7 +70,7 @@ namespace WordBrain.Tests
             var result = puzzle.Solution.Words.ToList();
 
             // Assert
-            CollectionAssert.AreEquivalent(new[] { "__", "BED", "____" }, result);
+            CollectionAssert.AreEquivalent(new[] { "OAR", "___", "___" }, result);
         }
 
         [TestMethod]
@@ -83,7 +83,7 @@ namespace WordBrain.Tests
             string result = puzzle.Solution.ToString();
 
             // Assert
-            Assert.AreEqual("__ ___ ____", result);
+            Assert.AreEqual("___ ___ ___", result);
         }
 
         [TestMethod]
@@ -91,7 +91,7 @@ namespace WordBrain.Tests
         {
             // Arrange
             Puzzle puzzle = CreatePuzzle();
-            WordTree wordTree = new WordTree(new[] { "BED" });
+            WordTree wordTree = new WordTree(new[] { "OAR" });
             Sequence sequence = new Sequence(puzzle, wordTree).Extend().First().Extend().First().Extend().First();
             sequence.TryPlay(out puzzle!);
 
@@ -99,7 +99,7 @@ namespace WordBrain.Tests
             var result = puzzle.Solution.ToString();
 
             // Assert
-            Assert.AreEqual("BED __ ____", result);
+            Assert.AreEqual("OAR ___ ___", result);
         }
     }
 }
