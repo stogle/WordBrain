@@ -23,9 +23,9 @@ namespace WordBrain
             Length = 0;
         }
 
-        private Sequence(Puzzle puzzle, WordTree wordTree, Sequence parent, int i, int j)
+        private Sequence(Sequence parent, WordTree wordTree, int i, int j)
         {
-            _puzzle = puzzle;
+            _puzzle = parent._puzzle;
             _wordTree = wordTree;
             _parent = parent;
             _i = i;
@@ -59,7 +59,7 @@ namespace WordBrain
                     {
                         if (!IsVisited(i, j) && _wordTree.TryLetter(_puzzle.Grid[i, j]!.Value, out wordTree))
                         {
-                            yield return new Sequence(_puzzle, wordTree, this, i, j);
+                            yield return new Sequence(this, wordTree, i, j);
                         }
                     }
                 }
@@ -75,38 +75,38 @@ namespace WordBrain
                 {
                     if (isNotFirstColumn && !IsVisited(_i - 1, _j - 1) && _wordTree.TryLetter(_puzzle.Grid[_i - 1, _j - 1]!.Value, out wordTree))
                     {
-                        yield return new Sequence(_puzzle, wordTree, this, _i - 1, _j - 1); // NW
+                        yield return new Sequence(this, wordTree, _i - 1, _j - 1); // NW
                     }
                     if (!IsVisited(_i - 1, _j) && _wordTree.TryLetter(_puzzle.Grid[_i - 1, _j]!.Value, out wordTree))
                     {
-                        yield return new Sequence(_puzzle, wordTree, this, _i - 1, _j); // N
+                        yield return new Sequence(this, wordTree, _i - 1, _j); // N
                     }
                     if (isNotLastColumn && !IsVisited(_i - 1, _j + 1) && _wordTree.TryLetter(_puzzle.Grid[_i - 1, _j + 1]!.Value, out wordTree))
                     {
-                        yield return new Sequence(_puzzle, wordTree, this, _i - 1, _j + 1); // NE
+                        yield return new Sequence(this, wordTree, _i - 1, _j + 1); // NE
                     }
                 }
                 if (isNotFirstColumn && !IsVisited(_i, _j - 1) && _wordTree.TryLetter(_puzzle.Grid[_i, _j - 1]!.Value, out wordTree))
                 {
-                    yield return new Sequence(_puzzle, wordTree, this, _i, _j - 1); // W
+                    yield return new Sequence(this, wordTree, _i, _j - 1); // W
                 }
                 if (isNotLastColumn && !IsVisited(_i, _j + 1) && _wordTree.TryLetter(_puzzle.Grid[_i, _j + 1]!.Value, out wordTree))
                 {
-                    yield return new Sequence(_puzzle, wordTree, this, _i, _j + 1); // E
+                    yield return new Sequence(this, wordTree, _i, _j + 1); // E
                 }
                 if (_i + 1 < _puzzle.Grid.Height)
                 {
                     if (isNotFirstColumn && !IsVisited(_i + 1, _j - 1) && _wordTree.TryLetter(_puzzle.Grid[_i + 1, _j - 1]!.Value, out wordTree))
                     {
-                        yield return new Sequence(_puzzle, wordTree, this, _i + 1, _j - 1); // SW
+                        yield return new Sequence(this, wordTree, _i + 1, _j - 1); // SW
                     }
                     if (!IsVisited(_i + 1, _j) && _wordTree.TryLetter(_puzzle.Grid[_i + 1, _j]!.Value, out wordTree))
                     {
-                        yield return new Sequence(_puzzle, wordTree, this, _i + 1, _j); // S
+                        yield return new Sequence(this, wordTree, _i + 1, _j); // S
                     }
                     if (isNotLastColumn && !IsVisited(_i + 1, _j + 1) && _wordTree.TryLetter(_puzzle.Grid[_i + 1, _j + 1]!.Value, out wordTree))
                     {
-                        yield return new Sequence(_puzzle, wordTree, this, _i + 1, _j + 1); // SE
+                        yield return new Sequence(this, wordTree, _i + 1, _j + 1); // SE
                     }
                 }
             }
