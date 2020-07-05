@@ -13,8 +13,7 @@ namespace WordBrain
         private readonly TextWriter _stdout;
         private readonly string _path;
         private readonly Puzzle _puzzle;
-        private readonly Progress<Solution> _progress;
-        private int _reportLength;
+        private readonly ConsoleProgress _progress = new ConsoleProgress();
 
         public Program(Func<DateTime> now, Func<string, string[]> fileReader, TextWriter stdout, string[] args)
         {
@@ -31,7 +30,6 @@ namespace WordBrain
             }
             _path = path;
             _puzzle = new Puzzle(new Grid(letters), new Solution(lengths));
-            _progress = new Progress<Solution>(Report);
         }
 
         public void Start()
@@ -58,28 +56,33 @@ namespace WordBrain
             foreach (var solution in solver.Solve(_puzzle, _progress))
             {
                 solutions.Add(solution);
-                ClearReport();
+                _progress.ClearReport();
                 _stdout.WriteLine(solution);
             }
-            ClearReport();
+            _progress.ClearReport();
             return solutions;
         }
 
-        private void Report(Solution value)
+        private class ConsoleProgress : IProgress<Solution>
         {
-            if (value == null)
+            private int _reportLength;
+
+            public void Report(Solution value)
             {
-                return;
+                if (value == null)
+                {
+                    return;
+                }
+
+                string report = value.ToString();
+                _reportLength = report.Length;
+                Console.Write($"{report}\r");
             }
 
-            string report = value.ToString();
-            _reportLength = report.Length;
-            Console.Write($"{report}\r");
-        }
-
-        private void ClearReport()
-        {
-            Console.Write($"{new string(' ', _reportLength)}\r");
+            public void ClearReport()
+            {
+                Console.Write($"{new string(' ', _reportLength)}\r");
+            }
         }
     }
 }
