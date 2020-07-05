@@ -47,7 +47,7 @@ The command `WordBrain 3of6game.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12` prod
 
     Found 6 solution(s) in 00:00:04.8951832
 
-The command `WordBrain 3of6game.txt ....AT .F..LL .LMTLI TODIUE TAPNAR ETOSMB 7 6 4 8 3` produces the following output:
+The command `WordBrain 3of6game.txt G...AT AF..LL PLMTEI TODIUE TAPNAR ETOSMB 7 6 4 8 3 3` produces the following output:
 
     Read 61,442 words in 00:00:00.0928488
 

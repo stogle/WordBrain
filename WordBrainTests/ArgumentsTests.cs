@@ -128,7 +128,7 @@ namespace WordBrain.Tests
         }
 
         [TestMethod]
-        public void TryParse_WhenArgsContainsInvalidLengths_SetsPathAndLettersAndReturnsFalse()
+        public void TryParse_WhenArgsContainsNonNumericLengths_SetsPathAndLettersAndReturnsFalse()
         {
             // Arrange
             string[] args = { "words.txt", "ABC", "DEF", "GHI", "2", "3x", "4" };
@@ -145,6 +145,46 @@ namespace WordBrain.Tests
             CollectionAssert.AreEqual("DEF".ToCharArray(), letters![1]);
             CollectionAssert.AreEqual("GHI".ToCharArray(), letters![2]);
             Assert.IsNull(lengths);
+        }
+
+        [TestMethod]
+        public void TryParse_WhenArgsContainsNonPositiveLengths_SetsPathAndLettersAndReturnsFalse()
+        {
+            // Arrange
+            string[] args = { "words.txt", "ABC", "DEF", "GHI", "2", "3", "4", "0" };
+            var arguments = CreateArguments(args);
+
+            // Act
+            bool result = arguments.TryParse(out string? path, out char?[][]? letters, out int[]? lengths);
+
+            // Assert
+            Assert.IsFalse(result);
+            Assert.AreEqual("words.txt", path);
+            Assert.AreEqual(3, letters!.Length);
+            CollectionAssert.AreEqual("ABC".ToCharArray(), letters![0]);
+            CollectionAssert.AreEqual("DEF".ToCharArray(), letters![1]);
+            CollectionAssert.AreEqual("GHI".ToCharArray(), letters![2]);
+            Assert.IsNull(lengths);
+        }
+
+        [TestMethod]
+        public void TryParse_WhenArgsLettersAndLengthsAreInconsistent_SetsPathLettersAndLengthsAndReturnsFalse()
+        {
+            // Arrange
+            string[] args = { "words.txt", "ABC", "DEF", "GHI", "2", "3", "5" };
+            var arguments = CreateArguments(args);
+
+            // Act
+            bool result = arguments.TryParse(out string? path, out char?[][]? letters, out int[]? lengths);
+
+            // Assert
+            Assert.IsFalse(result);
+            Assert.AreEqual("words.txt", path);
+            Assert.AreEqual(3, letters!.Length);
+            CollectionAssert.AreEqual("ABC".ToCharArray(), letters![0]);
+            CollectionAssert.AreEqual("DEF".ToCharArray(), letters![1]);
+            CollectionAssert.AreEqual("GHI".ToCharArray(), letters![2]);
+            CollectionAssert.AreEqual(new[] { 2, 3, 5 }, lengths);
         }
 
         [TestMethod]

@@ -34,6 +34,10 @@ namespace WordBrain
             {
                 return false;
             }
+            if (lengths.Sum() != letters.SelectMany(row => row).Count(c => c != null))
+            {
+                return false;
+            }
 
             return true;
         }
@@ -88,7 +92,7 @@ namespace WordBrain
             lengths = new int[lengthsCount];
             for (int i = 0; i < lengthsCount; i++)
             {
-                if (!int.TryParse(_args[argsIndex++], out int length))
+                if (!int.TryParse(_args[argsIndex++], out int length) || length <= 0)
                 {
                     lengths = null;
                     return false;
