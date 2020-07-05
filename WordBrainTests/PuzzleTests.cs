@@ -101,11 +101,11 @@ namespace WordBrain.Tests
             // Assert
             Assert.AreEqual(letters.Length, result.Height);
             Assert.AreEqual(letters[0].Length, result.Width);
-            for (int i = 0; i < letters.Length; i++)
+            for (int row = 0; row < letters.Length; row++)
             {
-                for (int j = 0; j < letters[i].Length; j++)
+                for (int col = 0; col < letters[row].Length; col++)
                 {
-                    Assert.AreEqual(letters[i][j], result[i, j]);
+                    Assert.AreEqual(letters[row][col], result[row, col]);
                 }
             }
         }

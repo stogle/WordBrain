@@ -19,33 +19,33 @@ namespace WordBrain
 
         public int Width { get; }
 
-        public char? this[int x, int y] => _letters[x][y];
+        public char? this[int row, int col] => _letters[row][col];
 
         internal Grid Play(Sequence sequence)
         {
             // Set all used letter to null
             char?[][] letters = _letters.Select(row => row.ToArray()).ToArray();
-            foreach ((int i, int j) in sequence.GetSquares())
+            foreach ((int row, int col) in sequence.GetSquares())
             {
-                letters[i][j] = null;
+                letters[row][col] = null;
             }
 
             // Fill null letters with the letters above
-            for (int j = 0; j < Width; j++)
+            for (int col = 0; col < Width; col++)
             {
-                for (int i = Height - 1; i > 0; i--)
+                for (int row = Height - 1; row > 0; row--)
                 {
-                    if (letters[i][j] == null)
+                    if (letters[row][col] == null)
                     {
-                        int k = i - 1;
-                        while (k >= 0 && letters[k][j] == null)
+                        int rowAbove = row - 1;
+                        while (rowAbove >= 0 && letters[rowAbove][col] == null)
                         {
-                            k--;
+                            rowAbove--;
                         }
-                        if (k >= 0)
+                        if (rowAbove >= 0)
                         {
-                            letters[i][j] = letters[k][j];
-                            letters[k][j] = null;
+                            letters[row][col] = letters[rowAbove][col];
+                            letters[rowAbove][col] = null;
                         }
                     }
                 }

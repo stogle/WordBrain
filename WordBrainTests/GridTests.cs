@@ -54,7 +54,7 @@ namespace WordBrain.Tests
             var puzzle = CreatePuzzle(letters);
 
             // Act
-            var result = Enumerable.Range(0, puzzle.Grid.Height).SelectMany(i => Enumerable.Range(0, puzzle.Grid.Width).Select(j => letters[i][j] == puzzle.Grid[i, j]));
+            var result = Enumerable.Range(0, puzzle.Grid.Height).SelectMany(row => Enumerable.Range(0, puzzle.Grid.Width).Select(col => letters[row][col] == puzzle.Grid[row, col]));
 
             // Assert
             Assert.IsTrue(result.All(b => b));

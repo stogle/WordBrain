@@ -8,8 +8,8 @@ namespace WordBrain
         private readonly Puzzle _puzzle;
         private readonly WordTree _wordTree;
         private readonly Sequence? _parent;
-        private readonly int _i;
-        private readonly int _j;
+        private readonly int _row;
+        private readonly int _col;
         private string? _toString;
 
         public Sequence(Puzzle puzzle, WordTree wordTree)
@@ -17,25 +17,25 @@ namespace WordBrain
             _puzzle = puzzle;
             _wordTree = wordTree;
             _parent = null;
-            _i = -1;
-            _j = -1;
+            _row = -1;
+            _col = -1;
             _toString = string.Empty;
             Length = 0;
         }
 
-        private Sequence(Sequence parent, WordTree wordTree, int i, int j)
+        private Sequence(Sequence parent, WordTree wordTree, int row, int col)
         {
             _puzzle = parent._puzzle;
             _wordTree = wordTree;
             _parent = parent;
-            _i = i;
-            _j = j;
+            _row = row;
+            _col = col;
             Length = parent.Length + 1;
         }
 
         public int Length { get; }
 
-        public IEnumerable<(int i, int j)> GetSquares()
+        public IEnumerable<(int row, int col)> GetSquares()
         {
             if (_parent != null)
             {
@@ -44,7 +44,7 @@ namespace WordBrain
                     yield return square;
                 }
 
-                yield return (_i, _j);
+                yield return (_row, _col);
             }
         }
 
@@ -53,13 +53,13 @@ namespace WordBrain
             WordTree? wordTree;
             if (_parent == null)
             {
-                for (int i = 0; i < _puzzle.Grid.Height; i++)
+                for (int row = 0; row < _puzzle.Grid.Height; row++)
                 {
-                    for (int j = 0; j < _puzzle.Grid.Width; j++)
+                    for (int col = 0; col < _puzzle.Grid.Width; col++)
                     {
-                        if (!IsVisited(i, j) && _wordTree.TryLetter(_puzzle.Grid[i, j]!.Value, out wordTree))
+                        if (!IsVisited(row, col) && _wordTree.TryLetter(_puzzle.Grid[row, col]!.Value, out wordTree))
                         {
-                            yield return new Sequence(this, wordTree, i, j);
+                            yield return new Sequence(this, wordTree, row, col);
                         }
                     }
                 }
@@ -69,61 +69,61 @@ namespace WordBrain
 
             if (Length < _puzzle.Solution.NextLength)
             {
-                bool isNotFirstColumn = _j - 1 >= 0;
-                bool isNotLastColumn = _j + 1 < _puzzle.Grid.Width;
-                if (_i - 1 >= 0)
+                bool isNotFirstColumn = _col - 1 >= 0;
+                bool isNotLastColumn = _col + 1 < _puzzle.Grid.Width;
+                if (_row - 1 >= 0)
                 {
-                    if (isNotFirstColumn && !IsVisited(_i - 1, _j - 1) && _wordTree.TryLetter(_puzzle.Grid[_i - 1, _j - 1]!.Value, out wordTree))
+                    if (isNotFirstColumn && !IsVisited(_row - 1, _col - 1) && _wordTree.TryLetter(_puzzle.Grid[_row - 1, _col - 1]!.Value, out wordTree))
                     {
-                        yield return new Sequence(this, wordTree, _i - 1, _j - 1); // NW
+                        yield return new Sequence(this, wordTree, _row - 1, _col - 1); // NW
                     }
-                    if (!IsVisited(_i - 1, _j) && _wordTree.TryLetter(_puzzle.Grid[_i - 1, _j]!.Value, out wordTree))
+                    if (!IsVisited(_row - 1, _col) && _wordTree.TryLetter(_puzzle.Grid[_row - 1, _col]!.Value, out wordTree))
                     {
-                        yield return new Sequence(this, wordTree, _i - 1, _j); // N
+                        yield return new Sequence(this, wordTree, _row - 1, _col); // N
                     }
-                    if (isNotLastColumn && !IsVisited(_i - 1, _j + 1) && _wordTree.TryLetter(_puzzle.Grid[_i - 1, _j + 1]!.Value, out wordTree))
+                    if (isNotLastColumn && !IsVisited(_row - 1, _col + 1) && _wordTree.TryLetter(_puzzle.Grid[_row - 1, _col + 1]!.Value, out wordTree))
                     {
-                        yield return new Sequence(this, wordTree, _i - 1, _j + 1); // NE
+                        yield return new Sequence(this, wordTree, _row - 1, _col + 1); // NE
                     }
                 }
-                if (isNotFirstColumn && !IsVisited(_i, _j - 1) && _wordTree.TryLetter(_puzzle.Grid[_i, _j - 1]!.Value, out wordTree))
+                if (isNotFirstColumn && !IsVisited(_row, _col - 1) && _wordTree.TryLetter(_puzzle.Grid[_row, _col - 1]!.Value, out wordTree))
                 {
-                    yield return new Sequence(this, wordTree, _i, _j - 1); // W
+                    yield return new Sequence(this, wordTree, _row, _col - 1); // W
                 }
-                if (isNotLastColumn && !IsVisited(_i, _j + 1) && _wordTree.TryLetter(_puzzle.Grid[_i, _j + 1]!.Value, out wordTree))
+                if (isNotLastColumn && !IsVisited(_row, _col + 1) && _wordTree.TryLetter(_puzzle.Grid[_row, _col + 1]!.Value, out wordTree))
                 {
-                    yield return new Sequence(this, wordTree, _i, _j + 1); // E
+                    yield return new Sequence(this, wordTree, _row, _col + 1); // E
                 }
-                if (_i + 1 < _puzzle.Grid.Height)
+                if (_row + 1 < _puzzle.Grid.Height)
                 {
-                    if (isNotFirstColumn && !IsVisited(_i + 1, _j - 1) && _wordTree.TryLetter(_puzzle.Grid[_i + 1, _j - 1]!.Value, out wordTree))
+                    if (isNotFirstColumn && !IsVisited(_row + 1, _col - 1) && _wordTree.TryLetter(_puzzle.Grid[_row + 1, _col - 1]!.Value, out wordTree))
                     {
-                        yield return new Sequence(this, wordTree, _i + 1, _j - 1); // SW
+                        yield return new Sequence(this, wordTree, _row + 1, _col - 1); // SW
                     }
-                    if (!IsVisited(_i + 1, _j) && _wordTree.TryLetter(_puzzle.Grid[_i + 1, _j]!.Value, out wordTree))
+                    if (!IsVisited(_row + 1, _col) && _wordTree.TryLetter(_puzzle.Grid[_row + 1, _col]!.Value, out wordTree))
                     {
-                        yield return new Sequence(this, wordTree, _i + 1, _j); // S
+                        yield return new Sequence(this, wordTree, _row + 1, _col); // S
                     }
-                    if (isNotLastColumn && !IsVisited(_i + 1, _j + 1) && _wordTree.TryLetter(_puzzle.Grid[_i + 1, _j + 1]!.Value, out wordTree))
+                    if (isNotLastColumn && !IsVisited(_row + 1, _col + 1) && _wordTree.TryLetter(_puzzle.Grid[_row + 1, _col + 1]!.Value, out wordTree))
                     {
-                        yield return new Sequence(this, wordTree, _i + 1, _j + 1); // SE
+                        yield return new Sequence(this, wordTree, _row + 1, _col + 1); // SE
                     }
                 }
             }
         }
 
-        private bool IsVisited(int i, int j)
+        private bool IsVisited(int row, int col)
         {
             Sequence? sequence = this;
             while (sequence._parent != null)
             {
-                if (i == sequence._i && j == sequence._j)
+                if (row == sequence._row && col == sequence._col)
                 {
                     return true;
                 }
                 sequence = sequence._parent;
             }
-            return _puzzle.Grid[i, j] == null;
+            return _puzzle.Grid[row, col] == null;
         }
 
         public bool TryPlay([NotNullWhen(true)]out Puzzle? puzzle)
@@ -150,7 +150,7 @@ namespace WordBrain
                 char[] buffer = new char[Length];
                 for (int i = Length - 1; i >= 0; i--)
                 {
-                    char? c = _puzzle.Grid[sequence!._i, sequence._j];
+                    char? c = _puzzle.Grid[sequence!._row, sequence._col];
                     buffer[i] = c!.Value;
                     sequence = sequence._parent;
                 }
