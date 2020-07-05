@@ -7,8 +7,8 @@ namespace WordBrain
 {
     public class Arguments
     {
-        private string[] _args;
-        private string _args0;
+        private readonly string[] _args;
+        private readonly string _args0;
 
         public Arguments(string[] args, string args0)
         {
