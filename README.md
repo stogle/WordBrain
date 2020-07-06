@@ -47,19 +47,39 @@ The command `WordBrain 3of6game.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12` prod
 
     Found 6 solution(s) in 00:00:04.6712986
 
-The command `WordBrain 3of6game.txt G...AT AF..LL PLMTEI TODIUE TAPNAR ETOSMB 7 6 4 8 3 3` produces the following output:
+The command `WordBrain 3of6game.txt ECSWYM.. GAENSE.. ABRSUE.. RADAELRE EATOOIRT VOCMEOIT GUERTGVA IFEODPFA 8 8 6 8 6 8 6 8` produces the following output:
 
-    Read 61,442 words in 00:00:00.0928488
+    Read 61,442 words in 00:00:00.1050974
 
-    G . . . A T
-    A F . . L L
-    P L M T E I
-    T O D I U E
-    T A P N A R
-    E T O S M B
-    _______ ______ ____ ________ ___ ___
+    E C S W Y M . .
+    G A E N S E . .
+    A B R S U E . .
+    R A D A E L R E
+    E A T O O I R T
+    V O C M E O I T
+    G U E R T G V A
+    I F E O D P F A
+    ________ ________ ______ ________ ______ ________ ______ ________
 
-    SANDPIT TOMATO FELT UMBRELLA GAP TIE
-    SANDPIT TOMATO LEFT UMBRELLA GAP TIE
+    FAVORITE DATABASE ASSUME COVERAGE TARGET CEREMONY FIGURE WOODPILE
 
-    Found 2 solution(s) in 00:00:00.3883658
+    Found 1 solution(s) in 00:00:03.3732502
+
+The command `WordBrain 3of6game.txt ECSWYMRE GAENSESE ABRSUETL RADAELEC EATOOIRT VOCMEOIT GUERTGVA IFEODPFA 8 8 6 6 8 6 8 6 8` produces the following output:
+
+    Read 61,442 words in 00:00:00.1096540
+
+    E C S W Y M R E
+    G A E N S E S E
+    A B R S U E T L
+    R A D A E L E C
+    E A T O O I R T
+    V O C M E O I T
+    G U E R T G V A
+    I F E O D P F A
+    ________ ________ ______ ______ ________ ______ ________ ______ ________
+
+    DATABASE COVERAGE SELECT ASSUME FAVORITE TARGET CEREMONY FIGURE WOODPILE
+    DATABASE COVERAGE ELECTS FIGURE FAVORITE ASSUME CEREMONY TARGET WOODPILE
+
+    Found 2 solution(s) in 00:02:46.6516326
