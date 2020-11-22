@@ -25,7 +25,7 @@ namespace WordBrain.WPF
 
         public ObservableCollection<LineViewModel> Grid { get; } = new ObservableCollection<LineViewModel>();
 
-        private void GridCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void GridCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.OldItems != null)
             {
@@ -44,9 +44,9 @@ namespace WordBrain.WPF
             Rows = Grid.Count - 1;
         }
 
-        private void LinePropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void LinePropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            var item = (LineViewModel)sender;
+            var item = (LineViewModel)sender!;
             bool isLast = item == Grid.Last();
             if (isLast && item.Text.Length != 0)
             {
@@ -133,13 +133,13 @@ namespace WordBrain.WPF
             }
         }
 
-        private void WordViewModelPropertyChanged(object sender, PropertyChangedEventArgs e) => AdjustLengthsToMatchLetters(sender as WordViewModel);
+        private void WordViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e) => AdjustLengthsToMatchLetters(sender as WordViewModel);
 
         public ObservableCollection<WordViewModel> Lengths { get; } = new ObservableCollection<WordViewModel> { new WordViewModel { Length = 1 } };
 
         public ICommand Solve { get; }
 
-        private async Task ExecuteSolveAsync(object _)
+        private async Task ExecuteSolveAsync(object? _)
         {
             var wordTree = new WordTree(System.IO.File.ReadAllLines("3of6game.txt"));
             var solver = new Solver(wordTree);
@@ -158,7 +158,7 @@ namespace WordBrain.WPF
             }
         }
 
-        private bool CanExecuteSolve(object _) => Rows != 0;
+        private bool CanExecuteSolve(object? _) => Rows != 0;
 
         public ObservableCollection<Solution> Output { get; } = new ObservableCollection<Solution>();
 

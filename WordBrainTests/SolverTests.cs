@@ -61,7 +61,7 @@ namespace WordBrain.Tests
             var progress = new Progress<Solution>(solution => isProgressReported = true);
 
             // Act
-            solver.Solve(puzzle, progress).ToList();
+            var result = solver.Solve(puzzle, progress).ToList();
 
             // Assert
             Assert.IsTrue(isProgressReported);
