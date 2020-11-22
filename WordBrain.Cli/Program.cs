@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace WordBrain
+namespace WordBrain.Cli
 {
     public class Program
     {
@@ -29,7 +29,7 @@ namespace WordBrain
                 throw new ArgumentException(Strings.Program_ExpectedValidArgs, nameof(args));
             }
             _path = path;
-            _puzzle = new Puzzle(new Grid(letters), new Solution(lengths));
+            _puzzle = new Puzzle(letters, lengths);
         }
 
         public void Start()
@@ -61,28 +61,6 @@ namespace WordBrain
             }
             _progress.ClearReport();
             return solutions;
-        }
-
-        private class ConsoleProgress : IProgress<Solution>
-        {
-            private int _reportLength;
-
-            public void Report(Solution value)
-            {
-                if (value == null)
-                {
-                    return;
-                }
-
-                string report = value.ToString();
-                _reportLength = report.Length;
-                Console.Write($"{report}\r");
-            }
-
-            public void ClearReport()
-            {
-                Console.Write($"{new string(' ', _reportLength)}\r");
-            }
         }
     }
 }

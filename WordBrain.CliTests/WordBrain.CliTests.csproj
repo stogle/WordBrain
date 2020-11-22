@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WordBrain\WordBrain.csproj" />
+    <ProjectReference Include="..\WordBrain.Cli\WordBrain.Cli.csproj" />
   </ItemGroup>
 
 </Project>

@@ -6,14 +6,14 @@
 Solves [WordBrain](https://www.maginteractive.com/games/wordbrain/) puzzles
 
 ## Usage
-    Usage: WordBrain word_list line1 [line2 ...] length1 [length2 ...]
+    Usage: WordBrain.Cli word_list line1 [line2 ...] length1 [length2 ...]
       word_list: The path to a file containing a list of valid words (one per line).
       line1, line2, etc.: The lines of the WordBrain grid. The grid must be rectangular. Use '.' for blanks.
       length1, length2, etc.: The lengths of the words in the solution. They must sum to the number of letters in the grid.
 
 ## Examples
 
-The command `WordBrain 3of6game.txt SLLY HAUE ICTN PAON 4 8 4` produces the following output:
+The command `WordBrain.Cli 3of6game.txt SLLY HAUE ICTN PAON 4 8 4` produces the following output:
 
     Read 61,442 words in 00:00:00.0863478
 
@@ -27,7 +27,7 @@ The command `WordBrain 3of6game.txt SLLY HAUE ICTN PAON 4 8 4` produces the foll
 
     Found 1 solution(s) in 00:00:00.2341133
 
-The command `WordBrain 3of6game.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12` produces the following output:
+The command `WordBrain.Cli 3of6game.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12` produces the following output:
 
     Read 61,442 words in 00:00:00.0808263
 
@@ -47,7 +47,7 @@ The command `WordBrain 3of6game.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12` prod
 
     Found 6 solution(s) in 00:00:04.4479744
 
-The command `WordBrain 3of6game.txt ECSWYM.. GAENSE.. ABRSUE.. RADAELRE EATOOIRT VOCMEOIT GUERTGVA IFEODPFA 8 8 6 8 6 8 6 8` produces the following output:
+The command `WordBrain.Cli 3of6game.txt ECSWYM.. GAENSE.. ABRSUE.. RADAELRE EATOOIRT VOCMEOIT GUERTGVA IFEODPFA 8 8 6 8 6 8 6 8` produces the following output:
 
     Read 61,442 words in 00:00:00.0912933
 
@@ -65,7 +65,7 @@ The command `WordBrain 3of6game.txt ECSWYM.. GAENSE.. ABRSUE.. RADAELRE EATOOIRT
 
     Found 1 solution(s) in 00:00:02.8165989
 
-The command `WordBrain 3of6game.txt ECSWYMRE GAENSESE ABRSUETL RADAELEC EATOOIRT VOCMEOIT GUERTGVA IFEODPFA 8 8 6 6 8 6 8 6 8` produces the following output:
+The command `WordBrain.Cli 3of6game.txt ECSWYMRE GAENSESE ABRSUETL RADAELEC EATOOIRT VOCMEOIT GUERTGVA IFEODPFA 8 8 6 6 8 6 8 6 8` produces the following output:
 
     Read 61,442 words in 00:00:00.0884889
 

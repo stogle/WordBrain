@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace WordBrain.Tests
+namespace WordBrain.Cli.Tests
 {
     [TestClass]
     public class ProgramTests

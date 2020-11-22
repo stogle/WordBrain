@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace WordBrain.Tests
+namespace WordBrain.Cli.Tests
 {
     [TestClass]
     public class ArgumentsTests
