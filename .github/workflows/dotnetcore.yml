@@ -26,7 +26,7 @@ jobs:
     - name: Build
       run: dotnet build -c Release --no-restore
     - name: Test
-      run: dotnet test -c Release --no-build -v normal -r . -m:1 -p:CollectCoverage=true,CoverletOutput=../coverage,MergeWith=../coverage.json,CoverletOutputFormat=\"lcov,json\"
+      run: dotnet test -c Release --no-build -v normal -r . -m:1 -p:CollectCoverage=true,CoverletOutput=../coverage,MergeWith=../coverage.json,CoverletOutputFormat="lcov,json"
     - name: Coveralls GitHub Action
       uses: coverallsapp/github-action@v1.1.1
       with:
