@@ -15,7 +15,7 @@ Solves [WordBrain](https://www.maginteractive.com/games/wordbrain/) puzzles
 
 The command `WordBrain 3of6game.txt SLLY HAUE ICTN PAON 4 8 4` produces the following output:
 
-    Read 61,442 words in 00:00:00.1048676
+    Read 61,442 words in 00:00:00.0863478
 
     S L L Y
     H A U E
@@ -25,11 +25,11 @@ The command `WordBrain 3of6game.txt SLLY HAUE ICTN PAON 4 8 4` produces the foll
 
     SHIP ACTUALLY NONE
 
-    Found 1 solution(s) in 00:00:00.1183183
+    Found 1 solution(s) in 00:00:00.2341133
 
 The command `WordBrain 3of6game.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12` produces the following output:
 
-    Read 61,442 words in 00:00:00.1094828
+    Read 61,442 words in 00:00:00.0808263
 
     E Z E A I
     U I C R D
@@ -45,11 +45,11 @@ The command `WordBrain 3of6game.txt EZEAI UICRD LRHAD AEAEO VCTES 5 4 4 12` prod
     VALUE ODES AIDE CHARACTERIZE
     VALUE ODES IDEA CHARACTERIZE
 
-    Found 6 solution(s) in 00:00:04.6712986
+    Found 6 solution(s) in 00:00:04.4479744
 
 The command `WordBrain 3of6game.txt ECSWYM.. GAENSE.. ABRSUE.. RADAELRE EATOOIRT VOCMEOIT GUERTGVA IFEODPFA 8 8 6 8 6 8 6 8` produces the following output:
 
-    Read 61,442 words in 00:00:00.1050974
+    Read 61,442 words in 00:00:00.0912933
 
     E C S W Y M . .
     G A E N S E . .
@@ -63,11 +63,11 @@ The command `WordBrain 3of6game.txt ECSWYM.. GAENSE.. ABRSUE.. RADAELRE EATOOIRT
 
     FAVORITE DATABASE ASSUME COVERAGE TARGET CEREMONY FIGURE WOODPILE
 
-    Found 1 solution(s) in 00:00:03.3732502
+    Found 1 solution(s) in 00:00:02.8165989
 
 The command `WordBrain 3of6game.txt ECSWYMRE GAENSESE ABRSUETL RADAELEC EATOOIRT VOCMEOIT GUERTGVA IFEODPFA 8 8 6 6 8 6 8 6 8` produces the following output:
 
-    Read 61,442 words in 00:00:00.1096540
+    Read 61,442 words in 00:00:00.0884889
 
     E C S W Y M R E
     G A E N S E S E
@@ -79,7 +79,7 @@ The command `WordBrain 3of6game.txt ECSWYMRE GAENSESE ABRSUETL RADAELEC EATOOIRT
     I F E O D P F A
     ________ ________ ______ ______ ________ ______ ________ ______ ________
 
-    DATABASE COVERAGE SELECT ASSUME FAVORITE TARGET CEREMONY FIGURE WOODPILE
-    DATABASE COVERAGE ELECTS FIGURE FAVORITE ASSUME CEREMONY TARGET WOODPILE
+    DATABASE COVERAGE SELECT ASSUME CEREMONY FIGURE FAVORITE TARGET WOODPILE
+    COVERAGE DATABASE ELECTS FIGURE FAVORITE ASSUME CEREMONY TARGET WOODPILE
 
-    Found 2 solution(s) in 00:02:46.6516326
+    Found 2 solution(s) in 00:02:16.9333207
