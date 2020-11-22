@@ -26,10 +26,8 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Test
-      run: >
-        dotnet test --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" -r coverage --
-          DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=lcov
-          DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.MergeWith=coverage/lcov.info
+      run: |
+        dotnet test --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" -r coverage -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=lcov DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.MergeWith=coverage/lcov.info
     - name: Coveralls GitHub Action
       uses: coverallsapp/github-action@v1.1.1
       with:
